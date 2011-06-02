@@ -13,8 +13,6 @@ h2. Installation
 
 To install Infinite Ajax Scroll make sure you have jQuery 1.4+ installed. Next add jquery.ias.js to the head of your webpage.
 
-Installation of Uniform is quite simple. First, make sure you have jQuery 1.4+ installed. Then you’ll want to link to the jquery.uniform.js file and uniform.default.css in the head area of your page:
-
 bc. <script type="text/javascript" src="jquery.ias.js"></script>
 <link rel="stylesheet" type="text/css" href="ias.default.css" media="screen" charset="utf-8" />
 
