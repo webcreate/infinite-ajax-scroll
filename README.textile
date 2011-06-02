@@ -14,11 +14,10 @@ h2. Installation
 To install Infinite Ajax Scroll make sure you have jQuery 1.4+ installed. Next add jquery.ias.js to the head of your webpage.
 
 bc. <script type="text/javascript" src="jquery.ias.js"></script>
-<link rel="stylesheet" type="text/css" href="ias.default.css" media="screen" charset="utf-8" />
 
 h2. Basic usage
 
-jQuery.ias({
+bc. jQuery.ias({
 	container : ".listing",
 	item: ".post",
 	pagination: "#content .navigation",
