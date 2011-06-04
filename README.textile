@@ -9,11 +9,20 @@ Requires jQuery 1.4 or newer.
 Licensed under:
 MIT License - http://www.opensource.org/licenses/mit-license.php
 
+h2. Requirements
+
+* jQuery 1.4+
+* A fully working (server-side) pagination with a 'goto the next page' link
+
+IAS is based on the assumption that you, as a developer, already have taken care for the pagination using a server-side script. What IAS does is loading the next page via AJAX and inserting each individual item into the current page.
+
 h2. Installation
 
-To install Infinite Ajax Scroll make sure you have jQuery 1.4+ installed. Next add jquery.ias.js to the head of your webpage.
+To install Infinite Ajax Scroll make sure you have jQuery 1.4+ installed. Next, add jquery.ias.min.js to the head of your webpage.
 
-bc. <script type="text/javascript" src="jquery.ias.js"></script>
+bc. <script type="text/javascript" src="jquery.ias.min.js"></script>
+
+Now place the loader image in you image folder and add the CSS to you existing stylesheets.
 
 h2. Basic usage
 
@@ -24,3 +33,42 @@ bc. jQuery.ias({
 	next: ".next-posts a",
 	loader: "images/loader.gif"
 });
+
+You can use IAS multple times within a single webpage. For example, you can have an IAS definition for paginating blogposts and one for comments.
+
+h2. Options
+
+h3. container
+
+*Default:* "#container"
+Enter the selector of the element containing your items that you want to paginate.
+
+h3. item
+
+*Default:* ".item"
+Enter the selector of the element that each item has. Make sure the elements are inside the container element.
+
+h3. pagination
+
+*Default:* "#pagination"
+Enter the selector of the element that contains your regular pagination links, like next, previous and the page numbers. This element will be hidden when IAS loads.
+
+h3. next
+
+*Default:* ".next"
+Enter the selector of the link element that links to the next page. The href attribute of this element will be used to get the items from the next page.
+
+h3. loader
+
+*Default:* "images/loader.gif"
+Enter the url to the loader image. This will image be displayed when the next page with items is loaded via AJAX.
+
+h2. Customizing
+
+IAS inserts a div element with a image to generate a loader. The div has a class called *ias_loader*. Using this class you can adjust the styling of the loader.
+
+You can also link to an other loader image. Use the *loader* option to link to the right image.
+
+h2. Issues
+
+If you have any ideas or bugs, please submit them to the GitHub issue tracker at https://github.com/webcreate/Infinite-Ajax-Scroll. We rely on our users for ideas on improvements and bug reports.

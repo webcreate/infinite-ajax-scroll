@@ -129,7 +129,7 @@
 			loader = $(".ias_loader");
 			
 			if (loader.size() == 0) {
-				loader = $("<div class='ias_loader' style='text-align:center; margin: 5px 0;'><img src='"+opts.loader+"'/></div>");
+				loader = $("<div class='ias_loader'><img src='"+opts.loader+"'/></div>");
 				loader.hide();
 			}
 			return loader;
@@ -176,7 +176,7 @@
 	// plugin defaults
 	$.ias.defaults = {
 			container: '#container',
-			item: ".post",
+			item: ".item",
 			pagination: "#pagination",
 			next: ".next",
 	};
