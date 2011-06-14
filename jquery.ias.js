@@ -205,7 +205,7 @@
 				paginate(curTreshold, function() {
 					stop_scroll();
 					
-					if (paging.getCurPageNum(curTreshold) <= pageNum) {
+					if ((paging.getCurPageNum(curTreshold) + 1) < pageNum) {
 						paginateToPage(pageNum);
 						
 						$("html,body").animate({"scrollTop": curTreshold}, 400, "swing");
@@ -459,7 +459,7 @@
 		function init()
 		{
 			isHtml5 = !!(window.history && history.pushState && history.replaceState);
-			isHtml5 = false;
+			isHtml5 = false; // html5 functions disabled due to problems in chrome
 		};
 		
 		/**
