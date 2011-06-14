@@ -55,7 +55,6 @@
 						
 						curTreshold = get_scroll_treshold();
 						$("html,body").scrollTop(curTreshold);
-
 					}
 					else {
 						reset();
@@ -460,6 +459,7 @@
 		function init()
 		{
 			isHtml5 = !!(window.history && history.pushState && history.replaceState);
+			isHtml5 = false;
 		};
 		
 		/**
