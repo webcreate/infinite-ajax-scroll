@@ -2,7 +2,7 @@ h1. Infinite Ajax Scroll
 
 Turn your paginated pages into infinite scrolling pages with ease.
 
-Version 0.1.0
+Version 0.1.1
 
 Requires jQuery 1.4 or newer. 
 
@@ -34,7 +34,7 @@ bc. jQuery.ias({
 	loader: "images/loader.gif"
 });
 
-You can use IAS multple times within a single webpage. For example, you can have an IAS definition for paginating blogposts and one for comments.
+You can use IAS multiple times within a single webpage. For example, you can have an IAS definition for paginating blogposts and one for comments.
 
 h2. Options
 
@@ -61,7 +61,23 @@ Enter the selector of the link element that links to the next page. The href att
 h3. loader
 
 *Default:* "images/loader.gif"
-Enter the url to the loader image. This will image be displayed when the next page with items is loaded via AJAX.
+Enter the url to the loader image. This image will be displayed when the next page with items is loaded via AJAX.
+
+h3. onPageChange
+
+*Default:* empty function
+Event handler. Is called each time the user scrolls to an other page.
+
+Parameters:
+
+|*param*|*description*|
+|pageNum|Current page number|
+|pageUrl|Url of the current page|
+|scrollOffset|scroll offset for this page|
+
+Example:
+
+bc. onPageChange: function(pageNum, pageUrl, scrollOffset) { console.log('Welcome on page ' + pageNum); } 
 
 h2. Customizing
 
