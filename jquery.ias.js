@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin 
- * Version v0.1.1
+ * Version v0.1.2
  * http://webcreate.nl/
  *
  * Copyright (c) 2011 Jeroen Fiege
@@ -149,7 +149,7 @@
 				// walk through the items on the next page
 				// and insert them with a nice fadeIn effect
 				for(i=0;i<items.length;i++) {
-					item = items[i];
+					var item = items[i];
 					item.hide(); // at first, hide it so we can fade it in later
 					
 					curLastItem = $(opts.container).find(opts.item).last();
