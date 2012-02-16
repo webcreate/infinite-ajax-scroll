@@ -118,6 +118,8 @@ bc. jQuery.ias({
 
 h3. Integrating with jQuery Masonry
 
+Example on how to integrate "jQuery Masonry":http://masonry.desandro.com/.
+
 bc. jQuery.ias({
     container : ".listing",
     item: ".post",
