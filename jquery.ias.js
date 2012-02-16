@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin 
- * Version v0.1.2
+ * Version v0.1.3
  * http://webcreate.nl/
  *
  * Copyright (c) 2011 Jeroen Fiege
@@ -146,15 +146,16 @@
 			show_loader();
 			
 			loadItems(urlNextPage, function(data, items) {
-				// walk through the items on the next page
-				// and insert them with a nice fadeIn effect
-				for(i=0;i<items.length;i++) {
-					var item = items[i];
-					item.hide(); // at first, hide it so we can fade it in later
+				// call the onLoadItems callback
+				result = opts.onLoadItems.call(this, items);
+				
+				if (result !== false) {
+					$(items).hide();  // at first, hide it so we can fade it in later
 					
+					// insert them after the last item with a nice fadeIn effect
 					curLastItem = $(opts.container).find(opts.item).last();
-					curLastItem.after(item);
-					item.fadeIn();
+					curLastItem.after(items);
+					$(items).fadeIn();
 				}
 				
 				// update pagination
@@ -183,7 +184,7 @@
 				// walk through the items on the next page
 				// and add them to the items array
 				$(opts.container, data).find(opts.item).each(function() {
-					items.push($(this));
+					items.push(this);
 				});
 				
 				if (onCompleteHandler) onCompleteHandler.call(this, data, items);
@@ -280,7 +281,8 @@
 		item: ".item",
 		pagination: "#pagination",
 		next: ".next",
-		onPageChange: function() {}
+		onPageChange: function() {},
+		onLoadItems: function() {},
 	};
 	
 	// utility module

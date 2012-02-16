@@ -2,7 +2,7 @@ h1. Infinite Ajax Scroll
 
 Turn your paginated pages into infinite scrolling pages with ease.
 
-Version 0.1.2
+Version 0.1.3
 
 Requires jQuery 1.4 or newer. 
 
@@ -78,6 +78,65 @@ Parameters:
 Example:
 
 bc. onPageChange: function(pageNum, pageUrl, scrollOffset) { console.log('Welcome on page ' + pageNum); } 
+
+h3. onLoadItems
+
+*Default:* empty function
+Event handler. Is called each time new items are loaded.
+
+Parameters:
+
+|*param*|*description*|
+|items|array containing the item elements|
+
+Return value:
+When we return false in the callback, we prevent IAS from automatically insert the loaded items. This can be used to manually insert the items.
+
+Example:
+
+bc. onLoadItems: function(items) { console.log('We loaded ' + items.length + ' items'); } 
+
+h2. Advanced usage
+
+h3. Integrating Google Analytics
+
+You can integrate Google Analytics by using the onPageChange event. Here is an example:
+
+bc. jQuery.ias({
+    container : ".listing",
+    item: ".post",
+    pagination: "#content .navigation",
+    next: ".next-posts a",
+    loader: "images/loader.gif",
+    onPageChange: function(pageNum, pageUrl, scrollOffset) {
+        // This will track a pageview every time the user 
+        // scrolls up or down the screen to a different page.
+        path = jQuery('<a/>').attr('href',pageUrl)[0].pathname.replace(/^[^\/]/,'/');
+        _gaq.push(['_trackPageview', path]);
+    }
+});
+
+h3. Integrating with jQuery Masonry
+
+bc. jQuery.ias({
+    container : ".listing",
+    item: ".post",
+    pagination: "#content .navigation",
+    next: ".next-posts a",
+    loader: "images/loader.gif",
+    onLoadItems: function(items) {
+        // hide new items while they are loading
+        var $newElems = $(items).show().css({ opacity: 0 });
+        // ensure that images load before adding to masonry layout
+        $newElems.imagesLoaded(function(){
+          // show elems now they're ready
+          $newElems.animate({ opacity: 1 });
+          $('.listing').masonry( 'appended', $newElems, true ); 
+        });
+        return true;
+    }
+});
+
 
 h2. Customizing
 
