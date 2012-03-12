@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin 
- * Version v0.1.3
+ * Version v0.1.4
  * http://webcreate.nl/
  *
  * Copyright (c) 2011 Jeroen Fiege
@@ -13,9 +13,9 @@
 	{
 		// setup
 		var opts = $.extend({}, $.ias.defaults, options);
-		var util = new $.ias.util();		// utilities module
-		var paging = new $.ias.paging();	// paging module
-		var hist = new $.ias.history();		// history module
+		var util = new $.ias.util();								// utilities module
+		var paging = new $.ias.paging();							// paging module
+		var hist = (opts.history ? new $.ias.history() : false);	// history module
 		var _self = this;
 		
 		// initialize
@@ -35,7 +35,7 @@
 		{
 			// track page number changes
 			paging.onChangePage(function(pageNum, scrollOffset, pageUrl) {
-				hist.setPage(pageNum, pageUrl);
+				if (hist) hist.setPage(pageNum, pageUrl);
 				
 				// call onPageChange event
 				opts.onPageChange.call(this, pageNum, pageUrl, scrollOffset);
@@ -45,7 +45,7 @@
 			reset();
 			
 			// load and scroll to previous page
-			if (hist.havePage()) {
+			if (hist && hist.havePage()) {
 				stop_scroll();
 				
 				pageNum = hist.getPage();
@@ -54,7 +54,7 @@
 					if (pageNum > 1) {
 						paginateToPage(pageNum);
 						
-						curTreshold = get_scroll_treshold();
+						curTreshold = get_scroll_treshold(true);
 						$("html,body").scrollTop(curTreshold);
 					}
 					else {
@@ -118,15 +118,19 @@
 		/**
 		 * Get scroll treshold based on the last item element
 		 * 
+		 * @param boolean pure indicates if the tresholdMargin should be applied
 		 * @return integer treshold
 		 */
-		function get_scroll_treshold()
+		function get_scroll_treshold(pure)
 		{
 			el = $(opts.container).find(opts.item).last();
 			
 			if (el.size() == 0) return 0;
 			
 			treshold = el.offset().top + el.height();
+			
+			if (!pure)
+				treshold += opts.tresholdMargin;
 			
 			return treshold;
 		}
@@ -203,7 +207,7 @@
 		 */
 		function paginateToPage(pageNum)
 		{
-			curTreshold = get_scroll_treshold();
+			curTreshold = get_scroll_treshold(true);
 			
 			if (curTreshold > 0) {
 				paginate(curTreshold, function() {
@@ -283,6 +287,8 @@
 		item: ".item",
 		pagination: "#pagination",
 		next: ".next",
+		tresholdMargin: 0,
+		history : true,
 		onPageChange: function() {},
 		onLoadItems: function() {},
 	};
@@ -552,11 +558,10 @@
 		this.pushState = function(stateObj, title, url) 
 		{
 			if (isHtml5) {
-				hash =  (stateObj.page > 0 ? "#/page/" + stateObj.page : "");
-				history.pushState({ ias : stateObj }, title, hash);
+				history.pushState({ ias : stateObj }, title, url);
 			}
 			else {
-				hash =  (stateObj.page > 0 ? "#/page/" + stateObj.page : "");
+				hash = (stateObj.page > 0 ? "#/page/" + stateObj.page : "");
 				window.location.hash = hash;
 			}
 			
@@ -574,12 +579,10 @@
 		this.replaceState = function(stateObj, title, url) 
 		{
 			if (isHtml5) {
-				hash =  (stateObj.page > 0 ? "#/page/" + stateObj.page : "");
-				history.replaceState({ ias : stateObj }, title, hash);
+				history.replaceState({ ias : stateObj }, title, url);
 			}
 			else {
-				hash =  (stateObj.page > 0 ? "#/page/" + stateObj.page : "");
-				window.location.hash = hash;
+				this.pushState(stateObj, title, url);
 			}
 		};
 	};
