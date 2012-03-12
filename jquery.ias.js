@@ -16,6 +16,7 @@
 		var util = new $.ias.util();		// utilities module
 		var paging = new $.ias.paging();	// paging module
 		var hist = new $.ias.history();		// history module
+		var _self = this;
 		
 		// initialize
 		init();
@@ -28,7 +29,7 @@
 		 * - setup scroll event and hides pagination element
 		 * - loads and scrolls to previous page when we have something in our history
 		 * 
-		 * @return void
+		 * @return self
 		 */
 		function init()
 		{
@@ -61,6 +62,8 @@
 					}
 				});
 			}
+			
+			return _self;
 		}
 		
 		/**
@@ -220,7 +223,6 @@
 			}
 		}
 			
-		
 		/**
 		 * Return the active loader of creates a new loader
 		 * 
