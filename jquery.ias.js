@@ -170,7 +170,7 @@
 				
 				remove_loader();
 				reset();
-				
+				opts.onComplete.call(this);
 				if (onCompleteHandler) onCompleteHandler.call(this);
 			});
 		}
@@ -237,7 +237,7 @@
 			loader = $(".ias_loader");
 			
 			if (loader.size() == 0) {
-				loader = $("<div class='ias_loader'><img src='"+opts.loader+"'/></div>");
+				loader = $("<div class='ias_loader'>"+opts.loader+"</div>");
 				loader.hide();
 			}
 			return loader;
@@ -291,6 +291,7 @@
 		history : true,
 		onPageChange: function() {},
 		onLoadItems: function() {},
+		onComplete: function() {},
 	};
 	
 	// utility module
