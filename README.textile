@@ -2,7 +2,7 @@ h1. Infinite Ajax Scroll
 
 Turn your paginated pages into infinite scrolling pages with ease.
 
-Version 0.1.4
+Version 0.1.5
 
 Requires jQuery 1.4 or newer. 
 
@@ -27,11 +27,11 @@ Now place the loader image in you image folder and add the CSS to you existing s
 h2. Basic usage
 
 bc. jQuery.ias({
-	container : ".listing",
-	item: ".post",
-	pagination: "#content .navigation",
-	next: ".next-posts a",
-	loader: "images/loader.gif"
+	container : '.listing',
+	item: '.post',
+	pagination: '#content .navigation',
+	next: '.next-posts a',
+	loader: '<img src="images/loader.gif"/>'
 });
 
 You can use IAS multiple times within a single webpage. For example, you can have an IAS definition for paginating blogposts and one for comments.
@@ -60,7 +60,7 @@ Enter the selector of the link element that links to the next page. The href att
 
 h3. loader
 
-*Default:* "images/loader.gif"
+*Default:* "<img src="images/loader.gif"/>"
 Enter the url to the loader image. This image will be displayed when the next page with items is loaded via AJAX.
 
 h3. tresholdMargin
@@ -112,6 +112,22 @@ Example:
 
 bc. onLoadItems: function(items) { console.log('We loaded ' + items.length + ' items'); } 
 
+h3. onRenderComplete
+
+*Default:* empty function
+Event handler. Is called each time new items have been inserted in the DOM.
+
+This can be useful when you have a javascript function that normally performs some actions on the items in the document.ready event. When loading items from a new page using IAS, the document ready handler isn't called. Use this event instead.
+
+Parameters:
+
+|*param*|*description*|
+|items|array containing the item elements|
+
+Example:
+
+bc. onRenderComplete: function(items) { console.log('We rendered ' + items.length + ' items'); } 
+
 h2. Advanced usage
 
 h3. Integrating Google Analytics
@@ -119,11 +135,11 @@ h3. Integrating Google Analytics
 You can integrate Google Analytics by using the onPageChange event. Here is an example:
 
 bc. jQuery.ias({
-    container : ".listing",
-    item: ".post",
-    pagination: "#content .navigation",
-    next: ".next-posts a",
-    loader: "images/loader.gif",
+    container : '.listing',
+    item: '.post',
+    pagination: '#content .navigation',
+    next: '.next-posts a',
+    loader: '<img src="images/loader.gif"/>',
     onPageChange: function(pageNum, pageUrl, scrollOffset) {
         // This will track a pageview every time the user 
         // scrolls up or down the screen to a different page.
@@ -137,11 +153,11 @@ h3. Integrating with jQuery Masonry
 Example on how to integrate "jQuery Masonry":http://masonry.desandro.com/.
 
 bc. jQuery.ias({
-    container : ".listing",
-    item: ".post",
-    pagination: "#content .navigation",
-    next: ".next-posts a",
-    loader: "images/loader.gif",
+    container : '.listing',
+    item: '.post',
+    pagination: '#content .navigation',
+    next: '.next-posts a',
+    loader: '<img src="images/loader.gif"/>',
     onLoadItems: function(items) {
         // hide new items while they are loading
         var $newElems = $(items).show().css({ opacity: 0 });
@@ -165,3 +181,15 @@ You can also link to an other loader image. Use the *loader* option to link to t
 h2. Issues
 
 If you have any ideas or bugs, please submit them to the GitHub issue tracker at https://github.com/webcreate/Infinite-Ajax-Scroll. We rely on our users for ideas on improvements and bug reports.
+
+h2. Contributers
+
+These people have contributed to IAS. A dollar sign indicates a paided feature request or donation. Between brakets is the part of IAS they have contributed to.
+
+* Varun Mishra (IE8 bugfix)
+* Farooq A.Aziz $
+* Sascha Oosterbaan $ (onLoadItems)
+* Loïc Heroguer $ (tresholdMargin)
+* Andy Smith (onRenderComplete, html loader)
+
+$ = donated money or paid feature request

@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin 
- * Version v0.1.4
+ * Version v0.1.5
  * http://webcreate.nl/
  *
  * Copyright (c) 2011 Jeroen Fiege
@@ -171,6 +171,9 @@
 				remove_loader();
 				reset();
 				
+				// call the onRenderComplete callback
+				opts.onRenderComplete.call(this, items);
+				
 				if (onCompleteHandler) onCompleteHandler.call(this);
 			});
 		}
@@ -237,7 +240,7 @@
 			loader = $(".ias_loader");
 			
 			if (loader.size() == 0) {
-				loader = $("<div class='ias_loader'><img src='"+opts.loader+"'/></div>");
+				loader = $("<div class='ias_loader'>"+opts.loader+"</div>");
 				loader.hide();
 			}
 			return loader;
@@ -284,13 +287,15 @@
 	// plugin defaults
 	$.ias.defaults = {
 		container: '#container',
-		item: ".item",
-		pagination: "#pagination",
-		next: ".next",
+		item: '.item',
+		pagination: '#pagination',
+		next: '.next',
+		loader: '<img src="images/loader.gif"/>',
 		tresholdMargin: 0,
 		history : true,
 		onPageChange: function() {},
 		onLoadItems: function() {},
+		onRenderComplete: function() {},
 	};
 	
 	// utility module

@@ -1,3 +1,11 @@
+h1. 0.1.5 / 2012-03-30
+
+* Changed the IAS loader block to accept general HTML and insert that in the container ".ias_loader" DIV
+* Added a an onRenderComplete callback which kicks in once the content has been fully inserted into the DOM.
+* Added contributers list to the readme
+
+Attention: This version breaks backward compatibility, as the loader now needs to be a full img tag, instead of only the src.
+
 h1. 0.1.4 / 2012-03-12
 
 * Added tresholdMargin option
