@@ -3,7 +3,7 @@
  * Version v0.1.5
  * http://webcreate.nl/
  *
- * Copyright (c) 2011 Jeroen Fiege
+ * Copyright (c) 2011-2012 Jeroen Fiege
  * Licensed under the MIT License: 
  * http://webcreate.nl/license
  */

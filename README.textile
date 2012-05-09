@@ -60,7 +60,7 @@ Enter the selector of the link element that links to the next page. The href att
 
 h3. loader
 
-*Default:* '<img src="images/loader.gif"/>'
+*Default:* `<img src="images/loader.gif"/>`
 Enter the url to the loader image. This image will be displayed when the next page with items is loaded via AJAX.
 
 h3. tresholdMargin
@@ -184,11 +184,12 @@ If you have any ideas or bugs, please submit them to the GitHub issue tracker at
 
 h2. Contributers
 
-These people have contributed to IAS. A dollar sign indicates a paided feature request or donation. Between brakets is the part of IAS they have contributed to.
+These people have contributed to IAS. A dollar sign indicates a paided feature request or donation. Between brackets is the part of IAS they have contributed to.
 
 * Varun Mishra (IE8 bugfix)
 * Farooq A.Aziz $
 * Sascha Oosterbaan $ (onLoadItems)
 * Loïc Heroguer $ (tresholdMargin)
 * Andy Smith (onRenderComplete, html loader)
+* Gilson D'Elrei $
 
