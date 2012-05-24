@@ -15,7 +15,7 @@
 		var opts = $.extend({}, $.ias.defaults, options);
 		var util = new $.ias.util();								// utilities module
 		var paging = new $.ias.paging();							// paging module
-		var hist = (opts.history ? new $.ias.history() : false);	// history module
+		var hist;
 		var _self = this;
 		
 		// initialize
@@ -33,6 +33,7 @@
 		 */
 		function init()
 		{
+                        this.hist = (opts.history ? new $.ias.history() : false);// history module needs to be set here for disabling to work in chrome
 			// track page number changes
 			paging.onChangePage(function(pageNum, scrollOffset, pageUrl) {
 				if (hist) hist.setPage(pageNum, pageUrl);
