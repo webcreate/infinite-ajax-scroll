@@ -295,7 +295,7 @@
 		history : true,
 		onPageChange: function() {},
 		onLoadItems: function() {},
-		onRenderComplete: function() {},
+		onRenderComplete: function() {}
 	};
 	
 	// utility module
