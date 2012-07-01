@@ -12,11 +12,13 @@
 	$.ias = function(options) 
 	{
 		// setup
-		var opts = $.extend({}, $.ias.defaults, options);
-		var util = new $.ias.util();								// utilities module
-		var paging = new $.ias.paging();							// paging module
-		var hist = (opts.history ? new $.ias.history() : false);	// history module
-		var _self = this;
+		var opts 			= $.extend({}, $.ias.defaults, options);
+		var util 			= new $.ias.util();								// utilities module
+		var paging 			= new $.ias.paging();							// paging module
+		var hist 			= (opts.history ? new $.ias.history() : false);	// history module
+		var customLoaderProc		= opts.customLoaderProc || false; // Some kinda hook to handle the loader stuff by yourself
+		var _self 			= this;
+
 		
 		// initialize
 		init();
@@ -254,10 +256,16 @@
 		function show_loader(selector)
 		{
 			loader = get_loader();
-			el = $(opts.container).find(opts.item).last();
-			
-			el.after(loader);
+
+			if (opts.customLoaderProc !== 'undefined') {
+				opts.customLoaderProc(loader);
+			} else {
+				el = $(opts.container).find(opts.item).last();
+				el.after(loader)
+			}
+
 			loader.fadeIn();
+
 		}
 		
 		/**
@@ -295,7 +303,7 @@
 		history : true,
 		onPageChange: function() {},
 		onLoadItems: function() {},
-		onRenderComplete: function() {},
+		onRenderComplete: function() {}
 	};
 	
 	// utility module

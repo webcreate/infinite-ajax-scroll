@@ -128,6 +128,16 @@ Example:
 
 bc. onRenderComplete: function(items) { console.log('We rendered ' + items.length + ' items'); } 
 
+h3. customLoaderProc
+
+*Default:* undefined function
+Event handler. Is called each time while new items are being loaded.
+
+Enables you to do fancy loader stuff. Per default, the loader will be inserted right after the last item.
+
+bc. customLoaderProc: function(loader) { console.log(loader); } 
+
+
 h2. Advanced usage
 
 h3. Integrating Google Analytics
