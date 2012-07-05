@@ -13,8 +13,10 @@
 	{
 		// setup
 		var opts = $.extend({}, $.ias.defaults, options);
+		// setting the item which will listen for scroll events (either $(opts.container) or $(window) depending on the scrollInContainer option)
+		var scrolling_container = (opts.scrollInContainer ? $(opts.container) : $(window)); 
 		var util = new $.ias.util();								// utilities module
-		var paging = new $.ias.paging();							// paging module
+		var paging = new $.ias.paging(scrolling_container);							// paging module
 		var hist = (opts.history ? new $.ias.history() : false);	// history module
 		var _self = this;
 		
@@ -74,8 +76,7 @@
 		function reset()
 		{
 			hide_pagination();
-			
-			$(window).scroll(scroll_handler);
+			scrolling_container.scroll(scroll_handler);
 		}
 		
 		/**
@@ -85,12 +86,14 @@
 		 */
 		function scroll_handler()
 		{
-			scrTop = $(window).scrollTop();
-			wndHeight = $(window).height();
+			
+			scrTop = scrolling_container.scrollTop();
+			wndHeight = scrolling_container.height();
 			
 			curScrOffset = scrTop + wndHeight;
 			
 			if (curScrOffset >= get_scroll_treshold()) {
+				
 				paginate(curScrOffset);
 			}
 		}
@@ -102,7 +105,7 @@
 		 */
 		function stop_scroll()
 		{
-			$(window).unbind('scroll', scroll_handler);
+			scrolling_container.unbind('scroll', scroll_handler);
 		}
 
 		/**
@@ -296,6 +299,7 @@
 		onPageChange: function() {},
 		onLoadItems: function() {},
 		onRenderComplete: function() {},
+		scrollInContainer: false
 	};
 	
 	// utility module
@@ -347,7 +351,7 @@
 	};
 	
 	// paging module
-	$.ias.paging = function()
+	$.ias.paging = function(scrolling_container)
 	{
 		// setup 
 		var pagebreaks = [[0, document.location.toString()]];
@@ -364,7 +368,7 @@
 		 */
 		function init()
 		{
-			$(window).scroll(scroll_handler);
+			scrolling_container.scroll(scroll_handler);
 		}
 		
 		/**
@@ -376,8 +380,9 @@
 		 */
 		function scroll_handler()
 		{
-			scrTop = $(window).scrollTop();
-			wndHeight = $(window).height();
+			
+			scrTop = scrolling_container.scrollTop();
+			wndHeight = scrolling_container.height();
 			
 			curScrOffset = scrTop + wndHeight;
 			
