@@ -133,6 +133,16 @@ Example:
 
 bc. onRenderComplete: function(items) { console.log('We rendered ' + items.length + ' items'); }
 
+h3. customLoaderProc
+
+*Default:* false
+Custom function callback to handle the rendering of the loader yourself.
+Per default, the loader will be inserted right after the last item.
+
+Example
+
+bc. customLoaderProc: function(loader) { console.log(loader); } 
+
 h2. Advanced usage
 
 h3. Integrating Google Analytics

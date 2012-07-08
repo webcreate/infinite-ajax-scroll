@@ -12,11 +12,11 @@
     $.ias = function(options)
     {
         // setup
-        var opts = $.extend({}, $.ias.defaults, options);
-        var util = new $.ias.util();                                // utilities module
-        var paging = new $.ias.paging(opts.scrollContainer);        // paging module
-        var hist = (opts.history ? new $.ias.history() : false);    // history module
-        var _self = this;
+        var opts             = $.extend({}, $.ias.defaults, options);
+        var util             = new $.ias.util();                                // utilities module
+        var paging           = new $.ias.paging(opts.scrollContainer);          // paging module
+        var hist             = (opts.history ? new $.ias.history() : false);    // history module
+        var _self            = this;
 
         // initialize
         init();
@@ -246,7 +246,7 @@
         }
 
         /**
-         * Return the active loader of creates a new loader
+         * Return the active loader or creates a new loader
          *
          * @return object loader jquery object
          */
@@ -266,13 +266,17 @@
          *
          * @return void
          */
-        function show_loader(selector)
+        function show_loader()
         {
             loader = get_loader();
-            el = $(opts.container).find(opts.item).last();
 
-            el.after(loader);
-            loader.fadeIn();
+            if (opts.customLoaderProc !== false) {
+                opts.customLoaderProc(loader);
+            } else {
+                el = $(opts.container).find(opts.item).last();
+                el.after(loader);
+                loader.fadeIn();
+            }
         }
 
         /**
@@ -302,6 +306,7 @@
     // plugin defaults
     $.ias.defaults = {
         container: '#container',
+        scrollContainer: $(window),
         item: '.item',
         pagination: '#pagination',
         next: '.next',
@@ -311,7 +316,7 @@
         onPageChange: function() {},
         onLoadItems: function() {},
         onRenderComplete: function() {},
-        scrollContainer: $(window)
+        customLoaderProc: false
     };
 
     // utility module
@@ -363,7 +368,7 @@
     };
 
     // paging module
-    $.ias.paging = function(scrollContainer)
+    $.ias.paging = function()
     {
         // setup
         var pagebreaks = [[0, document.location.toString()]];
@@ -380,7 +385,7 @@
          */
         function init()
         {
-            scrollContainer.scroll(scroll_handler);
+            $(window).scroll(scroll_handler);
         }
 
         /**
@@ -392,14 +397,8 @@
          */
         function scroll_handler()
         {
-            // the way we calculate if have to load the next page depend on which container we have
-            if (scrollContainer == $.ias.defaults.scrollContainer){
-                scrTop = scrollContainer.scrollTop();
-            } else{
-                scrTop = scrollContainer.offset().top;
-            }
-
-            wndHeight = scrollContainer.height();
+            scrTop = $(window).scrollTop();
+            wndHeight = $(window).height();
 
             curScrOffset = scrTop + wndHeight;
 
