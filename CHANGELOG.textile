@@ -2,6 +2,7 @@ h1. 0.1.6 / 2012-07-08
 
 * Fixed issue in LoadItems function then the container element was a root element
 * Changed indenting to spaces instead of tabs
+* Merged pull request #23 from romainhill
 
 h1. 0.1.5 / 2012-03-30
 
