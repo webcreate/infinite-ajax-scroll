@@ -1,3 +1,8 @@
+h1. 0.1.6 / 2012-07-08
+
+* Fixed issue in LoadItems function then the container element was a root element
+* Changed indenting to spaces instead of tabs
+
 h1. 0.1.5 / 2012-03-30
 
 * Changed the IAS loader block to accept general HTML and insert that in the container ".ias_loader" DIV

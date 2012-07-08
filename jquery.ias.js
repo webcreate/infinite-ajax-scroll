@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin
- * Version v0.1.5
+ * Version v0.1.6
  * http://webcreate.nl/
  *
  * Copyright (c) 2011-2012 Jeroen Fiege
@@ -193,9 +193,18 @@
             $.get(url, null, function(data) {
                 // walk through the items on the next page
                 // and add them to the items array
-                $(opts.container, data).find(opts.item).each(function() {
-                    items.push(this);
-                });
+                container = $(opts.container, data).eq(0);
+                if (0 == container.length) {
+                    // incase the element is a root element (body > element),
+                    // try to filter it
+                    container = $(data).filter(opts.container).eq(0);
+                }
+
+                if (container) {
+                    container.find(opts.item).each(function() {
+                        items.push(this);
+                    });
+                }
 
                 if (onCompleteHandler) onCompleteHandler.call(this, data, items);
             }, "html");
@@ -295,7 +304,7 @@
         history : true,
         onPageChange: function() {},
         onLoadItems: function() {},
-        onRenderComplete: function() {},
+        onRenderComplete: function() {}
     };
 
     // utility module
