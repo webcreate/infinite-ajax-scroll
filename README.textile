@@ -79,6 +79,11 @@ Set this to false to disable the history module.
 
 The IAS history module uses hashes (in the format "#/page/<num>") to remember the last viewed page, so when a visitor hits the back button after visiting an item from that page, it will load all items up to that last page and scrolls it into view. The use of hashes can be problematic in some cases, in which case you can disable this feature.
 
+h3. scrollContainer
+
+*Default:* $(window)
+By default, scroll events are listened from the $(window) object. You can use this setting to specify a custom container, for example a div with overflow.
+
 h3. onPageChange
 
 *Default:* empty function

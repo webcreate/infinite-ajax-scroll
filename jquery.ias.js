@@ -14,7 +14,7 @@
         // setup
         var opts = $.extend({}, $.ias.defaults, options);
         var util = new $.ias.util();                                // utilities module
-        var paging = new $.ias.paging();                            // paging module
+        var paging = new $.ias.paging(opts.scrollContainer);        // paging module
         var hist = (opts.history ? new $.ias.history() : false);    // history module
         var _self = this;
 
@@ -75,7 +75,7 @@
         {
             hide_pagination();
 
-            $(window).scroll(scroll_handler);
+            opts.scrollContainer.scroll(scroll_handler);
         }
 
         /**
@@ -85,8 +85,14 @@
          */
         function scroll_handler()
         {
-            scrTop = $(window).scrollTop();
-            wndHeight = $(window).height();
+            // the way we calculate if have to load the next page depend on which container we have
+            if (opts.scrollContainer == $.ias.defaults.scrollContainer){
+                scrTop = opts.scrollContainer.scrollTop();
+            } else{
+                scrTop = opts.scrollContainer.offset().top;
+            }
+
+            wndHeight = opts.scrollContainer.height();
 
             curScrOffset = scrTop + wndHeight;
 
@@ -102,7 +108,7 @@
          */
         function stop_scroll()
         {
-            $(window).unbind('scroll', scroll_handler);
+            opts.scrollContainer.unbind('scroll', scroll_handler);
         }
 
         /**
@@ -304,7 +310,8 @@
         history : true,
         onPageChange: function() {},
         onLoadItems: function() {},
-        onRenderComplete: function() {}
+        onRenderComplete: function() {},
+        scrollContainer: $(window)
     };
 
     // utility module
@@ -356,7 +363,7 @@
     };
 
     // paging module
-    $.ias.paging = function()
+    $.ias.paging = function(scrollContainer)
     {
         // setup
         var pagebreaks = [[0, document.location.toString()]];
@@ -373,7 +380,7 @@
          */
         function init()
         {
-            $(window).scroll(scroll_handler);
+            scrollContainer.scroll(scroll_handler);
         }
 
         /**
@@ -385,8 +392,14 @@
          */
         function scroll_handler()
         {
-            scrTop = $(window).scrollTop();
-            wndHeight = $(window).height();
+            // the way we calculate if have to load the next page depend on which container we have
+            if (scrollContainer == $.ias.defaults.scrollContainer){
+                scrTop = scrollContainer.scrollTop();
+            } else{
+                scrTop = scrollContainer.offset().top;
+            }
+
+            wndHeight = scrollContainer.height();
 
             curScrOffset = scrTop + wndHeight;
 
