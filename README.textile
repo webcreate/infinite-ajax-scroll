@@ -141,7 +141,7 @@ Per default, the loader will be inserted right after the last item.
 
 Example
 
-bc. customLoaderProc: function(loader) { console.log(loader); } 
+bc. customLoaderProc: function(loader) { console.log(loader); }
 
 h2. Advanced usage
 
@@ -207,4 +207,6 @@ These people have contributed to IAS. A dollar sign indicates a paided feature r
 * Loïc Heroguer $ (tresholdMargin)
 * Andy Smith (onRenderComplete, html loader)
 * Gilson D'Elrei $
+* Andy Hausmann (CustomLoaderProc)
+* Romain Hill (scrollContainer)
 
