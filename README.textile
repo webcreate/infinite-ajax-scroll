@@ -84,6 +84,22 @@ h3. scrollContainer
 *Default:* $(window)
 By default, scroll events are listened from the $(window) object. You can use this setting to specify a custom container, for example a div with overflow.
 
+h3. beforePageChange
+
+*Default:* empty function
+
+Event handler.  Is called when a user scrolls to another page, but before the new items are loaded.  Returning false will cancel the load;  any return value other than false will allow the pagination to proceed as normal.
+
+Parameters:
+
+|*param*|*description*|
+|curScrOffset|Current scroll offset of the page|
+|nextPageUrl|URL of the page that would be loaded if the beforePageChange does not return false|
+
+Example:
+
+bc. beforePageChange: function(scrollOffset, nextPageUrl) { console.log("The user wants to go to the next page, but they can't!"); return false; }
+
 h3. onPageChange
 
 *Default:* empty function
