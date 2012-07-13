@@ -153,6 +153,10 @@
             urlNextPage = $(opts.next).attr("href");
             if (!urlNextPage) return stop_scroll();
 
+            if (opts.beforePageChange && $.isFunction(opts.beforePageChange)) {
+              if (opts.beforePageChange(curScrOffset, urlNextPage) === false) return;
+            }
+
             paging.pushPages(curScrOffset, urlNextPage);
 
             stop_scroll();
@@ -314,6 +318,7 @@
         tresholdMargin: 0,
         history : true,
         onPageChange: function() {},
+        beforePageChange: function() {},
         onLoadItems: function() {},
         onRenderComplete: function() {},
         customLoaderProc: false
