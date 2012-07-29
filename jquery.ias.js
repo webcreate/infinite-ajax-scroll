@@ -136,7 +136,7 @@
             treshold = el.offset().top + el.height();
 
             if (!pure)
-                treshold += opts.tresholdMargin;
+                treshold += parseInt(opts.tresholdMargin);
 
             return treshold;
         }
