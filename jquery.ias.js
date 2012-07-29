@@ -278,7 +278,10 @@
                 opts.customLoaderProc(loader);
             } else {
                 el = $(opts.container).find(opts.item).last();
-                el.after(loader);
+                if($(el).is('tr')){
+                	el = el.closest('table');
+                }
+		el.after(loader);
                 loader.fadeIn();
             }
         }
