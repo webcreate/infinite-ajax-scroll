@@ -58,6 +58,11 @@ h3. next
 *Default:* ".next"
 Enter the selector of the link element that links to the next page. The href attribute of this element will be used to get the items from the next page. Make sure there is only one(1) element that matches the selector.
 
+h3. noneleft
+
+*Default:* false
+Contains the message to be displayed when there are no more pages left to load.
+
 h3. loader
 
 *Default:* `&lt;img src="images/loader.gif"/>`
