@@ -1,9 +1,10 @@
-h1. 0.1.6 / 2012-07-08
+h1. 0.1.6 / 2012-10-23
 
 * Fixed issue in LoadItems function then the container element was a root element
 * Changed indenting to spaces instead of tabs
 * Merged pull request #23 from romainhill (scrollContainer option)
 * Merged pull request #20 from andyhausmann (customLoaderProc option)
+* Merged pull request #31 from appel (noneleft option)
 
 h1. 0.1.5 / 2012-03-30
 
