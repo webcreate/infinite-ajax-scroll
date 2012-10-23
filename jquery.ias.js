@@ -151,14 +151,15 @@
         function paginate(curScrOffset, onCompleteHandler)
         {
             urlNextPage = $(opts.next).attr("href");
-            if (!urlNextPage)
-            {
-                if (opts.noneleft) $(opts.container).find(opts.item).last().after(opts.noneleft);
+            if (!urlNextPage) {
+                if (opts.noneleft) {
+                    $(opts.container).find(opts.item).last().after(opts.noneleft);
+                }
                 return stop_scroll();
             }
 
             if (opts.beforePageChange && $.isFunction(opts.beforePageChange)) {
-              if (opts.beforePageChange(curScrOffset, urlNextPage) === false) return;
+                if (opts.beforePageChange(curScrOffset, urlNextPage) === false) return;
             }
 
             paging.pushPages(curScrOffset, urlNextPage);
