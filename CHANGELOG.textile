@@ -1,3 +1,8 @@
+h1. 1.0.0 / 2013-01-20
+
+* Added manual trigger (options triggerPageTreshold and trigger)
+* Added loader delay (option loaderDelay)
+
 h1. 0.1.6 / 2012-10-23
 
 * Fixed issue in LoadItems function then the container element was a root element

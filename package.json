@@ -1,0 +1,26 @@
+{
+  "name" : "jquery-ias",
+  "title": "Infinite Ajax Scroll, a jQuery plugin",
+  "description": "jQuery plugin that progressively enhances your server-side pagination",
+  "version" : "1.0.0",
+  "main" : "src",
+  "author": {
+    "name": "Jeroen Fiege",
+    "web": "http://webcreate.nl"
+  },
+  "homepage": "https://github.com/webcreate/infinite-ajax-scroll",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://webcreate.nl/license"
+    }
+  ],
+  "dependencies": {
+     "jquery": ">=1.4"
+  } ,
+  "devDependencies": {
+    "buster": "~0.6.12",
+    "grunt": "0.3.17",
+    "grunt-buster": "~0.1.2"
+  }
+}

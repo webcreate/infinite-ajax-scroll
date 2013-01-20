@@ -25,12 +25,12 @@ describe("IAS loader", function () {
             pagination: '#content .navigation',
             next: '.next-posts a',
             loader: '<img src="images/loader.gif"/>',
-            loaderMinTime: 400,
+            loaderDelay: 400,
             history: false
         });
     });
 
-    it("should display for ~ 400 miliseconds", function() {
+    it("should display for ~400 miliseconds", function() {
         var deferred = when.defer();
 
         watch('.ias_loader:visible', this.timeout - 500).then(function(time) {

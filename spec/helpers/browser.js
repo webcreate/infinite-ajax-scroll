@@ -1,11 +1,10 @@
 
-
 var interpolate = function (source, target, shift) {
 	return (source + (target - source) * shift);
 };
 
 var easing = function (pos) {
-    return (-Math.cos(pos * Math.PI) / 2) + .5;
+    return (-Math.cos(pos * Math.PI) / 2) + 0.5;
 };
 
 function scrollDown(duration)
@@ -15,7 +14,7 @@ function scrollDown(duration)
 	var y = 0;
 
 	var endY = h - $(window).height();
-	var duration = duration || 1000;
+	duration = duration || 1000;
 
 	var startY = window.pageYOffset,
 		startT  = Date.now(),

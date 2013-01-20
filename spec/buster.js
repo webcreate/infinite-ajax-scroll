@@ -4,21 +4,21 @@ config["My tests"] = {
     rootPath: "../",
     environment: "browser",
     libs: [
-        "components/jquery/jquery.js",
+        "src/components/jquery/jquery.js"
     ],
     sources: [
-        "jquery.ias.js"
+        "src/jquery-ias.js"
     ],
     resources: [
          { path: "/", file: "spec/fixtures/page1.html" },
          { path: "/page2.html", file: "spec/fixtures/page2.html" },
-         { path: "/css/jquery.ias.css", file: "css/jquery.ias.css" },
-         { path: "/images/loader.gif", file: "images/loader.gif" }
+         { path: "/css/jquery.ias.css", file: "src/css/jquery.ias.css" },
+         { path: "/images/loader.gif", file: "src/images/loader.gif" }
     ],
     specs: [
         "spec/*-test.js"
     ],
     specHelpers: [
-        "spec/helpers/*.js",
-    ],
+        "spec/helpers/*.js"
+    ]
 }

@@ -1,10 +1,10 @@
-/*!
+/**
  * Infinite Ajax Scroll, a jQuery plugin
- * Version v1.0
- * http://webcreate.nl/
+ * Version 1.0.0
+ * https://github.com/webcreate/infinite-ajax-scroll
  *
  * Copyright (c) 2011-2013 Jeroen Fiege
- * Licensed under the MIT License:
+ * Licensed under MIT:
  * http://webcreate.nl/license
  */
 
@@ -416,9 +416,9 @@
         noneleft: false,
         loader: '<img src="images/loader.gif"/>',
         loaderDelay: 600,
+        triggerPageTreshold: 3,
         trigger: 'Load more items',
         tresholdMargin: 0,
-        triggerPageTreshold: 3,
         history : true,
         onPageChange: function () {},
         beforePageChange: function () {},
@@ -537,7 +537,7 @@
             if (lastPageNum !== curPageNum) {
                 scrOffset = curPagebreak[0];
                 urlPage = curPagebreak[1];
-                changePageHandler.call(this, curPageNum, scrOffset, urlPage); // @todo fix for window height
+                changePageHandler.call({}, curPageNum, scrOffset, urlPage); // @todo fix for window height
             }
 
             lastPageNum = curPageNum;
