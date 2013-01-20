@@ -2,7 +2,7 @@ h1. Infinite Ajax Scroll
 
 Turn your paginated pages into infinite scrolling pages with ease.
 
-Version 0.1.6
+Version 1.0.0
 
 Requires jQuery 1.4 or newer.
 
@@ -82,8 +82,6 @@ h3. trigger
 
 *Default:* "Load more items"
 Text of the manual trigger link.
-
-
 
 h3. tresholdMargin
 
@@ -235,7 +233,31 @@ h2. Issues
 
 If you have any ideas or bugs, please submit them to the GitHub issue tracker at https://github.com/webcreate/Infinite-Ajax-Scroll. We rely on our users for ideas on improvements and bug reports.
 
-h2. Contributers
+h2. Contributing
+
+h3. Installing dev tools
+
+bc. npm install
+
+h3. Running unit tests
+
+Unit testing is done with "Busterjs":https://github.com/busterjs/buster.
+
+Running tests:
+
+bc. buster server
+
+Launch some browsers and connect to http://localhost:1111 and capture them. Then run:
+
+bc. buster test -r specification
+
+h3. Build
+
+Building is done using "Grunt":https://github.com/gruntjs/grunt. To build run:
+
+bc. grunt
+
+h2. Contributors
 
 These people have contributed to IAS. A dollar sign indicates a paided feature request or donation. Between brackets is the part of IAS they have contributed to.
 
@@ -245,7 +267,8 @@ These people have contributed to IAS. A dollar sign indicates a paided feature r
 * Loïc Heroguer $ (tresholdMargin)
 * Andy Smith (onRenderComplete, html loader)
 * Gilson D'Elrei $
-* Andy Hausmann (CustomLoaderProc)
+* Andy Hausmann $ (CustomLoaderProc, manual trigger)
 * Romain Hill (scrollContainer)
 * Mark van der Waarde (noneleft)
-
+* diesachbearbeiter $ (manual trigger)
+* df9web $ (manual trigger)

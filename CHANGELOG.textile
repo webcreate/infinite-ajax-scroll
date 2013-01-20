@@ -1,7 +1,7 @@
 h1. 1.0.0 / 2013-01-20
 
-* Added manual trigger (options triggerPageTreshold and trigger)
-* Added loader delay (option loaderDelay)
+* Added manual trigger (see options triggerPageTreshold and trigger) (issue #43)
+* Added loader delay (see option loaderDelay)
 
 h1. 0.1.6 / 2012-10-23
 

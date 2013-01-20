@@ -32,10 +32,6 @@ module.exports = function (grunt) {
                 dest: 'dist/<%= pkg.name %>.min.js'
             }
         },
-        watch: {
-            files: '<config:lint.files>',
-            tasks: 'lint buster'
-        },
         jshint: {
             options: {
                 'browser': true,
@@ -63,19 +59,19 @@ module.exports = function (grunt) {
                 jQuery: true
             }
         },
-        buster: {
-            test: {
-                config: 'spec/buster.js'
-            },
-            server: {
-                port: 1111
+        uglify: {},
+        copy : {
+            dist : {
+                files : {
+                    'dist/css/' : 'src/css/*',
+                    'dist/images/' : 'src/images/*',
+                }
             }
-        },
-        uglify: {}
+        }
     });
 
     // Default task.
-    grunt.registerTask('default', 'lint buster concat min');
+    grunt.registerTask('default', 'lint copy concat min');
 
-    grunt.loadNpmTasks('grunt-buster');
+    grunt.loadNpmTasks('grunt-contrib-copy');
 };

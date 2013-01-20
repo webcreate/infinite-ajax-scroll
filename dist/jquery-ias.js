@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2011-2013 Jeroen Fiege
  * Licensed under MIT:
- * http://webcreate.nl/license
+ * http://www.opensource.org/licenses/mit-license.php
  */
 
 (function ($) {
@@ -416,9 +416,9 @@
         noneleft: false,
         loader: '<img src="images/loader.gif"/>',
         loaderDelay: 600,
+        triggerPageTreshold: 3,
         trigger: 'Load more items',
         tresholdMargin: 0,
-        triggerPageTreshold: 3,
         history : true,
         onPageChange: function () {},
         beforePageChange: function () {},
@@ -537,7 +537,7 @@
             if (lastPageNum !== curPageNum) {
                 scrOffset = curPagebreak[0];
                 urlPage = curPagebreak[1];
-                changePageHandler.call(this, curPageNum, scrOffset, urlPage); // @todo fix for window height
+                changePageHandler.call({}, curPageNum, scrOffset, urlPage); // @todo fix for window height
             }
 
             lastPageNum = curPageNum;
