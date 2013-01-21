@@ -1,5 +1,5 @@
 {
-  "name": "jquery-ias",
+  "name": "ias",
   "title": "Infinite Ajax Scroll",
   "description": "jQuery plugin that progressively enhances your server-side pagination",
   "version": "1.0.0",
