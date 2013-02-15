@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin
- * Version 1.0.0
+ * Version 1.0.1
  * https://github.com/webcreate/infinite-ajax-scroll
  *
  * Copyright (c) 2011-2013 Jeroen Fiege
@@ -11,6 +11,8 @@
 (function ($) {
 
     'use strict';
+
+    Date.now = Date.now || function () { return +new Date(); };
 
     $.ias = function (options)
     {

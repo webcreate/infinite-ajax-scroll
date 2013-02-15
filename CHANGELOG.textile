@@ -1,3 +1,7 @@
+h1. 1.0.1 / 2013-02-15
+
+* Fixed Date.now() issue with older IE versions (under IE9) (PR #45 by devloper)
+
 h1. 1.0.0 / 2013-01-20
 
 * Added manual trigger (see options triggerPageTreshold and trigger) (issue #43)

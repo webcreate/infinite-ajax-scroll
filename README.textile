@@ -272,3 +272,4 @@ These people have contributed to IAS. A dollar sign indicates a paided feature r
 * Mark van der Waarde (noneleft)
 * diesachbearbeiter $ (manual trigger)
 * df9web $ (manual trigger)
+* devloper (PR #45)
