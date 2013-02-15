@@ -12,6 +12,8 @@
 
     'use strict';
 
+    Date.now = Date.now || function () { return +new Date(); };
+
     $.ias = function (options)
     {
         // setup

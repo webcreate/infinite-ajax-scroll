@@ -1,6 +1,10 @@
+h2. 1.0.2 / 2013-02-15
+
+* Corrected some spelling stuff (treshold => threshold) (PR #47 by andyhausmann)
+
 h1. 1.0.1 / 2013-02-15
 
-* Corrected some spelling stuff (treshold => threshold)
+* Fixed Date.now() issue with older IE versions (under IE9) (PR #45 by devloper)
 
 h1. 1.0.0 / 2013-01-20
 

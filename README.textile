@@ -2,7 +2,7 @@ h1. Infinite Ajax Scroll
 
 Turn your paginated pages into infinite scrolling pages with ease.
 
-Version 1.0.0
+Version 1.0.2
 
 Requires jQuery 1.4 or newer.
 
@@ -267,8 +267,9 @@ These people have contributed to IAS. A dollar sign indicates a paided feature r
 * Loïc Heroguer $ (thresholdMargin)
 * Andy Smith (onRenderComplete, html loader)
 * Gilson D'Elrei $
-* Andy Hausmann $ (CustomLoaderProc, manual trigger)
+* Andy Hausmann $ (CustomLoaderProc, manual trigger, spelling corrections)
 * Romain Hill (scrollContainer)
 * Mark van der Waarde (noneleft)
 * diesachbearbeiter $ (manual trigger)
 * df9web $ (manual trigger)
+* devloper (PR #45)
