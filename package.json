@@ -2,7 +2,7 @@
   "name": "jquery-ias",
   "title": "Infinite Ajax Scroll, a jQuery plugin",
   "description": "jQuery plugin that progressively enhances your server-side pagination",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "dist",
   "author": {
     "name": "Jeroen Fiege",
