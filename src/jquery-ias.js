@@ -11,8 +11,8 @@
 (function ($) {
 
     'use strict';
-    
-    Date.now = Date.now || function() { return +new Date; };
+
+    Date.now = Date.now || function () { return +new Date(); };
 
     $.ias = function (options)
     {
