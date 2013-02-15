@@ -2,7 +2,7 @@ h1. Infinite Ajax Scroll
 
 Turn your paginated pages into infinite scrolling pages with ease.
 
-Version 1.0.0
+Version 1.0.1
 
 Requires jQuery 1.4 or newer.
 
