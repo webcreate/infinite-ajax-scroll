@@ -73,7 +73,7 @@ h3. loaderDelay
 *Default:* 600
 Minimal time (in miliseconds) the loader should be displayed before rendering the items of the next page. Note: This setting will _not_ actually delay the the loading of items itself.
 
-h3. triggerPageh
+h3. triggerPageThreshold
 
 *Default:* 3
 Page number after which a 'Load more items' link is displayed. Users will manually trigger the loading of the next page by clicking this link.
