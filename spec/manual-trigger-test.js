@@ -13,7 +13,7 @@ describe("IAS", function () {
 			pagination: '#content .navigation',
 			next: '.next-posts a',
 			loader: '<img src="images/loader.gif"/>',
-			triggerPageTreshold: 0,
+			triggerPageThreshold: 0,
 			history: false
 		});
 	});

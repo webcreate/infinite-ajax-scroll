@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin
- * Version 1.0.1
+ * Version 1.0.2
  * https://github.com/webcreate/infinite-ajax-scroll
  *
  * Copyright (c) 2011-2013 Jeroen Fiege
@@ -57,13 +57,13 @@
                 pageNum = hist.getPage();
 
                 util.forceScrollTop(function () {
-                    var curTreshold;
+                    var curThreshold;
 
                     if (pageNum > 1) {
                         paginateToPage(pageNum);
 
-                        curTreshold = get_scroll_treshold(true);
-                        $('html, body').scrollTop(curTreshold);
+                        curThreshold = get_scroll_threshold(true);
+                        $('html, body').scrollTop(curThreshold);
                     }
                     else {
                         reset();
@@ -97,13 +97,13 @@
         function scroll_handler()
         {
             var curScrOffset,
-                scrTreshold;
+                scrThreshold;
 
             curScrOffset = util.getCurrentScrollOffset(opts.scrollContainer);
-            scrTreshold = get_scroll_treshold();
+            scrThreshold = get_scroll_threshold();
 
-            if (curScrOffset >= scrTreshold) {
-                if (get_current_page() >= opts.triggerPageTreshold) {
+            if (curScrOffset >= scrThreshold) {
+                if (get_current_page() >= opts.triggerPageThreshold) {
                     stop_scroll();
                     show_trigger(function () {
                         paginate(curScrOffset);
@@ -136,15 +136,15 @@
         }
 
         /**
-         * Get scroll treshold based on the last item element
+         * Get scroll threshold based on the last item element
          *
-         * @param boolean pure indicates if the tresholdMargin should be applied
-         * @return integer treshold
+         * @param boolean pure indicates if the thresholdMargin should be applied
+         * @return integer threshold
          */
-        function get_scroll_treshold(pure)
+        function get_scroll_threshold(pure)
         {
             var el,
-                treshold;
+                threshold;
 
             el = $(opts.container).find(opts.item).last();
 
@@ -152,13 +152,13 @@
                 return 0;
             }
 
-            treshold = el.offset().top + el.height();
+            threshold = el.offset().top + el.height();
 
             if (!pure) {
-                treshold += opts.tresholdMargin;
+                threshold += opts.thresholdMargin;
             }
 
-            return treshold;
+            return threshold;
         }
 
         /**
@@ -287,19 +287,19 @@
          */
         function paginateToPage(pageNum)
         {
-            var curTreshold = get_scroll_treshold(true);
+            var curThreshold = get_scroll_threshold(true);
 
-            if (curTreshold > 0) {
-                paginate(curTreshold, function () {
+            if (curThreshold > 0) {
+                paginate(curThreshold, function () {
                     stop_scroll();
 
-                    if ((paging.getCurPageNum(curTreshold) + 1) < pageNum) {
+                    if ((paging.getCurPageNum(curThreshold) + 1) < pageNum) {
                         paginateToPage(pageNum);
 
-                        $('html,body').animate({'scrollTop': curTreshold}, 400, 'swing');
+                        $('html,body').animate({'scrollTop': curThreshold}, 400, 'swing');
                     }
                     else {
-                        $('html,body').animate({'scrollTop': curTreshold}, 1000, 'swing');
+                        $('html,body').animate({'scrollTop': curThreshold}, 1000, 'swing');
 
                         reset();
                     }
@@ -418,9 +418,9 @@
         noneleft: false,
         loader: '<img src="images/loader.gif"/>',
         loaderDelay: 600,
-        triggerPageTreshold: 3,
+        triggerPageThreshold: 3,
         trigger: 'Load more items',
-        tresholdMargin: 0,
+        thresholdMargin: 0,
         history : true,
         onPageChange: function () {},
         beforePageChange: function () {},

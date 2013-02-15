@@ -1,10 +1,14 @@
+h2. 1.0.2 / 2013-02-15
+
+* Corrected some spelling stuff (treshold => threshold) (PR #47 by andyhausmann)
+
 h1. 1.0.1 / 2013-02-15
 
 * Fixed Date.now() issue with older IE versions (under IE9) (PR #45 by devloper)
 
 h1. 1.0.0 / 2013-01-20
 
-* Added manual trigger (see options triggerPageTreshold and trigger) (issue #43)
+* Added manual trigger (see options triggerPageThreshold and trigger) (issue #43)
 * Added loader delay (see option loaderDelay)
 
 h1. 0.1.6 / 2012-10-23
@@ -25,7 +29,7 @@ Attention: This version breaks backward compatibility, as the loader now needs t
 
 h1. 0.1.4 / 2012-03-12
 
-* Added tresholdMargin option
+* Added thresholdMargin option
 * Added history option
 
 h1. 0.1.3 / 2012-02-17
