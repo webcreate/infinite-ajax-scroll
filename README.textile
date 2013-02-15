@@ -73,7 +73,7 @@ h3. loaderDelay
 *Default:* 600
 Minimal time (in miliseconds) the loader should be displayed before rendering the items of the next page. Note: This setting will _not_ actually delay the the loading of items itself.
 
-h3. triggerPageTreshold
+h3. triggerPageh
 
 *Default:* 3
 Page number after which a 'Load more items' link is displayed. Users will manually trigger the loading of the next page by clicking this link.
@@ -83,14 +83,14 @@ h3. trigger
 *Default:* "Load more items"
 Text of the manual trigger link.
 
-h3. tresholdMargin
+h3. thresholdMargin
 
 *Default:* 0
-On default IAS starts loading new items when you scroll to the latest .item element. The tresholdMargin will be added to the items' offset, giving you the ability to load new items earlier (please note that the margin should be a negative integer for this case).
+On default IAS starts loading new items when you scroll to the latest .item element. The thresholdMargin will be added to the items' offset, giving you the ability to load new items earlier (please note that the margin should be a negative integer for this case).
 
 For example:
 
-Setting a tresholdMargin of -250 means that IAS will start loading 250 pixel _before_ the last item has scrolled into view. A positive margin means that IAS will laod new items N pixels after the last item.
+Setting a thresholdMargin of -250 means that IAS will start loading 250 pixel _before_ the last item has scrolled into view. A positive margin means that IAS will laod new items N pixels after the last item.
 
 h3. history
 
@@ -264,7 +264,7 @@ These people have contributed to IAS. A dollar sign indicates a paided feature r
 * Varun Mishra (IE8 bugfix)
 * Farooq A.Aziz $
 * Sascha Oosterbaan $ (onLoadItems)
-* Loïc Heroguer $ (tresholdMargin)
+* Loïc Heroguer $ (thresholdMargin)
 * Andy Smith (onRenderComplete, html loader)
 * Gilson D'Elrei $
 * Andy Hausmann $ (CustomLoaderProc, manual trigger)
