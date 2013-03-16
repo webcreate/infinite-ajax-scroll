@@ -1,11 +1,11 @@
-/**
+/*!
  * Infinite Ajax Scroll, a jQuery plugin
- * Version 1.0.0
+ * Version 1.0.2
  * https://github.com/webcreate/infinite-ajax-scroll
  *
  * Copyright (c) 2011-2013 Jeroen Fiege
  * Licensed under MIT:
- * http://webcreate.nl/license
+ * http://www.opensource.org/licenses/mit-license.php
  */
 
 (function ($) {
@@ -173,7 +173,7 @@
             var urlNextPage;
 
             urlNextPage = $(opts.next).attr('href');
-            if (!urlNextPage) {
+            if (urlNextPage == "#noneleft") {
                 if (opts.noneleft) {
                     $(opts.container).find(opts.item).last().after(opts.noneleft);
                 }
@@ -207,8 +207,12 @@
 
                 urlNextPage = $(opts.next, data).attr('href');
 
+                if(urlNextPage == undefined || urlNextPage == "#"){
+                    urlNextPage = "#noneleft";
+                }
+
                 // update pagination
-                $(opts.pagination).replaceWith($(opts.pagination, data));
+                $(opts.next).attr('href', urlNextPage);
 
                 remove_loader();
                 hide_pagination();
