@@ -47,8 +47,15 @@
                 opts.onPageChange.call(this, pageNum, pageUrl, scrollOffset);
             });
 
-            // setup scroll and hide pagination
-            reset();
+            if (opts.triggerPageThreshold > 0) {
+                // setup scroll and hide pagination
+                reset();
+            } else if ($(opts.next).attr('href')) {
+                var curScrOffset = util.getCurrentScrollOffset(opts.scrollContainer);
+                show_trigger(function () {
+                    paginate(curScrOffset);
+                });
+            }
 
             // load and scroll to previous page
             if (hist && hist.havePage()) {
