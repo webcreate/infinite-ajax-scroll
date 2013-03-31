@@ -390,9 +390,13 @@
             var trigger = get_trigger(callback),
                 el;
 
-            el = $(opts.container).find(opts.item).last();
-            el.after(trigger);
-            trigger.fadeIn();
+            if (opts.customTriggerProc !== false) {
+                opts.customTriggerProc(trigger);
+            } else {
+                el = $(opts.container).find(opts.item).last();
+                el.after(trigger);
+                trigger.fadeIn();
+            }
         }
 
         /**
@@ -426,7 +430,8 @@
         beforePageChange: function () {},
         onLoadItems: function () {},
         onRenderComplete: function () {},
-        customLoaderProc: false
+        customLoaderProc: false,
+        customTriggerProc: false
     };
 
     // utility module
