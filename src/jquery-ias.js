@@ -437,6 +437,7 @@
         beforePageChange: function () {},
         onLoadItems: function () {},
         onRenderComplete: function () {},
+        onWindowScroll: function() {},
         customLoaderProc: false,
         customTriggerProc: false
     };
@@ -555,7 +556,9 @@
             }
 
             lastPageNum = curPageNum;
-        }
+            
+            opts.onWindowScroll();
+       }
 
         /**
          * Returns current page number based on scroll offset
