@@ -120,6 +120,7 @@
                     paginate(curScrOffset);
                 }
             }
+            opts.onWindowScroll();
         }
 
         /**
@@ -130,6 +131,7 @@
         function stop_scroll()
         {
             opts.scrollContainer.unbind('scroll', scroll_handler);
+            opts.scrollContainer.bind('scroll', opts.onWindowScroll);
         }
 
         /**
