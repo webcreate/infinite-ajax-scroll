@@ -29,19 +29,19 @@ $ bower install jquery-ias
 
 The pre-build files are in the dist folder.
 
-```html
+``` html
 <script type="text/javascript" src="dist/jquery.ias.min.js"></script>
 ```
 
 Optionally add the stylesheet:
 
-```html
+``` html
 <link rel="stylesheet" type="text/css" href="dist/css/jquery.ias.css" />
 ```
 
 ## Basic usage
 
-```js
+``` js
 jQuery.ias({
     container : '.listing',
     item: '.post',
@@ -148,7 +148,7 @@ Parameters:
 
 Example:
 
-```js
+``` js
 beforePageChange: function(scrollOffset, nextPageUrl) {
     console.log("The user wants to go to the next page, " +
         "but they can't because we return false!");
@@ -172,7 +172,7 @@ Parameters:
 
 Example:
 
-```js
+``` js
 onPageChange: function(pageNum, pageUrl, scrollOffset) {
     console.log('Welcome on page ' + pageNum);
 }
@@ -196,7 +196,7 @@ When you return `false` in the callback, we prevent IAS from automatically inser
 
 Example:
 
-```js
+``` js
 onLoadItems: function(items) {
     console.log('We loaded ' + items.length + ' items');
 }
@@ -218,7 +218,7 @@ Parameters:
 
 Example:
 
-```js
+``` js
 onRenderComplete: function(items) {
     console.log('We rendered ' + items.length + ' items');
 }
@@ -233,7 +233,7 @@ Per default, the loader will be inserted right after the last item.
 
 Example
 
-```js
+``` js
 customLoaderProc: function(loader) { console.log(loader); }
 ```
 
@@ -243,7 +243,7 @@ customLoaderProc: function(loader) { console.log(loader); }
 
 You can integrate Google Analytics by using the onPageChange event. Here is an example:
 
-```js
+``` js
 jQuery.ias({
     container : '.listing',
     item: '.post',
@@ -263,7 +263,7 @@ jQuery.ias({
 
 Example on how to integrate [jQuery Masonry](http://masonry.desandro.com/).
 
-```js
+``` js
 jQuery.ias({
     container : '.listing',
     item: '.post',
@@ -308,11 +308,19 @@ To contribute to IAS please follow the following steps:
 * Update README
 * Submit your Pull Request
 
-### Installing dev tools
+### Installing development tools
 
-```
-$ npm install
-```
+1) Install bower components
+
+    ``` sh
+    $ bower install
+    ```
+
+2) Install npm modules
+
+    ``` sh
+    $ npm install
+    ```
 
 ### Running tests
 
@@ -320,13 +328,13 @@ Testing is done with [Busterjs](https://github.com/busterjs/buster).
 
 Running tests:
 
-```
+``` sh
 $ ./node_modules/.bin/buster server
 ```
 
 Launch some browsers and connect to http://localhost:1111 and capture them. Then run:
 
-```
+``` sh
 $ ./node_modules/.bin/buster test -r specification
 ```
 
@@ -334,7 +342,7 @@ $ ./node_modules/.bin/buster test -r specification
 
 Building is done using [Grunt](https://github.com/gruntjs/grunt). To build run:
 
-```
+``` sh
 $ ./node_modules/.bin/grunt
 ```
 
