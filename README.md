@@ -55,77 +55,89 @@ You can use IAS multiple times within a single webpage. For example, you can hav
 
 ## Options
 
-### container
+### `container`
 
-*Default:* "#container"
+**Default:** "#container"
+
 Enter the selector of the element containing your items that you want to paginate.
 
-### item
+### `item`
 
-*Default:* ".item"
+**Default:** ".item"
+
 Enter the selector of the element that each item has. Make sure the elements are inside the container element.
 
-### pagination
+### `pagination`
 
-*Default:* "#pagination"
+**Default:** "#pagination"
+
 Enter the selector of the element that contains your regular pagination links, like next, previous and the page numbers. This element will be hidden when IAS loads.
 
-### next
+### `next`
 
-*Default:* ".next"
+**Default:** ".next"
+
 Enter the selector of the link element that links to the next page. The href attribute of this element will be used to get the items from the next page. Make sure there is only one(1) element that matches the selector.
 
-### noneleft
+### `noneleft`
 
-*Default:* false
+**Default:** false
+
 Contains the message to be displayed when there are no more pages left to load.
 
-### loader
+### `loader`
 
-*Default:* `&lt;img src="images/loader.gif"/>`
+**Default:** `<img src="images/loader.gif"/>`
+
 Enter the url to the loader image. This image will be displayed when the next page with items is loaded via AJAX.
 
-### loaderDelay
+### `loaderDelay`
 
-*Default:* 600
+**Default:** 600
+
 Minimal time (in miliseconds) the loader should be displayed before rendering the items of the next page. Note: This setting will _not_ actually delay the the loading of items itself.
 
-### triggerPageThreshold
+### `triggerPageThreshold`
 
-*Default:* 3
+**Default:** 3
+
 Page number after which a 'Load more items' link is displayed. Users will manually trigger the loading of the next page by clicking this link.
 
-### trigger
+### `trigger`
 
-*Default:* "Load more items"
+**Default:** "Load more items"
+
 Text of the manual trigger link.
 
-### thresholdMargin
+### `thresholdMargin`
 
-*Default:* 0
+**Default:** 0
+
 On default IAS starts loading new items when you scroll to the latest .item element. The thresholdMargin will be added to the items' offset, giving you the ability to load new items earlier (please note that the margin should be a negative integer for this case).
 
 For example:
 
 Setting a thresholdMargin of -250 means that IAS will start loading 250 pixel _before_ the last item has scrolled into view. A positive margin means that IAS will laod new items N pixels after the last item.
 
-### history
+### `history`
 
-*Default:* true
+**Default:** true
+
 Set this to false to disable the history module.
 
 The IAS history module uses hashes (in the format "#/page/<num>") to remember the last viewed page, so when a visitor hits the back button after visiting an item from that page, it will load all items up to that last page and scrolls it into view. The use of hashes can be problematic in some cases, in which case you can disable this feature.
 
-### scrollContainer
+### `scrollContainer`
 
-*Default:* $(window)
+**Default:** $(window)
+
 By default, scroll events are listened from the $(window) object. You can use this setting to specify a custom container, for example a div with overflow.
 
-### beforePageChange
+### `beforePageChange`
 
-*Default:* empty function
+**Default:** empty function
 
-Event handler.  Is called when a user scrolls to another page, but before the new items are loaded.  Returning false will cancel the load;  any return value other than false will allow the pagination to proceed as normal.
+Event handler. Is called when a user scrolls to another page, but before the new items are loaded.  Returning false will cancel the load; any return value other than false will allow the pagination to proceed as normal.
 
 Parameters:
 
@@ -137,12 +149,17 @@ Parameters:
 Example:
 
 ```js
-beforePageChange: function(scrollOffset, nextPageUrl) { console.log("The user wants to go to the next page, but they can't!"); return false; }
+beforePageChange: function(scrollOffset, nextPageUrl) {
+    console.log("The user wants to go to the next page, " +
+        "but they can't because we return false!");
+    return false;
+}
 ```
 
-### onPageChange
+### `onPageChange`
 
-*Default:* empty function
+**Default:** empty function
+
 Event handler. Is called each time the user scrolls to an other page.
 
 Parameters:
@@ -156,12 +173,15 @@ Parameters:
 Example:
 
 ```js
-onPageChange: function(pageNum, pageUrl, scrollOffset) { console.log('Welcome on page ' + pageNum); }
+onPageChange: function(pageNum, pageUrl, scrollOffset) {
+    console.log('Welcome on page ' + pageNum);
+}
 ```
 
-### onLoadItems
+### `onLoadItems`
 
-*Default:* empty function
+**Default:** empty function
+
 Event handler. Is called each time new items are loaded.
 
 Parameters:
@@ -171,17 +191,21 @@ Parameters:
 | items   | array containing the item elements |
 
 Return value:
-When we return false in the callback, we prevent IAS from automatically insert the loaded items. This can be used to manually insert the items.
+
+When you return `false` in the callback, we prevent IAS from automatically insert the loaded items. This can be used to manually insert the items.
 
 Example:
 
 ```js
-onLoadItems: function(items) { console.log('We loaded ' + items.length + ' items'); }
+onLoadItems: function(items) {
+    console.log('We loaded ' + items.length + ' items');
+}
 ```
 
-### onRenderComplete
+### `onRenderComplete`
 
-*Default:* empty function
+**Default:** empty function
+
 Event handler. Is called each time new items have been inserted in the DOM.
 
 This can be useful when you have a javascript function that normally performs some actions on the items in the document.ready event. When loading items from a new page using IAS, the document ready handler isn't called. Use this event instead.
@@ -195,12 +219,15 @@ Parameters:
 Example:
 
 ```js
-onRenderComplete: function(items) { console.log('We rendered ' + items.length + ' items'); }
+onRenderComplete: function(items) {
+    console.log('We rendered ' + items.length + ' items');
+}
 ```
 
-### customLoaderProc
+### `customLoaderProc`
 
-*Default:* false
+**Default:** false
+
 Custom function callback to handle the rendering of the loader yourself.
 Per default, the loader will be inserted right after the last item.
 
