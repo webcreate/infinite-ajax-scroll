@@ -5,7 +5,7 @@
  *
  * Copyright (c) 2011-2013 Jeroen Fiege
  * Licensed under MIT:
- * http://www.opensource.org/licenses/mit-license.php
+ * https://raw.github.com/webcreate/infinite-ajax-scroll/master/MIT-LICENSE.txt
  */
 
 (function ($) {

@@ -20,7 +20,7 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://www.opensource.org/licenses/mit-license.php"
+      "url": "https://raw.github.com/webcreate/infinite-ajax-scroll/master/MIT-LICENSE.txt"
     }
   ],
   "dependencies": {
