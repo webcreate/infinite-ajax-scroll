@@ -8,7 +8,7 @@ Version 1.0.2
 Requires jQuery 1.4 or newer.
 
 Licensed under:
-MIT License - http://www.opensource.org/licenses/mit-license.php
+MIT License - https://raw.github.com/webcreate/infinite-ajax-scroll/master/MIT-LICENSE.txt
 
 ## Requirements
 
