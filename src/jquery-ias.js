@@ -18,8 +18,8 @@
     {
         // setup
         var opts             = $.extend({}, $.ias.defaults, options);
-        var util             = new $.ias.util();                                // utilities module
-        var paging           = new $.ias.paging(opts.scrollContainer);          // paging module
+        var util             = new $.ias.util(opts);                            // utilities module
+        var paging           = new $.ias.paging(opts);                          // paging module   
         var hist             = (opts.history ? new $.ias.history() : false);    // history module
         var _self            = this;
 
@@ -63,7 +63,7 @@
                         paginateToPage(pageNum);
 
                         curThreshold = get_scroll_threshold(true);
-                        $('html, body').scrollTop(curThreshold);
+                        opts.scrollContainer.scrollTop(curThreshold);
                     }
                     else {
                         reset();
@@ -296,10 +296,10 @@
                     if ((paging.getCurPageNum(curThreshold) + 1) < pageNum) {
                         paginateToPage(pageNum);
 
-                        $('html,body').animate({'scrollTop': curThreshold}, 400, 'swing');
+                        opts.scrollContainer.animate({'scrollTop': curThreshold}, 400, 'swing');
                     }
                     else {
-                        $('html,body').animate({'scrollTop': curThreshold}, 1000, 'swing');
+                        opts.scrollContainer.animate({'scrollTop': curThreshold}, 1000, 'swing');
 
                         reset();
                     }
@@ -430,7 +430,7 @@
     };
 
     // utility module
-    $.ias.util = function ()
+    $.ias.util = function (opts)
     {
         // setup
         var wndIsLoaded = false;
@@ -464,7 +464,7 @@
          */
         this.forceScrollTop = function (onCompleteHandler)
         {
-            $('html,body').scrollTop(0);
+            opts.scrollContainer.scrollTop(0);
 
             if (!forceScrollTopIsCompleted) {
                 if (!wndIsLoaded) {
@@ -495,9 +495,10 @@
     };
 
     // paging module
-    $.ias.paging = function ()
+    $.ias.paging = function (opts)
     {
         // setup
+        var scrollContainer   = opts.scrollContainer
         var pagebreaks        = [[0, document.location.toString()]];
         var changePageHandler = function () {};
         var lastPageNum       = 1;
@@ -510,7 +511,7 @@
          */
         function init()
         {
-            $(window).scroll(scroll_handler);
+            scrollContainer.scroll(scroll_handler);
         }
 
         // initialize
@@ -531,7 +532,7 @@
                 scrOffset,
                 urlPage;
 
-            curScrOffset = util.getCurrentScrollOffset($(window));
+            curScrOffset = util.getCurrentScrollOffset(scrollContainer);
 
             curPageNum = getCurPageNum(curScrOffset);
             curPagebreak = getCurPagebreak(curScrOffset);
@@ -569,7 +570,7 @@
          */
         this.getCurPageNum = function (scrollOffset)
         {
-            scrollOffset = scrollOffset || util.getCurrentScrollOffset($(window));
+            scrollOffset = scrollOffset || util.getCurrentScrollOffset(scrollContainer);
 
             return getCurPageNum(scrollOffset);
         };
