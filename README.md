@@ -21,7 +21,7 @@ IAS is based on the assumption that you, as a developer, already have taken care
 
 **...using Bower**
 
-```
+``` sh
 $ bower install jquery-ias
 ```
 
@@ -310,13 +310,13 @@ To contribute to IAS please follow the following steps:
 
 ### Installing development tools
 
-1) Install bower components
+1. Install bower components
 
     ``` sh
     $ bower install
     ```
 
-2) Install npm modules
+2. Install npm modules
 
     ``` sh
     $ npm install
