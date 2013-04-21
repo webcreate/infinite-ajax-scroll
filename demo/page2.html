@@ -1,9 +1,23 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="../css/jquery.ias.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Infinite Ajax Scroll demo</title>
+    <link rel="stylesheet" type="text/css" href="https://raw.github.com/webcreate/infinite-ajax-scroll/master/dist/css/jquery.ias.css" />
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://raw.github.com/webcreate/infinite-ajax-scroll/master/dist/jquery-ias.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            jQuery.ias({
+                container : '.listing',
+                item: '.post',
+                pagination: '#content .navigation',
+                next: '.next-posts a',
+                loader: '<img src="https://raw.github.com/webcreate/infinite-ajax-scroll/master/dist/images/loader.gif"/>',
+                triggerPageThreshold: 2
+            });
+        });
+    </script>
 </head>
 <body>
 <div id="content">

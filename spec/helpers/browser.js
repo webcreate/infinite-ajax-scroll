@@ -106,10 +106,11 @@ function watch(selector, timeout, interval)
     timeout = timeout || 1000;
     var tracker = 0;
     var time = 0;
+    var result = false;
 
     var condition = function() {
         return $(selector).length > 0;
-    }
+    };
 
     var t = setInterval(function() {
         result = condition.call();
