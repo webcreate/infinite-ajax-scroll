@@ -7,7 +7,7 @@ before_script:
   - firefox http://localhost:1111/capture &
   - sleep 5
   - npm install -g bower
-  - bower install
+  - bower install --production
 
 script:
   - "node_modules/.bin/buster test -r specification"
