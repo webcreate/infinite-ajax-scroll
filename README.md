@@ -237,6 +237,19 @@ Example
 customLoaderProc: function(loader) { console.log(loader); }
 ```
 
+### `customTriggerProc`
+
+**Default:** false
+
+Custom function callback to handle the rendering of the trigger yourself.
+Per default, the trigger will be inserted right after the last item.
+
+Example
+
+``` js
+customTriggerProc: function(trigger) { console.log(trigger); }
+```
+
 ## Advanced usage
 
 ### Integrating Google Analytics
@@ -362,5 +375,6 @@ These people have contributed to IAS. A dollar sign indicates a paided feature r
 * diesachbearbeiter $ (manual trigger)
 * df9web $ (manual trigger)
 * devloper (PR #45)
+* Yuri Vanin (CustomTriggerProc)
 
 And [others](https://github.com/webcreate/infinite-ajax-scroll/graphs/contributors)...
