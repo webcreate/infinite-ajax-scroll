@@ -226,11 +226,11 @@ onRenderComplete: function(items) {
 
 ### `onScroll`
 
-*Default:* empty function
+**Default:** empty function
 
-Event handler. Is called during scroll as an extension of the existing scroll event.
+Event handler. Is called during scroll as an extension of the existing scroll event handler.
 
-This can be useful when you have another event that needs to be fired during scrolling events, such as the showing/hiding of a "back to top" arrow.  This function is called at the end of the regular IAS scroll event handler.
+Allows multiple scroll events to be triggered in addition to IAS.  This can be useful when you have another event that needs to be fired during scrolling events, such as the showing/hiding of a "back to top" arrow.  This function is called at the end of the regular IAS scroll event handler.
 
 Parameters:
 
