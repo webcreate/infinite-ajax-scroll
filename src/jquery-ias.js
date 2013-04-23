@@ -120,7 +120,7 @@
                     paginate(curScrOffset);
                 }
             }
-            opts.onWindowScroll();
+            opts.onScroll(curScrOffset, get_current_page(), scrThreshold);
         }
 
         /**
@@ -131,7 +131,6 @@
         function stop_scroll()
         {
             opts.scrollContainer.unbind('scroll', scroll_handler);
-            opts.scrollContainer.bind('scroll', opts.onWindowScroll);
         }
 
         /**
@@ -439,7 +438,7 @@
         beforePageChange: function () {},
         onLoadItems: function () {},
         onRenderComplete: function () {},
-        onWindowScroll: function() {},
+        onScroll: function() {},
         customLoaderProc: false,
         customTriggerProc: false
     };
@@ -559,7 +558,7 @@
 
             lastPageNum = curPageNum;
             
-            opts.onWindowScroll();
+            opts.onScroll();
        }
 
         /**
