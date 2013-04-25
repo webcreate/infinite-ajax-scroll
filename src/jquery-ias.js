@@ -21,8 +21,8 @@
 		
         // setup
         var opts             = $.extend({}, $.ias.defaults, options);
-        var util             = new $.ias.util(opts);							// utilities module
-        var paging           = new $.ias.paging(opts);							// paging module
+        var util             = new $.ias.util(opts);				// utilities module
+        var paging           = new $.ias.paging(opts);				// paging module
         var hist             = (opts.history ? new $.ias.history() : false);    // history module
         var _self            = this;
 
