@@ -16,10 +16,13 @@
 
     $.ias = function (options)
     {
+    	// when we use overflowed div, the scroll handler and container is the same
+		options.scrollHandler = ( options.scrollContainer != "html,body" ) ? $(options.scrollContainer) : $(window);
+		
         // setup
         var opts             = $.extend({}, $.ias.defaults, options);
-        var util             = new $.ias.util();                                // utilities module
-        var paging           = new $.ias.paging(opts.scrollContainer);          // paging module
+        var util             = new $.ias.util(opts);							// utilities module
+        var paging           = new $.ias.paging(opts);							// paging module
         var hist             = (opts.history ? new $.ias.history() : false);    // history module
         var _self            = this;
 
@@ -47,8 +50,15 @@
                 opts.onPageChange.call(this, pageNum, pageUrl, scrollOffset);
             });
 
-            // setup scroll and hide pagination
-            reset();
+            if (opts.triggerPageThreshold > 0) {
+                // setup scroll and hide pagination
+                reset();
+            } else if ($(opts.next).attr('href')) {
+                var curScrOffset = util.getCurrentScrollOffset(opts.scrollHandler);
+                show_trigger(function () {
+                    paginate(curScrOffset);
+                });
+            }
 
             // load and scroll to previous page
             if (hist && hist.havePage()) {
@@ -63,7 +73,7 @@
                         paginateToPage(pageNum);
 
                         curThreshold = get_scroll_threshold(true);
-                        $('html, body').scrollTop(curThreshold);
+                        $(opts.scrollContainer).scrollTop(curThreshold);
                     }
                     else {
                         reset();
@@ -86,7 +96,7 @@
         {
             hide_pagination();
 
-            opts.scrollContainer.scroll(scroll_handler);
+            opts.scrollHandler.scroll(scroll_handler);
         }
 
         /**
@@ -99,7 +109,7 @@
             var curScrOffset,
                 scrThreshold;
 
-            curScrOffset = util.getCurrentScrollOffset(opts.scrollContainer);
+            curScrOffset = util.getCurrentScrollOffset(opts.scrollHandler);
             scrThreshold = get_scroll_threshold();
 
             if (curScrOffset >= scrThreshold) {
@@ -122,7 +132,7 @@
          */
         function stop_scroll()
         {
-            opts.scrollContainer.unbind('scroll', scroll_handler);
+            opts.scrollHandler.unbind('scroll', scroll_handler);
         }
 
         /**
@@ -295,11 +305,11 @@
 
                     if ((paging.getCurPageNum(curThreshold) + 1) < pageNum) {
                         paginateToPage(pageNum);
-
-                        $('html,body').animate({'scrollTop': curThreshold}, 400, 'swing');
+						
+                        $(opts.scrollContainer).animate({'scrollTop': curThreshold}, 400, 'swing');
                     }
                     else {
-                        $('html,body').animate({'scrollTop': curThreshold}, 1000, 'swing');
+                        $(opts.scrollContainer).animate({'scrollTop': curThreshold}, 1000, 'swing');
 
                         reset();
                     }
@@ -309,7 +319,7 @@
 
         function get_current_page()
         {
-            var curScrOffset = util.getCurrentScrollOffset(opts.scrollContainer);
+            var curScrOffset = util.getCurrentScrollOffset(opts.scrollHandler);
 
             return paging.getCurPageNum(curScrOffset);
         }
@@ -390,9 +400,13 @@
             var trigger = get_trigger(callback),
                 el;
 
-            el = $(opts.container).find(opts.item).last();
-            el.after(trigger);
-            trigger.fadeIn();
+            if (opts.customTriggerProc !== false) {
+                opts.customTriggerProc(trigger);
+            } else {
+                el = $(opts.container).find(opts.item).last();
+                el.after(trigger);
+                trigger.fadeIn();
+            }
         }
 
         /**
@@ -411,7 +425,7 @@
     // plugin defaults
     $.ias.defaults = {
         container: '#container',
-        scrollContainer: $(window),
+        scrollContainer: 'html,body',
         item: '.item',
         pagination: '#pagination',
         next: '.next',
@@ -426,11 +440,12 @@
         beforePageChange: function () {},
         onLoadItems: function () {},
         onRenderComplete: function () {},
-        customLoaderProc: false
+        customLoaderProc: false,
+        customTriggerProc: false
     };
 
     // utility module
-    $.ias.util = function ()
+    $.ias.util = function (opts)
     {
         // setup
         var wndIsLoaded = false;
@@ -464,7 +479,7 @@
          */
         this.forceScrollTop = function (onCompleteHandler)
         {
-            $('html,body').scrollTop(0);
+            $(opts.scrollContainer).scrollTop(0);
 
             if (!forceScrollTopIsCompleted) {
                 if (!wndIsLoaded) {
@@ -482,11 +497,11 @@
                 wndHeight;
 
             // the way we calculate if we have to load the next page depends on which container we have
-            if (container.get(0) === window) {
+            //if (container.get(0) === window) {
                 scrTop = container.scrollTop();
-            } else {
-                scrTop = container.offset().top;
-            }
+            //} else {
+            //    scrTop = container.offset().top;
+            //}
 
             wndHeight = container.height();
 
@@ -495,7 +510,7 @@
     };
 
     // paging module
-    $.ias.paging = function ()
+    $.ias.paging = function (opts)
     {
         // setup
         var pagebreaks        = [[0, document.location.toString()]];
@@ -510,7 +525,7 @@
          */
         function init()
         {
-            $(window).scroll(scroll_handler);
+            opts.scrollHandler.scroll(scroll_handler);
         }
 
         // initialize
@@ -531,7 +546,7 @@
                 scrOffset,
                 urlPage;
 
-            curScrOffset = util.getCurrentScrollOffset($(window));
+            curScrOffset = util.getCurrentScrollOffset(opts.scrollHandler);
 
             curPageNum = getCurPageNum(curScrOffset);
             curPagebreak = getCurPagebreak(curScrOffset);
@@ -541,7 +556,6 @@
                 urlPage = curPagebreak[1];
                 changePageHandler.call({}, curPageNum, scrOffset, urlPage); // @todo fix for window height
             }
-
             lastPageNum = curPageNum;
         }
 
@@ -569,7 +583,7 @@
          */
         this.getCurPageNum = function (scrollOffset)
         {
-            scrollOffset = scrollOffset || util.getCurrentScrollOffset($(window));
+            scrollOffset = scrollOffset || util.getCurrentScrollOffset(opts.scrollHandler);
 
             return getCurPageNum(scrollOffset);
         };
