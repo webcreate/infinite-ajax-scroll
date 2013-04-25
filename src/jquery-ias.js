@@ -16,13 +16,14 @@
 
     $.ias = function (options)
     {
-    	// when we use overflowed div, the scroll handler and container is the same
-	options.scrollHandler = ( options.scrollContainer != "html,body" ) ? $(options.scrollContainer) : $(window);
-		
         // setup
         var opts             = $.extend({}, $.ias.defaults, options);
-        var util             = new $.ias.util(opts);				// utilities module
-        var paging           = new $.ias.paging(opts);				// paging module
+		
+        // when we use overflowed div, the scroll handler and container is the same
+        opts.scrollHandler = ( opts.scrollContainer != "html,body" ) ? $(opts.scrollContainer) : $(window);
+		
+        var util             = new $.ias.util(opts);                            // utilities module
+        var paging           = new $.ias.paging(opts);                          // paging module
         var hist             = (opts.history ? new $.ias.history() : false);    // history module
         var _self            = this;
 
@@ -385,8 +386,8 @@
             }
 
             $('a', trigger)
-                .off('click')
-                .on('click', function () { remove_trigger(); callback.call(); return false; })
+                .unbind('click')
+                .bind('click', function () { remove_trigger(); callback.call(); return false; })
             ;
 
             return trigger;
@@ -496,12 +497,7 @@
             var scrTop,
                 wndHeight;
 
-            // the way we calculate if we have to load the next page depends on which container we have
-            //if (container.get(0) === window) {
-                scrTop = container.scrollTop();
-            //} else {
-            //    scrTop = container.offset().top;
-            //}
+            scrTop = container.scrollTop();
 
             wndHeight = container.height();
 
