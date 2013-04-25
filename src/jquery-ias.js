@@ -17,7 +17,7 @@
     $.ias = function (options)
     {
     	// when we use overflowed div, the scroll handler and container is the same
-		options.scrollHandler = ( options.scrollContainer != "html,body" ) ? $(options.scrollContainer) : $(window);
+	options.scrollHandler = ( options.scrollContainer != "html,body" ) ? $(options.scrollContainer) : $(window);
 		
         // setup
         var opts             = $.extend({}, $.ias.defaults, options);
