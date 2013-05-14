@@ -5,14 +5,14 @@ Turn your paginated pages into infinite scrolling pages with ease.
 
 Version 1.0.2
 
-Requires jQuery 1.4 or newer.
+Requires jQuery 1.7 or newer.
 
 Licensed under:
 MIT License - https://raw.github.com/webcreate/infinite-ajax-scroll/master/MIT-LICENSE.txt
 
 ## Requirements
 
-* jQuery 1.4+
+* jQuery 1.7+
 * A fully working (server-side) pagination with a 'goto the next page' link
 
 IAS is based on the assumption that you, as a developer, already have taken care for the pagination using a server-side script. What IAS does is loading the next page via AJAX and inserting each individual item into the current page.
