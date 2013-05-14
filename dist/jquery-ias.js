@@ -375,8 +375,8 @@
             }
 
             $('a', trigger)
-                .off('click')
-                .on('click', function () { remove_trigger(); callback.call(); return false; })
+                .unbind('click')
+                .bind('click', function () { remove_trigger(); callback.call(); return false; })
             ;
 
             return trigger;
