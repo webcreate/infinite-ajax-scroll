@@ -557,8 +557,6 @@
             }
 
             lastPageNum = curPageNum;
-            
-            opts.onScroll();
        }
 
         /**
