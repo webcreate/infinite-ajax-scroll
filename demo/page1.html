@@ -11,7 +11,7 @@
             jQuery.ias({
                 container : '.listing',
                 item: '.post',
-                pagination: '#content .navigation',
+                pagination: '#navigation',
                 next: '.next-posts a',
                 loader: '<img src="https://raw.github.com/webcreate/infinite-ajax-scroll/master/dist/images/loader.gif"/>',
                 triggerPageThreshold: 2
@@ -41,16 +41,16 @@ Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.</p
  Donec eu libero sit amet quam egestas semper.</p>
         </div>
 
-    </div>
+    </div class="listing">
 
-    <div class="navigation">
+    <div id="navigation">
         <ul>
             <li>1</li>
             <li class="next-posts"><a href="page2.html">2</a></li>
             <li><a href="page3.html">3</a></li>
         </ul>
-    </div>
-</div>
+    </div id="navigation">
+</div id="content">
 
 </body>
 </html>
