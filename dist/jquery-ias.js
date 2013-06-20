@@ -93,7 +93,7 @@
         {
             hide_pagination();
 
-            opts.scrollContainer.scroll(scroll_handler);
+            opts.scrollContainer.bind( 'scroll.ias', scroll_handler );
         }
 
         /**
@@ -129,7 +129,7 @@
          */
         function stop_scroll()
         {
-            opts.scrollContainer.unbind('scroll', scroll_handler);
+            opts.scrollContainer.unbind('scroll.ias', scroll_handler);
         }
 
         /**
@@ -770,4 +770,5 @@
             }
         };
     };
+    
 })(jQuery);
