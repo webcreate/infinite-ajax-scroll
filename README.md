@@ -45,7 +45,7 @@ Optionally add the stylesheet:
 jQuery.ias({
     container : '.listing',
     item: '.post',
-    pagination: '#content .navigation',
+    pagination: '#navigation',
     next: '.next-posts a',
     loader: '<img src="dist/images/loader.gif"/>'
 });
@@ -71,7 +71,7 @@ Enter the selector of the element that each item has. Make sure the elements are
 
 **Default:** "#pagination"
 
-Enter the selector of the element that contains your regular pagination links, like next, previous and the page numbers. This element will be hidden when IAS loads.
+Enter the selector of the element that contains your regular pagination links, like next, previous and the page numbers. This element will be hidden when IAS loads. It must be an ID or nothing past the second page can be loaded.
 
 ### `next`
 
@@ -260,7 +260,7 @@ You can integrate Google Analytics by using the onPageChange event. Here is an e
 jQuery.ias({
     container : '.listing',
     item: '.post',
-    pagination: '#content .navigation',
+    pagination: '#navigation',
     next: '.next-posts a',
     loader: '<img src="images/loader.gif"/>',
     onPageChange: function(pageNum, pageUrl, scrollOffset) {
@@ -280,7 +280,7 @@ Example on how to integrate [jQuery Masonry](http://masonry.desandro.com/).
 jQuery.ias({
     container : '.listing',
     item: '.post',
-    pagination: '#content .navigation',
+    pagination: '#navigation',
     next: '.next-posts a',
     loader: '<img src="images/loader.gif"/>',
     onLoadItems: function(items) {
