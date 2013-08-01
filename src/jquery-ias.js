@@ -557,7 +557,7 @@
             }
 
             lastPageNum = curPageNum;
-       }
+        }
 
         /**
          * Returns current page number based on scroll offset
