@@ -120,6 +120,7 @@
                     paginate(curScrOffset);
                 }
             }
+            opts.onScroll(curScrOffset, get_current_page(), scrThreshold);
         }
 
         /**
@@ -437,6 +438,7 @@
         beforePageChange: function () {},
         onLoadItems: function () {},
         onRenderComplete: function () {},
+        onScroll: function() {},
         customLoaderProc: false,
         customTriggerProc: false
     };

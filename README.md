@@ -224,9 +224,34 @@ onRenderComplete: function(items) {
 }
 ```
 
+### `onScroll`
+
+**Default:** empty function
+
+Event handler. Is called during scroll as an extension of the existing scroll event handler.
+
+Allows multiple scroll events to be triggered in addition to IAS.  This can be useful when you have another event that needs to be fired during scrolling events, such as the showing/hiding of a "back to top" arrow.  This function is called at the end of the regular IAS scroll event handler.
+
+Parameters:
+
+| *param*         | *description*                     |
+|-----------------|-----------------------------------|
+| scrollOffset    | Current scroll offset of the page |
+| currentPage     | Current page number               |
+| scrollThreshold | Threshold margin for loading      |
+
+Example:
+
+``` js
+onScroll: function(scrollOffset, currentPage, scrollThreshold) { 
+    console.log('We are at position ' + scrollOffset + ' and page ' + currentPage);
+}
+```
+
 ### `customLoaderProc`
 
 **Default:** false
+
 
 Custom function callback to handle the rendering of the loader yourself.
 Per default, the loader will be inserted right after the last item.
