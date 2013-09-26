@@ -212,7 +212,7 @@
                     $(items).fadeIn();
                 }
 
-                urlNextPage = $(opts.next, data).attr('href');
+                urlNextPage = $(opts.next).attr('href');
 
                 // update pagination
                 $(opts.pagination).replaceWith($(opts.pagination, data));
