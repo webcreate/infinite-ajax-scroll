@@ -1,6 +1,6 @@
 /*!
  * Infinite Ajax Scroll, a jQuery plugin
- * Version 1.0.2
+ * Version 1.0.3
  * https://github.com/webcreate/infinite-ajax-scroll
  *
  * Copyright (c) 2011-2013 Jeroen Fiege
@@ -120,6 +120,7 @@
                     paginate(curScrOffset);
                 }
             }
+            opts.onScroll(curScrOffset, get_current_page(), scrThreshold);
         }
 
         /**
@@ -331,7 +332,13 @@
             var loader = $('.ias_loader');
 
             if (loader.size() === 0) {
-                loader = $('<div class="ias_loader">' + opts.loader + '</div>');
+                var elName = opts.control_container;
+                if (elName === 'auto') {
+                    // Use same element as ias item
+                    elName = $(opts.container).find(opts.item).get(0).tagName;
+                }
+                //loader = $('<div class="ias_loader">' + opts.loader + '</div>');
+                loader = $('<' + elName + ' />').addClass('ias_loader').append($(opts.loader));
                 loader.hide();
             }
             return loader;
@@ -377,7 +384,13 @@
             var trigger = $('.ias_trigger');
 
             if (trigger.size() === 0) {
-                trigger = $('<div class="ias_trigger"><a href="#">' + opts.trigger + '</a></div>');
+                var elName = opts.control_container;
+                if (elName === 'auto') {
+                    // Use same element as ias item
+                    elName = $(opts.container).find(opts.item).get(0).tagName;
+                }
+                //trigger = $('<div class="ias_trigger"><a href="#">' + opts.trigger + '</a></div>');
+                trigger = $('<' + elName + ' />').addClass('ias_trigger').append($('<a href="#">' + opts.trigger + '</a>'));
                 trigger.hide();
             }
 
@@ -431,12 +444,14 @@
         loaderDelay: 600,
         triggerPageThreshold: 3,
         trigger: 'Load more items',
+        control_container: 'div',
         thresholdMargin: 0,
         history : true,
         onPageChange: function () {},
         beforePageChange: function () {},
         onLoadItems: function () {},
         onRenderComplete: function () {},
+        onScroll: function() {},
         customLoaderProc: false,
         customTriggerProc: false
     };

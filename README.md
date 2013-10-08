@@ -109,6 +109,12 @@ Page number after which a 'Load more items' link is displayed. Users will manual
 
 Text of the manual trigger link.
 
+### `control_container`
+
+**Default:** "div"
+
+Container element for the generated *loader* and *trigger*. By default the loader image and the trigger button are wraped in a **div** element. You can specify any other valid html element tag name to wrap these components, or use the magic **"auto"** value to use the same html tag name as the one associated to **item** selector. 
+
 ### `thresholdMargin`
 
 **Default:** 0
