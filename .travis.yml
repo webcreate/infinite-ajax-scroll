@@ -8,6 +8,7 @@ before_script:
   - sleep 5
   - npm install -g bower
   - bower install --production
+  - bower install jquery#$JQUERY_VERSION
 
 script:
   - "node_modules/.bin/buster test -r specification"
@@ -16,3 +17,8 @@ language: node_js
 
 node_js:
   - 0.8
+
+env:
+  - JQUERY_VERSION=1.4
+  - JQUERY_VERSION=1.8
+  - JQUERY_VERSION=*
