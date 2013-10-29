@@ -1,0 +1,20 @@
+{
+  "name": "infinite-ajax-scroll",
+  "version": "1.0.2",
+  "homepage": "https://github.com/webcreate/infinite-ajax-scroll",
+  "authors": [
+    "Jeroen Fiege <jeroen@webcreate.nl>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": ">=1.4"
+  }
+}
