@@ -130,6 +130,12 @@
          */
         function stop_scroll()
         {
+            var urlNextPage = $(opts.next).attr('href');
+            if (!urlNextPage) {
+                if (opts.noneleft) {
+                    $(opts.container).find(opts.item).last().after(opts.noneleft);
+                }
+            }
             opts.scrollContainer.unbind('scroll', scroll_handler);
         }
 
@@ -182,9 +188,6 @@
 
             urlNextPage = $(opts.next).attr('href');
             if (!urlNextPage) {
-                if (opts.noneleft) {
-                    $(opts.container).find(opts.item).last().after(opts.noneleft);
-                }
                 return stop_scroll();
             }
 
