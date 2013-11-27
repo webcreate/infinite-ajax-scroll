@@ -182,9 +182,6 @@
 
             urlNextPage = $(opts.next).attr('href');
             if (!urlNextPage) {
-                if (opts.noneleft) {
-                    $(opts.container).find(opts.item).last().after(opts.noneleft);
-                }
                 return stop_scroll();
             }
 
@@ -225,6 +222,9 @@
                     reset();
                 }
                 else {
+                    if (opts.noneleft) {
+                        $(opts.container).find(opts.item).last().after(opts.noneleft);
+                    }
                     stop_scroll();
                 }
 
