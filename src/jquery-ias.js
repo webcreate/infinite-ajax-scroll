@@ -458,7 +458,7 @@
          */
         function init()
         {
-            $(window).load(function () {
+            $(document).ready(function () {
                 wndIsLoaded = true;
             });
         }
