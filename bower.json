@@ -5,6 +5,7 @@
   "authors": [
     "Jeroen Fiege <jeroen@webcreate.nl>"
   ],
+  "main" : "dist/jquery-ias.js",
   "license": "MIT",
   "ignore": [
     "**/.*",
