@@ -1,4 +1,12 @@
+1.1.0 / 2014-01-29
+==================
 
+* Typo and spelling fixes (threshold)
+* Added customTriggerProc
+* Fixed triggerPageThreshold when zero
+* Added onScroll event
+* Improved compatibility with jQuery 1.4
+* Fixed noneLeft
 
 1.0.2 / 2013-02-15
 ==================

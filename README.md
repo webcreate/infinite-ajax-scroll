@@ -3,7 +3,7 @@ Infinite Ajax Scroll
 
 Turn your paginated pages into infinite scrolling pages with ease.
 
-Version 1.0.2
+Version 1.1.0
 
 Requires jQuery 1.4 or newer.
 

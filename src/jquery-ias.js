@@ -1,11 +1,11 @@
 /**
  * Infinite Ajax Scroll, a jQuery plugin
- * Version 1.0.0
+ * Version 1.1.0
  * https://github.com/webcreate/infinite-ajax-scroll
  *
- * Copyright (c) 2011-2013 Jeroen Fiege
+ * Copyright (c) 2011-2014 Jeroen Fiege
  * Licensed under MIT:
- * http://webcreate.nl/license
+ * https://raw.github.com/webcreate/infinite-ajax-scroll/master/MIT-LICENSE.txt
  */
 
 (function ($) {
@@ -438,7 +438,7 @@
         beforePageChange: function () {},
         onLoadItems: function () {},
         onRenderComplete: function () {},
-        onScroll: function() {},
+        onScroll: function () {},
         customLoaderProc: false,
         customTriggerProc: false
     };
