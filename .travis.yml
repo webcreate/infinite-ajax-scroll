@@ -1,5 +1,6 @@
 before_script:
   - npm install
+  - npm install -g bower
   - bower install --production
   - bower install jquery#$JQUERY_VERSION
   - export DISPLAY=:99.0
