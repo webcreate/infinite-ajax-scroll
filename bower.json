@@ -8,9 +8,9 @@
     "node_modules",
     "bower_components",
     "test",
-    "tests"
+    "dist"
   ],
   "dependencies": {
-    "jquery": "git://github.com/components/jquery.git#~2.0.3"
+    "jquery": "git://github.com/components/jquery.git#>=1.7"
   }
 }
