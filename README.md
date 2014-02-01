@@ -3,7 +3,9 @@ Infinite Ajax Scroll 2
 
 A jQuery plugin to turn your paginated pages into infinite scrolling pages with ease.
 
-Download, documentation and demos available at: http://infiniteajaxscroll.com/
+Downloads, documentation and demos available at: http://infiniteajaxscroll.com/
+
+[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.png?branch=master)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
 
 ## Licensing
 
