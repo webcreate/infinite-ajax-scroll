@@ -26,6 +26,7 @@
     this.$itemsContainer = $(this.itemsContainerSelector);
     this.$container = (window === $element.get(0) ? $(document) : $element);
     this.defaultDelay = options.delay;
+    this.negativeMargin = options.negativeMargin;
     this.nextUrl = null;
     this.isBound = false;
     this.listeners = {
@@ -76,13 +77,15 @@
      * Returns scroll threshold. This threshold marks the line from where
      * IAS should start loading the next page.
      *
-     * @todo implement scrollThreshold margin
-     *
      * @private
+     * @param negativeMargin defaults to {this.negativeMargin}
      * @return {number}
      */
-    this.getScrollThreshold = function() {
+    this.getScrollThreshold = function(negativeMargin) {
       var lastElement;
+
+      negativeMargin = negativeMargin || this.negativeMargin;
+      negativeMargin = (negativeMargin >= 0 ? negativeMargin * -1 : negativeMargin);
 
       lastElement = this.getLastItem();
 
@@ -92,7 +95,7 @@
         return UNDETERMINED_SCROLLOFFSET;
       }
 
-      return (lastElement.offset().top + lastElement.height());
+      return (lastElement.offset().top + lastElement.height() + negativeMargin);
     };
 
     /**
@@ -490,6 +493,7 @@
     container: '.listing',
     next: '.next',
     pagination: false,
-    delay: 600
+    delay: 600,
+    negativeMargin: 10
   };
 })(jQuery);
