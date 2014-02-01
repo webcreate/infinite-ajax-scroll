@@ -23,8 +23,8 @@ describe("IAS", function () {
     var deferred = when.defer();
 
     watch('.ias-spinner:visible', this.timeout - 500).then(function(time) {
-      expect(time).toBeGreaterThan(350);
-      expect(time).toBeLessThan(450);
+      expect(time).toBeGreaterThan(299);
+      expect(time).toBeLessThan(501);
 
       deferred.resolve();
     });
