@@ -22,7 +22,15 @@ describe("IAS", function () {
   });
 
   it("should hide the pagination", function() {
-    expect($('.navigation').css('display')).toEqual('none');
+    var deferred = when.defer();
+
+    wait(250).then(function() {
+      expect($('.navigation').css('display')).toEqual('none');
+
+      deferred.resolve();
+    });
+
+    return deferred.promise;
   });
 
   it("should load the next page", function() {

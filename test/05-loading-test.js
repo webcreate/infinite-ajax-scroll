@@ -38,7 +38,7 @@ describe("IAS", function () {
         wait(2000).then(function() {
           diffTime = endTime - startTime;
 
-          expect(diffTime).toBeGreaterThan(_delay_ - 1);
+          expect(diffTime).toBeGreaterThan(_delay_ - 100);
           expect(diffTime).toBeLessThan(_delay_ + 100);
 
           deferred.resolve();
