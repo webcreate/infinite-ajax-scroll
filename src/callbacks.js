@@ -1,10 +1,10 @@
 /**
  * Infinite Ajax Scroll v2.0.0
  * A jQuery plugin for infinite scrolling
- * http://github.com/webcreate/infinite-ajax-scroll
+ * http://infiniteajaxscroll.com
  *
  * Commercial use requires one-time purchase of a commercial license
- * http://github.com/webcreate/infinite-ajax-scroll
+ * http://infiniteajaxscroll.com/docs/license.html
  *
  * Non-commercial use is licensed under the MIT License
  *

@@ -1,9 +1,9 @@
 /**
- * IAS Trigger Extension v1.0.0
+ * IAS Trigger Extension
  * An IAS extension to show a trigger link to load the next page
- * http://github.com/webcreate/infinite-ajax-scroll
+ * http://infiniteajaxscroll.com
  *
- * This extension is part of Infinite AJAX Scroll
+ * This file is part of the Infinite AJAX Scroll package
  *
  * Copyright 2014 Webcreate (Jeroen Fiege)
  */

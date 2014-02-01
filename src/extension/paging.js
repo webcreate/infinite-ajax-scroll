@@ -1,9 +1,9 @@
 /**
- * IAS Paging Extension v1.0.0
+ * IAS Paging Extension
  * An IAS extension providing additional events
- * http://github.com/webcreate/infinite-ajax-scroll
+ * http://infiniteajaxscroll.com
  *
- * This extension is part of Infinite AJAX Scroll
+ * This file is part of the Infinite AJAX Scroll package
  *
  * Copyright 2014 Webcreate (Jeroen Fiege)
  */

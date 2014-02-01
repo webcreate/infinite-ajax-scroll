@@ -1,9 +1,9 @@
 /**
- * IAS None Left Extension v1.0.0
+ * IAS None Left Extension
  * An IAS extension to show a message when there are no more pages te load
- * http://github.com/webcreate/infinite-ajax-scroll
+ * http://infiniteajaxscroll.com
  *
- * This extension is part of Infinite AJAX Scroll
+ * This file is part of the Infinite AJAX Scroll package
  *
  * Copyright 2014 Webcreate (Jeroen Fiege)
  */
