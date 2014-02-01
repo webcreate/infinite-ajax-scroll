@@ -51,6 +51,11 @@
           scrollThreshold = this.getScrollThreshold()
       ;
 
+      // the throttle method can call the scrollHandler even thought we have called unbind()
+      if (!this.isBound) {
+        return;
+      }
+
       // invalid scrollThreshold. The DOM might not have loaded yet...
       if (UNDETERMINED_SCROLLOFFSET == scrollThreshold) {
         return;
@@ -113,6 +118,11 @@
         scrollTop = $container.scrollTop();
       } else {
         scrollTop = $container.offset().top;
+      }
+
+      // compensate for iPhone
+      if (navigator.platform.indexOf("iPhone") != -1 || navigator.platform.indexOf("iPod") != -1) {
+        containerHeight += 80;
       }
 
       return (scrollTop + containerHeight);
@@ -379,15 +389,13 @@
     var url = this.nextUrl,
         self = this;
 
-    if (!url) {
-      this.unbind();
+    this.unbind();
 
+    if (!url) {
       this.fire('noneLeft', [this.getLastItem()]);
 
       return false;
     }
-
-    this.unbind();
 
     var promise = this.fire('next', [url]);
 
