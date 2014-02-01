@@ -81,4 +81,30 @@ describe("IAS", function () {
 
     return deferred.promise;
   });
+
+  it("should load the next page when content length is less than page fold", function() {
+    var deferred = when.defer();
+
+    jQuery.ias('destroy');
+
+    loadFixture("short.html", function() {
+      jQuery.ias({
+        container : '.listing',
+        item: '.post',
+        pagination: '.navigation',
+        next: '.next-posts a'
+      });
+
+      expect($('#post11').length).toEqual(0);
+
+      // expect the second page to be loaded without scrolling
+      wait(1000).then(function() {
+        expect($('#post11').length).toEqual(1);
+
+        deferred.resolve();
+      });
+    });
+
+    return deferred.promise;
+  });
 });

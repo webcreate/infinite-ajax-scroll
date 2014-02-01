@@ -276,10 +276,18 @@
    * @public
    */
   IAS.prototype.initialize = function() {
+    var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
+        scrollThreshold = this.getScrollThreshold();
+
     this.hidePagination();
     this.bind();
 
     this.nextUrl = this.getNextUrl();
+
+    // start loading next page if content is shorter than page fold
+    if (currentScrollOffset >= scrollThreshold) {
+      this.next();
+    }
 
     return this;
   };

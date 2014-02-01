@@ -15,10 +15,11 @@ config["My tests"] = {
     "src/extension/noneleft.js"
   ],
   resources: [
-    { path: "/",           file: "test/fixtures/page1.html" },
-    { path: "/page2.html", file: "test/fixtures/page2.html" },
-    { path: "/page3.html", file: "test/fixtures/page3.html" },
-    { path: "/framed.html", file: "test/fixtures/framed.html" }
+    { path: "/",            file: "test/fixtures/page1.html" },
+    { path: "/page2.html",  file: "test/fixtures/page2.html" },
+    { path: "/page3.html",  file: "test/fixtures/page3.html" },
+    { path: "/framed.html", file: "test/fixtures/framed.html" },
+    { path: "/short.html",  file: "test/fixtures/short.html" }
   ],
   specs: [
     "test/*-test.js"
