@@ -16,6 +16,8 @@ var IASTriggerExtension = function(options) {
   this.text = options.text;
   this.html = options.html;
   this.enabled = true;
+  this.count = 0;
+  this.offset = options.offset;
 
   // replace text
   this.html = this.html.replace('{text}', this.text);
@@ -24,7 +26,13 @@ var IASTriggerExtension = function(options) {
    * Shows trigger
    */
   this.showTrigger = function() {
-    if (!this.enabled) return true;
+    if (!this.enabled) {
+      return true;
+    }
+
+    if (this.offset && ++this.count < this.offset) {
+      return true;
+    }
 
     var trigger = this.getTrigger() || this.createTrigger();
     var lastItem = this.ias.getLastItem();
@@ -111,5 +119,6 @@ IASTriggerExtension.prototype.next = function() {
  */
 IASTriggerExtension.prototype.defaults = {
   text: 'Load more items',
-  html: '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>'
+  html: '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
+  offset: 3
 };
