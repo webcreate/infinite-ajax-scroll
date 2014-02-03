@@ -120,5 +120,5 @@ IASTriggerExtension.prototype.next = function() {
 IASTriggerExtension.prototype.defaults = {
   text: 'Load more items',
   html: '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
-  offset: 3
+  offset: 0
 };

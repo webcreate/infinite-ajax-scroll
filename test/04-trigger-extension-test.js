@@ -24,7 +24,6 @@ describe("IAS", function () {
     jQuery.ias().extension(new IASTriggerExtension({
       text: 'trigger text',
       html: '<div class="ias-trigger extra-trigger-class">{text}</div>',
-      offset: 0
     }));
 
     expect($('.ias-trigger:visible').length).toEqual(0); // ensure it isn't already there
@@ -56,7 +55,6 @@ describe("IAS", function () {
     jQuery.ias().extension(new IASTriggerExtension({
       text: 'trigger text',
       html: '<div class="ias-trigger extra-trigger-class">{text}</div>',
-      offset: 0
     }));
 
     scrollDown().then(function() {
