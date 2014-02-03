@@ -138,7 +138,8 @@
         container = this.$container;
       }
 
-      return $(this.nextSelector, container).attr('href');
+      // always take the last matching item
+      return $(this.nextSelector, container).last().attr('href');
     };
 
     /**
