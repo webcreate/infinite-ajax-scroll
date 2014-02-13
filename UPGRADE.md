@@ -6,7 +6,7 @@ Upgrade from 1.x to 2.0
 * `trigger` option has been replaced by the IASTriggerExtensions' `text` option
 * `loader` option has been replaced by the IASSpinnerExtensions' `html` option
 * `noneleft` option has been replaced by the IASNoneLeftExtensions' `text` option
-* `scrollContainer` option has been removed. You can now do: $('<scrollContainer>').ias({...})
+* `scrollContainer` option has been removed. You can now do: `$('<scrollContainer>').ias({...})`
 * `onPageChange` option has been replaced by the IASPagingExtensions' `pageChange` event
 * `onPageChange` option has been replaced by the IASPagingExtensions' `pageChange` event
 * `onLoadItems` option has been replaced by the `load` event
