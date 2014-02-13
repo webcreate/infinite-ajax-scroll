@@ -8,7 +8,6 @@ Upgrade from 1.x to 2.0
 * `noneleft` option has been replaced by the IASNoneLeftExtensions' `text` option
 * `scrollContainer` option has been removed. You can now do: `$('<scrollContainer>').ias({...})`
 * `onPageChange` option has been replaced by the IASPagingExtensions' `pageChange` event
-* `onPageChange` option has been replaced by the IASPagingExtensions' `pageChange` event
 * `onLoadItems` option has been replaced by the `load` event
 * `onRenderComplete` option has been replaced by the `render` event
 * `onScroll` option has been replaced by the `scroll` event
