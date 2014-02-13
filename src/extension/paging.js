@@ -11,6 +11,7 @@
 var IASPagingExtension = function() {
   this.ias = null;
   this.currentScrollOffset = 0;
+  this.prevCurrentScrollOffset = 0;
   this.pagebreaks = [[0, document.location.toString()]];
   this.lastPageNum = 1;
   this.listeners = {
@@ -29,6 +30,7 @@ var IASPagingExtension = function() {
         urlPage;
 
     this.currentScrollOffset = currentScrollOffset;
+    this.prevCurrentScrollOffset = currentScrollOffset - this.ias.$scrollContainer.height();
 
     if (this.lastPageNum !== currentPageNum) {
       urlPage = currentPagebreak[1];
@@ -55,20 +57,44 @@ var IASPagingExtension = function() {
     this.lastPageNum = currentPageNum;
   };
 
+  /**
+   * Keeps track of pagebreaks
+   *
+   * @param url
+   */
+  this.onPrev = function(url) {
+    this.pagebreaks.unshift([0, url]);
+
+    console.log(this.pagebreaks);
+
+    // trigger pageChange and update lastPageNum
+    var currentPageNum = this.getCurrentPageNum(this.prevCurrentScrollOffset) + 1;
+
+    this.ias.fire('pageChange', [currentPageNum, this.prevCurrentScrollOffset, url]);
+
+    this.lastPageNum = currentPageNum;
+  };
+
   return this;
 };
 
 /**
  * @public
  */
-IASPagingExtension.prototype.bind = function(ias) {
+IASPagingExtension.prototype.initialize = function(ias) {
   this.ias = ias;
-
-  ias.on('next', $.proxy(this.onNext, this));
-  ias.on('scroll', $.proxy(this.onScroll, this));
 
   // expose the extensions listeners
   jQuery.extend(ias.listeners, this.listeners);
+};
+
+/**
+ * @public
+ */
+IASPagingExtension.prototype.bind = function(ias) {
+  ias.on('prev', $.proxy(this.onPrev, this));
+  ias.on('next', $.proxy(this.onNext, this));
+  ias.on('scroll', $.proxy(this.onScroll, this));
 };
 
 /**
@@ -93,8 +119,7 @@ IASPagingExtension.prototype.getCurrentPageNum = function(scrollOffset) {
  * @param {number} scrollOffset
  * @returns {number}|null
  */
-IASPagingExtension.prototype.getCurrentPagebreak = function(scrollOffset)
-{
+IASPagingExtension.prototype.getCurrentPagebreak = function(scrollOffset) {
   for (var i = (this.pagebreaks.length - 1); i >= 0; i--) {
     if (scrollOffset > this.pagebreaks[i][0]) {
       return this.pagebreaks[i];

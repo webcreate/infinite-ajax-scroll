@@ -15,48 +15,12 @@ var IASCallbacks = function() {
   this.list = [];
   this.fireStack = [];
   this.isFiring = false;
-
-  /**
-   * Adds a callback
-   *
-   * @param callback
-   * @returns {IASCallbacks}
-   */
-  this.add = function(callback) {
-    this.list.push(callback);
-
-    return this;
-  };
-
-  /**
-   * Removes a callback
-   *
-   * @param callback
-   * @returns {IASCallbacks}
-   */
-  this.remove = function(callback) {
-    var index;
-
-    while( ( index = jQuery.inArray( callback, this.list, index ) ) > -1 ) {
-      this.list.splice( index, 1 );
-    }
-
-    return this;
-  };
-
-  /**
-   * Checks if callback is added
-   *
-   * @param callback
-   * @returns {*}
-   */
-  this.has = function(callback) {
-    return jQuery.inArray(callback, this.list);
-  };
+  this.isDisabled = false;
 
   /**
    * Calls all added callbacks
    *
+   * @private
    * @param args
    */
   this.fire = function(args) {
@@ -81,15 +45,63 @@ var IASCallbacks = function() {
     }
   };
 
+  return this;
+};
+
+IASCallbacks.prototype = {
+
+  /**
+   * Adds a callback
+   *
+   * @param callback
+   * @returns {IASCallbacks}
+   */
+  add: function(callback) {
+    this.list.push(callback);
+
+    return this;
+  },
+
+  /**
+   * Removes a callback
+   *
+   * @param callback
+   * @returns {IASCallbacks}
+   */
+  remove: function(callback) {
+    var index;
+
+    while( ( index = jQuery.inArray( callback, this.list, index ) ) > -1 ) {
+      this.list.splice( index, 1 );
+    }
+
+    return this;
+  },
+
+  /**
+   * Checks if callback is added
+   *
+   * @param callback
+   * @returns {*}
+   */
+  has: function(callback) {
+    return jQuery.inArray(callback, this.list);
+  },
+
+
   /**
    * Calls callbacks with a context
    *
    * @param context
    * @param args
-   * @returns {IASCallbacks}
+   * @returns {object|void}
    */
-  this.fireWith = function(context, args) {
+  fireWith: function(context, args) {
     var deferred = $.Deferred();
+
+    if (this.isDisabled) {
+      return deferred.reject();
+    }
 
     args = args || [];
     args = [ context, deferred, args.slice ? args.slice() : args ];
@@ -101,7 +113,19 @@ var IASCallbacks = function() {
     }
 
     return deferred;
-  };
+  },
 
-  return this;
+  /**
+   * Disable firing of new events
+   */
+  disable: function() {
+    this.isDisabled = true;
+  },
+
+  /**
+   * Enable firing of new events
+   */
+  enable: function() {
+    this.isDisabled = false;
+  }
 };

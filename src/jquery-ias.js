@@ -296,6 +296,10 @@
     this.hidePagination();
     this.bind();
 
+    for (var i = 0, l = this.extensions.length; i < l; i++) {
+      this.extensions[i].bind(this);
+    }
+
     this.nextUrl = this.getNextUrl();
 
     // start loading next page if content is shorter than page fold
@@ -394,6 +398,9 @@
 
     if (!url) {
       this.fire('noneLeft', [this.getLastItem()]);
+      this.listeners['noneLeft'].disable(); // disable it so it only fires once
+
+      self.bind();
 
       return false;
     }
@@ -427,7 +434,9 @@
       throw new Error('Extension doesn\'t have required method "bind"');
     }
 
-    extension.bind(this);
+    if (typeof extension['initialize'] != 'undefined') {
+      extension.initialize(this);
+    }
 
     this.extensions.push(extension);
 
