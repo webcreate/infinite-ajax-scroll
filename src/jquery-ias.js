@@ -30,11 +30,12 @@
     this.nextUrl = null;
     this.isBound = false;
     this.listeners = {
-      next: new IASCallbacks(),
-      load: new IASCallbacks(),
-      didLoad: new IASCallbacks(),
-      render: new IASCallbacks(),
-      scroll: new IASCallbacks(),
+      next:     new IASCallbacks(),
+      load:     new IASCallbacks(),
+      loaded:   new IASCallbacks(),
+      render:   new IASCallbacks(),
+      rendered: new IASCallbacks(),
+      scroll:   new IASCallbacks(),
       noneLeft: new IASCallbacks()
     };
     this.extensions = [];
@@ -79,6 +80,16 @@
     };
 
     /**
+     * Returns the first item currently in the DOM
+     *
+     * @private
+     * @returns {object}
+     */
+    this.getFirstItem = function() {
+      return $(this.itemSelector, this.$itemsContainer.get(0)).first();
+    };
+
+    /**
      * Returns scroll threshold. This threshold marks the line from where
      * IAS should start loading the next page.
      *
@@ -87,20 +98,20 @@
      * @return {number}
      */
     this.getScrollThreshold = function(negativeMargin) {
-      var lastElement;
+      var $lastElement;
 
       negativeMargin = negativeMargin || this.negativeMargin;
       negativeMargin = (negativeMargin >= 0 ? negativeMargin * -1 : negativeMargin);
 
-      lastElement = this.getLastItem();
+      $lastElement = this.getLastItem();
 
       // if the don't have a last element, the DOM might not have been loaded,
       // or the selector is invalid
-      if (0 === lastElement.size()) {
+      if (0 === $lastElement.size()) {
         return UNDETERMINED_SCROLLOFFSET;
       }
 
-      return (lastElement.offset().top + lastElement.height() + negativeMargin);
+      return ($lastElement.offset().top + $lastElement.height() + negativeMargin);
     };
 
     /**
@@ -159,6 +170,8 @@
 
       delay = delay || this.defaultDelay;
 
+      self.fire('load', [url]);
+
       return $.get(url, null, $.proxy(function(data) {
         $itemContainer = $(this.itemsContainerSelector, data).eq(0);
         if (0 === $itemContainer.length) {
@@ -171,8 +184,7 @@
           });
         }
 
-        // @todo it's best practise to fire events at the beginning of the method
-        self.fire('load', [data, items]);
+        self.fire('loaded', [data, items]);
 
         if (callback) {
           timeDiff = +new Date() - timeStart;
@@ -190,18 +202,33 @@
     /**
      * Renders items
      *
+     * @param callback
      * @param items
      */
-    this.render = function(items) {
-      var lastItem = this.getLastItem();
+    this.render = function(items, callback) {
+      var self = this,
+          $lastItem = this.getLastItem(),
+          count = 0;
 
       this.fire('render', [items]);
 
       $(items).hide(); // at first, hide it so we can fade it in later
 
-      lastItem.after(items);
+      $lastItem.after(items);
 
-      $(items).fadeIn();
+      $(items).fadeIn(400, function() {
+        // complete callback get fired for each item,
+        // only act on the last item
+        if (++count < items.length) {
+          return;
+        }
+
+        self.fire('rendered', [items]);
+
+        if (callback) {
+          callback();
+        }
+      });
     };
 
     /**
@@ -368,6 +395,29 @@
   };
 
   /**
+   * Registers an eventListener which only gets
+   * fired once.
+   *
+   * Note: chainable
+   *
+   * @public
+   * @returns IAS
+   */
+  IAS.prototype.one = function(event, callback) {
+    var self = this;
+
+    var remover = function() {
+      self.off(event, callback);
+      self.off(event, remover);
+    };
+
+    this.on(event, callback);
+    this.on(event, remover);
+
+    return this;
+  };
+
+  /**
    * Removes an eventListener
    *
    * Note: chainable
@@ -409,11 +459,11 @@
 
     promise.done(function() {
       self.load(url, function(data, items) {
-        self.render(items);
+        self.render(items, function() {
+          self.nextUrl = self.getNextUrl(data);
 
-        self.nextUrl = self.getNextUrl(data);
-
-        self.bind();
+          self.bind();
+        });
       });
     });
 
