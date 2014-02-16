@@ -34,11 +34,11 @@ var IASTriggerExtension = function(options) {
       return true;
     }
 
-    var trigger = this.getTrigger() || this.createTrigger();
-    var lastItem = this.ias.getLastItem();
+    var $trigger = this.getTrigger() || this.createTrigger();
+    var $lastItem = this.ias.getLastItem();
 
-    lastItem.after(trigger);
-    trigger.fadeIn();
+    $lastItem.after($trigger);
+    $trigger.fadeIn();
 
     return false;
   };
@@ -56,10 +56,10 @@ var IASTriggerExtension = function(options) {
    * @returns {jQuery|*|jQuery}
    */
   this.getTrigger = function() {
-    var trigger = $('#ias_trigger_' + this.uid);
+    var $trigger = $('#ias_trigger_' + this.uid);
 
-    if (trigger.size() > 0) {
-      return trigger;
+    if ($trigger.size() > 0) {
+      return $trigger;
     }
 
     return false;
@@ -69,21 +69,21 @@ var IASTriggerExtension = function(options) {
    * @returns {jQuery|*|jQuery}
    */
   this.hasTrigger = function() {
-    var trigger = $('#ias_trigger_' + this.uid);
+    var $trigger = $('#ias_trigger_' + this.uid);
 
-    return (trigger.size() > 0);
+    return ($trigger.size() > 0);
   };
 
   /**
    * @returns {*|jQuery}
    */
   this.createTrigger = function() {
-    var trigger = $(this.html).attr('id', 'ias_trigger_' + this.uid);
+    var $trigger = $(this.html).attr('id', 'ias_trigger_' + this.uid);
 
-    trigger.hide();
-    trigger.on('click', $.proxy(this.next, this));
+    $trigger.hide();
+    $trigger.on('click', $.proxy(this.next, this));
 
-    return trigger;
+    return $trigger;
   };
 
   return this;
@@ -94,10 +94,11 @@ var IASTriggerExtension = function(options) {
  */
 IASTriggerExtension.prototype.bind = function(ias) {
   var self = this;
+
   this.ias = ias;
 
-  this.ias.on('next', $.proxy(this.showTrigger, this));
-  this.ias.on('render', function () {
+  ias.on('next', $.proxy(this.showTrigger, this));
+  ias.on('render', function () {
     self.enabled = true;
   });
 };
