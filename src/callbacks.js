@@ -11,7 +11,7 @@
  * Copyright 2014 Webcreate (Jeroen Fiege)
  */
 
-var IASCallbacks = function() {
+var IASCallbacks = function () {
   this.list = [];
   this.fireStack = [];
   this.isFiring = false;
@@ -23,7 +23,7 @@ var IASCallbacks = function() {
    * @private
    * @param args
    */
-  this.fire = function(args) {
+  this.fire = function (args) {
     var context = args[0],
         deferred = args[1],
         callbackArguments = args[2];
@@ -45,18 +45,37 @@ var IASCallbacks = function() {
     }
   };
 
+  /**
+   * Returns index of the callback in the list in a similar way as
+   * the indexOf function.
+   *
+   * @param callback
+   * @param {number} index index to start the search from
+   * @returns {number}
+   */
+  this.inList = function (callback, index) {
+    index = index || 0;
+
+    for (var i = index, length = this.list.length; i < length; i++) {
+      if (this.list[i] === callback || (callback.guid && this.list[i].guid && callback.guid === this.list[i].guid)) {
+        return i;
+      }
+    }
+
+    return -1;
+  };
+
   return this;
 };
 
 IASCallbacks.prototype = {
-
   /**
    * Adds a callback
    *
    * @param callback
    * @returns {IASCallbacks}
    */
-  add: function(callback) {
+  add: function (callback) {
     this.list.push(callback);
 
     return this;
@@ -68,11 +87,11 @@ IASCallbacks.prototype = {
    * @param callback
    * @returns {IASCallbacks}
    */
-  remove: function(callback) {
-    var index;
+  remove: function (callback) {
+    var index = 0;
 
-    while( ( index = jQuery.inArray( callback, this.list, index ) ) > -1 ) {
-      this.list.splice( index, 1 );
+    while (( index = this.inList(callback, index) ) > -1) {
+      this.list.splice(index, 1);
     }
 
     return this;
@@ -84,8 +103,8 @@ IASCallbacks.prototype = {
    * @param callback
    * @returns {*}
    */
-  has: function(callback) {
-    return jQuery.inArray(callback, this.list);
+  has: function (callback) {
+    return (this.inList(callback) > -1);
   },
 
 
@@ -96,7 +115,7 @@ IASCallbacks.prototype = {
    * @param args
    * @returns {object|void}
    */
-  fireWith: function(context, args) {
+  fireWith: function (context, args) {
     var deferred = $.Deferred();
 
     if (this.isDisabled) {
@@ -118,14 +137,14 @@ IASCallbacks.prototype = {
   /**
    * Disable firing of new events
    */
-  disable: function() {
+  disable: function () {
     this.isDisabled = true;
   },
 
   /**
    * Enable firing of new events
    */
-  enable: function() {
+  enable: function () {
     this.isDisabled = false;
   }
 };
