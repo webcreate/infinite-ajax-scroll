@@ -1,8 +1,8 @@
-Upgrade from 2.0 to 2.x
+Upgrade from 2.0 to 2.1
 =======================
 
-* `render` event should be replaced with `rendered`
-* `load` event should be replaced with `loaded`
+* `render` is now triggered before rendering, use `rendered` when rendering is complete
+* `load` is now triggered before loading, use `loaded` when loading is complete
 
 Upgrade from 1.x to 2.0
 =======================

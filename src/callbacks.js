@@ -1,12 +1,8 @@
 /**
- * Infinite Ajax Scroll v2.0.0
- * A jQuery plugin for infinite scrolling
+ * IASCallbacks
  * http://infiniteajaxscroll.com
  *
- * Commercial use requires one-time purchase of a commercial license
- * http://infiniteajaxscroll.com/docs/license.html
- *
- * Non-commercial use is licensed under the MIT License
+ * This file is part of the Infinite AJAX Scroll package
  *
  * Copyright 2014 Webcreate (Jeroen Fiege)
  */

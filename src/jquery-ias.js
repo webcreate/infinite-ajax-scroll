@@ -1,5 +1,5 @@
 /**
- * Infinite Ajax Scroll v2.0.0
+ * Infinite Ajax Scroll v2.1.0
  * A jQuery plugin for infinite scrolling
  * http://infiniteajaxscroll.com
  *

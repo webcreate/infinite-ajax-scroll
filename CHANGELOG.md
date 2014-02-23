@@ -1,7 +1,7 @@
 Changelog
 =========
 
-## 2.x
+## 2.1.0
 
 * Added History extension
 * Added `ready` event
