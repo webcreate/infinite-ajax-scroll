@@ -36,7 +36,8 @@
       render:   new IASCallbacks(),
       rendered: new IASCallbacks(),
       scroll:   new IASCallbacks(),
-      noneLeft: new IASCallbacks()
+      noneLeft: new IASCallbacks(),
+      ready:    new IASCallbacks()
     };
     this.extensions = [];
 
@@ -327,6 +328,8 @@
       this.extensions[i].bind(this);
     }
 
+    this.fire('ready');
+
     this.nextUrl = this.getNextUrl();
 
     // start loading next page if content is shorter than page fold
@@ -384,12 +387,14 @@
    * @public
    * @returns IAS
    */
-  IAS.prototype.on = function(event, callback) {
+  IAS.prototype.on = function(event, callback, priority) {
     if (typeof this.listeners[event] == 'undefined') {
       throw new Error('There is no event called "' + event + '"');
     }
 
-    this.listeners[event].add($.proxy(callback, this));
+    priority = priority || 0;
+
+    this.listeners[event].add($.proxy(callback, this), priority);
 
     return this;
   };
