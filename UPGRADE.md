@@ -1,3 +1,9 @@
+Upgrade from 2.0 to 2.x
+=======================
+
+* `render` event should be replaced with `rendered`
+* `load` event should be replaced with `loaded`
+
 Upgrade from 1.x to 2.0
 =======================
 
