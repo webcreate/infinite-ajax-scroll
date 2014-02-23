@@ -27,6 +27,10 @@ var IASHistoryExtension = function (options) {
   this.onPageChange = function (pageNum, scrollOffset, url) {
     var state = {};
 
+    if (!window.history || !window.history.replaceState) {
+      return;
+    }
+
     history.replaceState(state, document.title, url);
   };
 
@@ -129,6 +133,7 @@ IASHistoryExtension.prototype.initialize = function (ias) {
   // expose the extensions listeners
   jQuery.extend(ias.listeners, this.listeners);
 
+  // expose prev method
   ias.prev = function() {
     self.prev();
   };
