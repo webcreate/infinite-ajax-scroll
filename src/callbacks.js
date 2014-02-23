@@ -30,8 +30,9 @@ var IASCallbacks = function () {
     this.isFiring = true;
 
     for (var i = 0, l = this.list.length; i < l; i++) {
-      if (false === this.list[i].apply(context, callbackArguments)) {
+      if (false === this.list[i].fn.apply(context, callbackArguments)) {
         deferred.reject();
+
         break;
       }
     }
@@ -57,7 +58,7 @@ var IASCallbacks = function () {
     index = index || 0;
 
     for (var i = index, length = this.list.length; i < length; i++) {
-      if (this.list[i] === callback || (callback.guid && this.list[i].guid && callback.guid === this.list[i].guid)) {
+      if (this.list[i].fn === callback || (callback.guid && this.list[i].fn.guid && callback.guid === this.list[i].fn.guid)) {
         return i;
       }
     }
@@ -74,9 +75,22 @@ IASCallbacks.prototype = {
    *
    * @param callback
    * @returns {IASCallbacks}
+   * @param priority
    */
-  add: function (callback) {
-    this.list.push(callback);
+  add: function (callback, priority) {
+    var callbackObject = {fn: callback, priority: priority};
+
+    priority = priority || 0;
+
+    for (var i = 0, length = this.list.length; i < length; i++) {
+      if (priority > this.list[i].priority) {
+        this.list.splice(i, 0, callbackObject);
+
+        return this;
+      }
+    }
+
+    this.list.push(callbackObject);
 
     return this;
   },
