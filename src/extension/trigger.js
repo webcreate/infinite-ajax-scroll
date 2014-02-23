@@ -83,15 +83,12 @@ IASTriggerExtension.prototype.bind = function(ias) {
 
   this.ias = ias;
 
-  ias.on('next', $.proxy(this.showTriggerNext, this), this.priority);
-
   try {
     ias.on('prev', $.proxy(this.showTriggerPrev, this), this.priority);
   } catch (exception) {}
 
-  ias.on('rendered', function () {
-    self.enabled = true;
-  }, 1000);
+  ias.on('next', $.proxy(this.showTriggerNext, this), this.priority);
+  ias.on('rendered', function () { self.enabled = true; }, this.priority);
 };
 
 /**
