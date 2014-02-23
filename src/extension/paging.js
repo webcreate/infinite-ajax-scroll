@@ -10,10 +10,9 @@
 
 var IASPagingExtension = function() {
   this.ias = null;
-  this.currentScrollOffset = 0;
-  this.prevCurrentScrollOffset = 0;
   this.pagebreaks = [[0, document.location.toString()]];
   this.lastPageNum = 1;
+  this.enabled = true;
   this.listeners = {
     pageChange: new IASCallbacks()
   };
@@ -25,17 +24,19 @@ var IASPagingExtension = function() {
    * @param scrollThreshold
    */
   this.onScroll = function(currentScrollOffset, scrollThreshold) {
-    var currentPageNum = this.getCurrentPageNum(currentScrollOffset),
+    if (!this.enabled) {
+      return;
+    }
+
+    var ias = this.ias,
+        currentPageNum = this.getCurrentPageNum(currentScrollOffset),
         currentPagebreak = this.getCurrentPagebreak(currentScrollOffset),
         urlPage;
-
-    this.currentScrollOffset = currentScrollOffset;
-    this.prevCurrentScrollOffset = currentScrollOffset - this.ias.$scrollContainer.height();
 
     if (this.lastPageNum !== currentPageNum) {
       urlPage = currentPagebreak[1];
 
-      this.ias.fire('pageChange', [currentPageNum, currentScrollOffset, urlPage]);
+      ias.fire('pageChange', [currentPageNum, currentScrollOffset, urlPage]);
     }
 
     this.lastPageNum = currentPageNum;
@@ -47,12 +48,14 @@ var IASPagingExtension = function() {
    * @param url
    */
   this.onNext = function(url) {
-    this.pagebreaks.push([this.currentScrollOffset, url]);
+    var currentScrollOffset = this.ias.getCurrentScrollOffset(this.ias.$scrollContainer);
+
+    this.pagebreaks.push([currentScrollOffset, url]);
 
     // trigger pageChange and update lastPageNum
-    var currentPageNum = this.getCurrentPageNum(this.currentScrollOffset) + 1;
+    var currentPageNum = this.getCurrentPageNum(currentScrollOffset) + 1;
 
-    this.ias.fire('pageChange', [currentPageNum, this.currentScrollOffset, url]);
+    this.ias.fire('pageChange', [currentPageNum, currentScrollOffset, url]);
 
     this.lastPageNum = currentPageNum;
   };
@@ -63,16 +66,31 @@ var IASPagingExtension = function() {
    * @param url
    */
   this.onPrev = function(url) {
+    var self = this,
+        ias = self.ias,
+        currentScrollOffset = ias.getCurrentScrollOffset(ias.$scrollContainer),
+        prevCurrentScrollOffset = currentScrollOffset - ias.$scrollContainer.height(),
+        $firstItem = ias.getFirstItem();
+
+    this.enabled = false;
+
     this.pagebreaks.unshift([0, url]);
 
-    console.log(this.pagebreaks);
+    ias.one('rendered', function() {
+      // update pagebreaks
+      for (var i = 1, l = self.pagebreaks.length; i < l; i++) {
+        self.pagebreaks[i][0] = self.pagebreaks[i][0] + $firstItem.offset().top;
+      }
 
-    // trigger pageChange and update lastPageNum
-    var currentPageNum = this.getCurrentPageNum(this.prevCurrentScrollOffset) + 1;
+      // trigger pageChange and update lastPageNum
+      var currentPageNum = self.getCurrentPageNum(prevCurrentScrollOffset) + 1;
 
-    this.ias.fire('pageChange', [currentPageNum, this.prevCurrentScrollOffset, url]);
+      ias.fire('pageChange', [currentPageNum, prevCurrentScrollOffset, url]);
 
-    this.lastPageNum = currentPageNum;
+      self.lastPageNum = currentPageNum;
+
+      self.enabled = true;
+    });
   };
 
   return this;
@@ -92,9 +110,12 @@ IASPagingExtension.prototype.initialize = function(ias) {
  * @public
  */
 IASPagingExtension.prototype.bind = function(ias) {
-  ias.on('prev', $.proxy(this.onPrev, this));
-  ias.on('next', $.proxy(this.onNext, this));
-  ias.on('scroll', $.proxy(this.onScroll, this));
+  try {
+    ias.on('prev', $.proxy(this.onPrev, this), this.priority);
+  } catch (exception) {}
+
+  ias.on('next', $.proxy(this.onNext, this), this.priority);
+  ias.on('scroll', $.proxy(this.onScroll, this), this.priority);
 };
 
 /**
@@ -128,3 +149,9 @@ IASPagingExtension.prototype.getCurrentPagebreak = function(scrollOffset) {
 
   return null;
 };
+
+/**
+ * @public
+ * @type {number}
+ */
+IASPagingExtension.prototype.priority = 500;

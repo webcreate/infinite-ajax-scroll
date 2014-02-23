@@ -12,20 +12,17 @@ var IASTriggerExtension = function(options) {
   options = $.extend({}, this.defaults, options);
 
   this.ias = null;
-  this.uid = new Date().getTime();
-  this.text = options.text;
-  this.html = options.html;
+  this.html = (options.html).replace('{text}', options.text);
   this.enabled = true;
   this.count = 0;
   this.offset = options.offset;
-
-  // replace text
-  this.html = this.html.replace('{text}', this.text);
+  this.$triggerNext = null;
+  this.$triggerPrev = null;
 
   /**
-   * Shows trigger
+   * Shows trigger for next page
    */
-  this.showTrigger = function() {
+  this.showTriggerNext = function() {
     if (!this.enabled) {
       return true;
     }
@@ -34,7 +31,7 @@ var IASTriggerExtension = function(options) {
       return true;
     }
 
-    var $trigger = this.getTrigger() || this.createTrigger();
+    var $trigger = this.$triggerNext || (this.$triggerNext = this.createTrigger(this.next));
     var $lastItem = this.ias.getLastItem();
 
     $lastItem.after($trigger);
@@ -44,44 +41,32 @@ var IASTriggerExtension = function(options) {
   };
 
   /**
-   * Removes trigger
+   * Shows trigger for previous page
    */
-  this.removeTrigger = function() {
-    if (this.hasTrigger()) {
-      this.getTrigger().remove();
+  this.showTriggerPrev = function() {
+    if (!this.enabled) {
+      return true;
     }
-  };
 
-  /**
-   * @returns {jQuery|*|jQuery}
-   */
-  this.getTrigger = function() {
-    var $trigger = $('#ias_trigger_' + this.uid);
+    var $trigger = this.$triggerPrev || (this.$triggerPrev = this.createTrigger(this.prev));
+    var $firstItem = this.ias.getFirstItem();
 
-    if ($trigger.size() > 0) {
-      return $trigger;
-    }
+    $firstItem.before($trigger);
+    $trigger.fadeIn();
 
     return false;
   };
 
   /**
-   * @returns {jQuery|*|jQuery}
-   */
-  this.hasTrigger = function() {
-    var $trigger = $('#ias_trigger_' + this.uid);
-
-    return ($trigger.size() > 0);
-  };
-
-  /**
+   * @param clickCallback
    * @returns {*|jQuery}
    */
-  this.createTrigger = function() {
-    var $trigger = $(this.html).attr('id', 'ias_trigger_' + this.uid);
+  this.createTrigger = function(clickCallback) {
+    var uid = (new Date()).getTime(),
+        $trigger = $(this.html).attr('id', 'ias_trigger_' + uid);
 
     $trigger.hide();
-    $trigger.on('click', $.proxy(this.next, this));
+    $trigger.on('click', $.proxy(clickCallback, this));
 
     return $trigger;
   };
@@ -91,16 +76,22 @@ var IASTriggerExtension = function(options) {
 
 /**
  * @public
+ * @param {object} ias
  */
 IASTriggerExtension.prototype.bind = function(ias) {
   var self = this;
 
   this.ias = ias;
 
-  ias.on('next', $.proxy(this.showTrigger, this));
-  ias.on('render', function () {
+  ias.on('next', $.proxy(this.showTriggerNext, this), this.priority);
+
+  try {
+    ias.on('prev', $.proxy(this.showTriggerPrev, this), this.priority);
+  } catch (exception) {}
+
+  ias.on('rendered', function () {
     self.enabled = true;
-  });
+  }, 1000);
 };
 
 /**
@@ -110,9 +101,27 @@ IASTriggerExtension.prototype.next = function() {
   this.enabled = false;
   this.ias.unbind();
 
-  this.removeTrigger();
+  if (this.$triggerNext) {
+    this.$triggerNext.remove();
+    this.$triggerNext = null;
+  }
 
   this.ias.next();
+};
+
+/**
+ * @public
+ */
+IASTriggerExtension.prototype.prev = function() {
+  this.enabled = false;
+  this.ias.unbind();
+
+  if (this.$triggerPrev) {
+    this.$triggerPrev.remove();
+    this.$triggerPrev = null;
+  }
+
+  this.ias.prev();
 };
 
 /**
@@ -123,3 +132,9 @@ IASTriggerExtension.prototype.defaults = {
   html: '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
   offset: 0
 };
+
+/**
+ * @public
+ * @type {number}
+ */
+IASTriggerExtension.prototype.priority = 1000;
