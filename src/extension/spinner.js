@@ -14,20 +14,28 @@ var IASSpinnerExtension = function(options) {
   this.ias = null;
   this.uid = new Date().getTime();
   this.src = options.src;
-  this.html = options.html;
-
-  // replace image src
-  this.html = this.html.replace('{src}', this.src);
+  this.html = (options.html).replace('{src}', this.src);
 
   /**
    * Shows spinner
    */
   this.showSpinner = function() {
-    var spinner = this.getSpinner() || this.createSpinner();
-    var lastItem = this.ias.getLastItem();
+    var $spinner = this.getSpinner() || this.createSpinner(),
+        $lastItem = this.ias.getLastItem();
 
-    lastItem.after(spinner);
-    spinner.fadeIn();
+    $lastItem.after($spinner);
+    $spinner.fadeIn();
+  };
+
+  /**
+   * Shows spinner
+   */
+  this.showSpinnerBefore = function() {
+    var $spinner = this.getSpinner() || this.createSpinner(),
+        $firstItem = this.ias.getFirstItem();
+
+    $firstItem.before($spinner);
+    $spinner.fadeIn();
   };
 
   /**
@@ -40,36 +48,36 @@ var IASSpinnerExtension = function(options) {
   };
 
   /**
-   * @returns {jQuery|*|jQuery}
+   * @returns {jQuery|boolean}
    */
   this.getSpinner = function() {
-    var spinner = $('#ias_spinner_' + this.uid);
+    var $spinner = $('#ias_spinner_' + this.uid);
 
-    if (spinner.size() > 0) {
-      return spinner;
+    if ($spinner.size() > 0) {
+      return $spinner;
     }
 
     return false;
   };
 
   /**
-   * @returns {jQuery|*|jQuery}
+   * @returns {boolean}
    */
   this.hasSpinner = function() {
-    var spinner = $('#ias_spinner_' + this.uid);
+    var $spinner = $('#ias_spinner_' + this.uid);
 
-    return (spinner.size() > 0);
+    return ($spinner.size() > 0);
   };
 
   /**
-   * @returns {*|jQuery}
+   * @returns {jQuery}
    */
   this.createSpinner = function() {
-    var spinner = $(this.html).attr('id', 'ias_spinner_' + this.uid);
+    var $spinner = $(this.html).attr('id', 'ias_spinner_' + this.uid);
 
-    spinner.hide();
+    $spinner.hide();
 
-    return spinner;
+    return $spinner;
   };
 
   return this;
@@ -82,6 +90,11 @@ IASSpinnerExtension.prototype.bind = function(ias) {
   this.ias = ias;
 
   ias.on('next', $.proxy(this.showSpinner, this));
+
+  try {
+    ias.on('prev', $.proxy(this.showSpinnerBefore, this));
+  } catch (exception) {}
+
   ias.on('render', $.proxy(this.removeSpinner, this));
 };
 

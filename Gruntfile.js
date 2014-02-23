@@ -34,7 +34,7 @@ module.exports = function(grunt) {
         separator: ';'
       },
       dist: {
-        src: ['<banner:meta.banner>', 'src/callbacks.js', 'src/extension/*.js', 'src/jquery-ias.js'],
+        src: ['<banner:meta.banner>', 'src/callbacks.js', 'src/jquery-ias.js', 'src/extension/*.js'],
         dest: 'dist/<%= pkg.name %>.js'
       }
     },

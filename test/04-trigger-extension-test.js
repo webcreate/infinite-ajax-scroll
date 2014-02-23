@@ -23,13 +23,15 @@ describe("IAS", function () {
 
     jQuery.ias().extension(new IASTriggerExtension({
       text: 'trigger text',
-      html: '<div class="ias-trigger extra-trigger-class">{text}</div>',
+      html: '<div class="ias-trigger extra-trigger-class">{text}</div>'
     }));
+
+    jQuery.ias().initialize();
 
     expect($('.ias-trigger:visible').length).toEqual(0); // ensure it isn't already there
 
     scrollDown().then(function() {
-      wait(500).then(function() {
+      wait(1000).then(function() {
         // expect the trigger to be visible
         expect($('.ias-trigger:visible').length).toEqual(1);
 
@@ -54,11 +56,13 @@ describe("IAS", function () {
 
     jQuery.ias().extension(new IASTriggerExtension({
       text: 'trigger text',
-      html: '<div class="ias-trigger extra-trigger-class">{text}</div>',
+      html: '<div class="ias-trigger extra-trigger-class">{text}</div>'
     }));
 
+    jQuery.ias().initialize();
+
     scrollDown().then(function() {
-      wait(500).then(function() {
+      wait(1000).then(function() {
         $('.ias-trigger:visible').trigger('click');
 
         wait(2000).then(function() {
@@ -81,6 +85,8 @@ describe("IAS", function () {
       offset: 2
     }));
 
+    jQuery.ias().initialize();
+
     expect($('.ias-trigger:visible').length).toEqual(0); // ensure it isn't already there
 
     // scroll to page 2
@@ -94,7 +100,7 @@ describe("IAS", function () {
 
         // scroll to page 3
         scrollDown().then(function() {
-          wait(750).then(function() {
+          wait(1000).then(function() {
             // expect the trigger to be visible
             expect($('.ias-trigger:visible').length).toEqual(1);
 

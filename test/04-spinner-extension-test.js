@@ -13,6 +13,8 @@ describe("IAS", function () {
       next: '.next-posts a',
       delay: 400
     }).extension(new IASSpinnerExtension());
+
+    jQuery.ias().initialize();
   });
 
   after(function() {

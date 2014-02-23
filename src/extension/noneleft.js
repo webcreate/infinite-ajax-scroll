@@ -12,21 +12,17 @@ var IASNoneLeftExtension = function(options) {
   options = $.extend({}, this.defaults, options);
 
   this.ias = null;
-  this.uid = new Date().getTime();
-  this.text = options.text;
-  this.html = options.html;
-
-  // replace text
-  this.html = this.html.replace('{text}', this.text);
+  this.uid = (new Date()).getTime();
+  this.html = (options.html).replace('{text}', options.text);
 
   /**
    * Shows none left message
    */
   this.showNoneLeft = function() {
-    var $element = $(this.html).attr('id', 'ias_noneleft_' + this.uid);
-    var lastItem = this.ias.getLastItem();
+    var $element = $(this.html).attr('id', 'ias_noneleft_' + this.uid),
+        $lastItem = this.ias.getLastItem();
 
-    lastItem.after($element);
+    $lastItem.after($element);
     $element.fadeIn();
   };
 

@@ -30,12 +30,14 @@
     this.nextUrl = null;
     this.isBound = false;
     this.listeners = {
-      next: new IASCallbacks(),
-      load: new IASCallbacks(),
-      didLoad: new IASCallbacks(),
-      render: new IASCallbacks(),
-      scroll: new IASCallbacks(),
-      noneLeft: new IASCallbacks()
+      next:     new IASCallbacks(),
+      load:     new IASCallbacks(),
+      loaded:   new IASCallbacks(),
+      render:   new IASCallbacks(),
+      rendered: new IASCallbacks(),
+      scroll:   new IASCallbacks(),
+      noneLeft: new IASCallbacks(),
+      ready:    new IASCallbacks()
     };
     this.extensions = [];
 
@@ -79,6 +81,16 @@
     };
 
     /**
+     * Returns the first item currently in the DOM
+     *
+     * @private
+     * @returns {object}
+     */
+    this.getFirstItem = function() {
+      return $(this.itemSelector, this.$itemsContainer.get(0)).first();
+    };
+
+    /**
      * Returns scroll threshold. This threshold marks the line from where
      * IAS should start loading the next page.
      *
@@ -87,20 +99,20 @@
      * @return {number}
      */
     this.getScrollThreshold = function(negativeMargin) {
-      var lastElement;
+      var $lastElement;
 
       negativeMargin = negativeMargin || this.negativeMargin;
       negativeMargin = (negativeMargin >= 0 ? negativeMargin * -1 : negativeMargin);
 
-      lastElement = this.getLastItem();
+      $lastElement = this.getLastItem();
 
       // if the don't have a last element, the DOM might not have been loaded,
       // or the selector is invalid
-      if (0 === lastElement.size()) {
+      if (0 === $lastElement.size()) {
         return UNDETERMINED_SCROLLOFFSET;
       }
 
-      return (lastElement.offset().top + lastElement.height() + negativeMargin);
+      return ($lastElement.offset().top + $lastElement.height() + negativeMargin);
     };
 
     /**
@@ -159,6 +171,8 @@
 
       delay = delay || this.defaultDelay;
 
+      self.fire('load', [url]);
+
       return $.get(url, null, $.proxy(function(data) {
         $itemContainer = $(this.itemsContainerSelector, data).eq(0);
         if (0 === $itemContainer.length) {
@@ -171,8 +185,7 @@
           });
         }
 
-        // @todo it's best practise to fire events at the beginning of the method
-        self.fire('load', [data, items]);
+        self.fire('loaded', [data, items]);
 
         if (callback) {
           timeDiff = +new Date() - timeStart;
@@ -190,18 +203,33 @@
     /**
      * Renders items
      *
+     * @param callback
      * @param items
      */
-    this.render = function(items) {
-      var lastItem = this.getLastItem();
+    this.render = function(items, callback) {
+      var self = this,
+          $lastItem = this.getLastItem(),
+          count = 0;
 
       this.fire('render', [items]);
 
       $(items).hide(); // at first, hide it so we can fade it in later
 
-      lastItem.after(items);
+      $lastItem.after(items);
 
-      $(items).fadeIn();
+      $(items).fadeIn(400, function() {
+        // complete callback get fired for each item,
+        // only act on the last item
+        if (++count < items.length) {
+          return;
+        }
+
+        self.fire('rendered', [items]);
+
+        if (callback) {
+          callback();
+        }
+      });
     };
 
     /**
@@ -296,6 +324,12 @@
     this.hidePagination();
     this.bind();
 
+    for (var i = 0, l = this.extensions.length; i < l; i++) {
+      this.extensions[i].bind(this);
+    }
+
+    this.fire('ready');
+
     this.nextUrl = this.getNextUrl();
 
     // start loading next page if content is shorter than page fold
@@ -353,12 +387,37 @@
    * @public
    * @returns IAS
    */
-  IAS.prototype.on = function(event, callback) {
+  IAS.prototype.on = function(event, callback, priority) {
     if (typeof this.listeners[event] == 'undefined') {
       throw new Error('There is no event called "' + event + '"');
     }
 
-    this.listeners[event].add($.proxy(callback, this));
+    priority = priority || 0;
+
+    this.listeners[event].add($.proxy(callback, this), priority);
+
+    return this;
+  };
+
+  /**
+   * Registers an eventListener which only gets
+   * fired once.
+   *
+   * Note: chainable
+   *
+   * @public
+   * @returns IAS
+   */
+  IAS.prototype.one = function(event, callback) {
+    var self = this;
+
+    var remover = function() {
+      self.off(event, callback);
+      self.off(event, remover);
+    };
+
+    this.on(event, callback);
+    this.on(event, remover);
 
     return this;
   };
@@ -394,6 +453,9 @@
 
     if (!url) {
       this.fire('noneLeft', [this.getLastItem()]);
+      this.listeners['noneLeft'].disable(); // disable it so it only fires once
+
+      self.bind();
 
       return false;
     }
@@ -402,11 +464,11 @@
 
     promise.done(function() {
       self.load(url, function(data, items) {
-        self.render(items);
+        self.render(items, function() {
+          self.nextUrl = self.getNextUrl(data);
 
-        self.nextUrl = self.getNextUrl(data);
-
-        self.bind();
+          self.bind();
+        });
       });
     });
 
@@ -427,7 +489,9 @@
       throw new Error('Extension doesn\'t have required method "bind"');
     }
 
-    extension.bind(this);
+    if (typeof extension['initialize'] != 'undefined') {
+      extension.initialize(this);
+    }
 
     this.extensions.push(extension);
 
