@@ -12,6 +12,8 @@ describe("IAS", function () {
       pagination: '.navigation',
       next: '.next-posts a'
     }).extension(new IASPagingExtension());
+
+    jQuery.ias().initialize();
   });
 
   after(function() {
@@ -39,7 +41,6 @@ describe("IAS", function () {
             deferred.resolve();
           });
         });
-
       });
     });
 
