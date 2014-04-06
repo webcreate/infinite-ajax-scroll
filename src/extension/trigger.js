@@ -27,7 +27,7 @@ var IASTriggerExtension = function(options) {
       return true;
     }
 
-    if (this.offset && ++this.count < this.offset) {
+    if (false === this.offset || ++this.count < this.offset) {
       return true;
     }
 
