@@ -211,24 +211,26 @@
           $lastItem = this.getLastItem(),
           count = 0;
 
-      this.fire('render', [items]);
+      var promise = this.fire('render', [items]);
 
-      $(items).hide(); // at first, hide it so we can fade it in later
+      promise.done(function() {
+        $(items).hide(); // at first, hide it so we can fade it in later
 
-      $lastItem.after(items);
+        $lastItem.after(items);
 
-      $(items).fadeIn(400, function() {
-        // complete callback get fired for each item,
-        // only act on the last item
-        if (++count < items.length) {
-          return;
-        }
+        $(items).fadeIn(400, function() {
+          // complete callback get fired for each item,
+          // only act on the last item
+          if (++count < items.length) {
+            return;
+          }
 
-        self.fire('rendered', [items]);
+          self.fire('rendered', [items]);
 
-        if (callback) {
-          callback();
-        }
+          if (callback) {
+            callback();
+          }
+        });
       });
     };
 
