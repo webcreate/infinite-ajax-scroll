@@ -12,7 +12,8 @@ config["My tests"] = {
     "src/extension/paging.js",
     "src/extension/spinner.js",
     "src/extension/trigger.js",
-    "src/extension/noneleft.js"
+    "src/extension/noneleft.js",
+    "src/extension/history.js"
   ],
   resources: [
     { path: "/",            file: "test/fixtures/page1.html" },

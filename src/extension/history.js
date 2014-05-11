@@ -135,7 +135,7 @@ IASHistoryExtension.prototype.initialize = function (ias) {
 
   // expose prev method
   ias.prev = function() {
-    self.prev();
+    return self.prev();
   };
 
   this.prevUrl = this.getPrevUrl();
