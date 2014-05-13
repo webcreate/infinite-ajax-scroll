@@ -1,5 +1,5 @@
-Infinite Ajax Scroll 2
-======================
+Infinite Ajax Scroll
+====================
 
 A jQuery plugin to turn your paginated pages into infinite scrolling pages with ease.
 

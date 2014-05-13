@@ -1,5 +1,5 @@
 /**
- * Infinite Ajax Scroll v2.1.0
+ * Infinite Ajax Scroll v2.1.1
  * A jQuery plugin for infinite scrolling
  * http://infiniteajaxscroll.com
  *
@@ -171,9 +171,13 @@
 
       delay = delay || this.defaultDelay;
 
-      self.fire('load', [url]);
+      var loadEvent = {
+        url: url
+      };
 
-      return $.get(url, null, $.proxy(function(data) {
+      self.fire('load', [loadEvent]);
+
+      return $.get(loadEvent.url, null, $.proxy(function(data) {
         $itemContainer = $(this.itemsContainerSelector, data).eq(0);
         if (0 === $itemContainer.length) {
           $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);

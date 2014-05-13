@@ -44,6 +44,38 @@ describe("IAS", function () {
     return deferred.promise;
   });
 
+  it("should allow url to be changed in load event", function() {
+    var deferred = when.defer();
+
+    jQuery.ias({
+      container : '.listing',
+      item: '.post',
+      pagination: '.navigation',
+      next: '.next-posts a'
+    });
+
+    // first listener changes the url
+    jQuery.ias().on('load', function (loadEvent) {
+      // assert that it isn't already there
+      buster.refute.contains(loadEvent.url, "ajax=1");
+
+      loadEvent.url = loadEvent.url + "?ajax=1";
+    });
+
+    // second listener asserts the url is changed
+    jQuery.ias().on('load', function (loadEvent) {
+      buster.assert.contains(loadEvent.url, "ajax=1");
+    });
+
+    scrollDown().then(function() {
+      wait(2000).then(function() {
+        deferred.resolve();
+      });
+    });
+
+    return deferred.promise;
+  });
+
   it("should call render listeners when render is complete", function() {
     var deferred = when.defer();
     var spy1 = this.spy();
