@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## 2.1.1
+
+* Changed argument of `load` event from url to event object
+* Fixed `prev()` return value
+
 ## 2.1.0
 
 * Added History extension
