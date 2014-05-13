@@ -1,10 +1,14 @@
-var config = module.exports;
+var config = module.exports,
+    fs = require('fs'),
+    bower = {
+      jquery: JSON.parse(fs.readFileSync('bower_components/jquery/bower.json', 'utf8'))
+    };
 
 config["My tests"] = {
   rootPath: "../",
   environment: "browser", // or "node"
   libs: [
-    "bower_components/jquery/jquery.min.js"
+    "bower_components/jquery/" + bower.jquery.main,
   ],
   sources: [
     "src/callbacks.js",
