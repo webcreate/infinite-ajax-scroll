@@ -13,6 +13,7 @@ var IASTriggerExtension = function(options) {
 
   this.ias = null;
   this.html = (options.html).replace('{text}', options.text);
+  this.htmlPrev = (options.htmlPrev).replace('{text}', options.textPrev);
   this.enabled = true;
   this.count = 0;
   this.offset = options.offset;
@@ -31,7 +32,7 @@ var IASTriggerExtension = function(options) {
       return true;
     }
 
-    var $trigger = this.$triggerNext || (this.$triggerNext = this.createTrigger(this.next));
+    var $trigger = this.$triggerNext || (this.$triggerNext = this.createTrigger(this.next, this.html));
     var $lastItem = this.ias.getLastItem();
 
     $lastItem.after($trigger);
@@ -48,7 +49,7 @@ var IASTriggerExtension = function(options) {
       return true;
     }
 
-    var $trigger = this.$triggerPrev || (this.$triggerPrev = this.createTrigger(this.prev));
+    var $trigger = this.$triggerPrev || (this.$triggerPrev = this.createTrigger(this.prev, this.htmlPrev));
     var $firstItem = this.ias.getFirstItem();
 
     $firstItem.before($trigger);
@@ -60,10 +61,14 @@ var IASTriggerExtension = function(options) {
   /**
    * @param clickCallback
    * @returns {*|jQuery}
+   * @param {string} html
    */
-  this.createTrigger = function(clickCallback) {
+  this.createTrigger = function(clickCallback, html) {
     var uid = (new Date()).getTime(),
-        $trigger = $(this.html).attr('id', 'ias_trigger_' + uid);
+        $trigger;
+
+    html = html || this.html;
+    $trigger = $(html).attr('id', 'ias_trigger_' + uid);
 
     $trigger.hide();
     $trigger.on('click', $.proxy(clickCallback, this));
@@ -127,6 +132,8 @@ IASTriggerExtension.prototype.prev = function() {
 IASTriggerExtension.prototype.defaults = {
   text: 'Load more items',
   html: '<div class="ias-trigger" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
+  textPrev: 'Load previous items',
+  htmlPrev: '<div class="ias-trigger ias-trigger-prev" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
   offset: 0
 };
 

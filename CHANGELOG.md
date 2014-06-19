@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 2.1.2
+
+* Added `htmlPrev` and `textPrev` options to IASTriggerExtension
+
 ## 2.1.1
 
 * Changed argument of `load` event from url to event object
