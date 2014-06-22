@@ -29,6 +29,8 @@
     this.negativeMargin = options.negativeMargin;
     this.nextUrl = null;
     this.isBound = false;
+    /* Browsers that handle JavaScript via proxy servers don't support the scroll event */
+    this.hasScrollEvent = ('onscroll' in window ? true : false);
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -242,7 +244,8 @@
      * Hides the pagination
      */
     this.hidePagination = function() {
-      if (this.paginationSelector) {
+      /* If the browser doesn't support the scroll event, don't hide the pagination */
+      if (this.paginationSelector && this.hasScrollEvent) {
         $(this.paginationSelector, this.$container).hide();
       }
     };
