@@ -29,8 +29,6 @@
     this.negativeMargin = options.negativeMargin;
     this.nextUrl = null;
     this.isBound = false;
-    /* Browsers that handle JavaScript via proxy servers don't support the scroll event */
-    this.hasScrollEvent = ('onscroll' in window ? true : false);
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -329,6 +327,9 @@
   IAS.prototype.initialize = function() {
     var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
         scrollThreshold = this.getScrollThreshold();
+
+    /* Browsers that handle JavaScript via proxy servers don't support the scroll event */
+    this.hasScrollEvent = ('onscroll' in window ? true : false);
 
     this.hidePagination();
     this.bind();
