@@ -11,7 +11,7 @@ describe("IAS", function () {
       item: '.post',
       pagination: '.navigation',
       next: '.next-posts a'
-    })
+    });
   });
 
   after(function() {
@@ -111,6 +111,43 @@ describe("IAS", function () {
           });
         });
       });
+    });
+
+    return deferred.promise;
+  });
+
+  it("should display a prev trigger", function() {
+    var deferred = when.defer();
+
+    jQuery.ias('destroy');
+
+    loadFixture("page2.html", function() {
+      jQuery.ias({
+        container : '.listing',
+        item: '.post',
+        pagination: '.navigation',
+        next: '.next-posts a'
+      });
+
+      jQuery.ias().extension(new IASPagingExtension());
+      jQuery.ias().extension(new IASTriggerExtension({
+        textPrev: 'trigger prev text'
+      }));
+      jQuery.ias().extension(new IASHistoryExtension({
+        prev: '.prev-posts a'
+      }));
+
+      expect($('.ias-trigger-prev:visible').length).toEqual(0); // ensure it isn't already there
+
+      jQuery.ias().initialize();
+
+      wait(1000).then(function() {
+        expect($('.ias-trigger-prev:visible').length).toEqual(1);
+
+        expect($('.ias-trigger-prev:visible').text()).toEqual('trigger prev text');
+
+        deferred.resolve();
+      })
     });
 
     return deferred.promise;
