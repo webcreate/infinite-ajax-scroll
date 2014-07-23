@@ -126,7 +126,7 @@ IASCallbacks.prototype = {
    * @returns {object|void}
    */
   fireWith: function (context, args) {
-    var deferred = $.Deferred();
+    var deferred = jQuery.Deferred();
 
     if (this.isDisabled) {
       return deferred.reject();
