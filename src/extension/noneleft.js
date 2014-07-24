@@ -9,7 +9,7 @@
  */
 
 var IASNoneLeftExtension = function(options) {
-  options = $.extend({}, this.defaults, options);
+  options = jQuery.extend({}, this.defaults, options);
 
   this.ias = null;
   this.uid = (new Date()).getTime();
@@ -19,7 +19,7 @@ var IASNoneLeftExtension = function(options) {
    * Shows none left message
    */
   this.showNoneLeft = function() {
-    var $element = $(this.html).attr('id', 'ias_noneleft_' + this.uid),
+    var $element = jQuery(this.html).attr('id', 'ias_noneleft_' + this.uid),
         $lastItem = this.ias.getLastItem();
 
     $lastItem.after($element);
@@ -35,7 +35,7 @@ var IASNoneLeftExtension = function(options) {
 IASNoneLeftExtension.prototype.bind = function(ias) {
   this.ias = ias;
 
-  ias.on('noneLeft', $.proxy(this.showNoneLeft, this));
+  ias.on('noneLeft', jQuery.proxy(this.showNoneLeft, this));
 };
 
 /**

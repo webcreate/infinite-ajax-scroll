@@ -9,7 +9,7 @@
  */
 
 var IASHistoryExtension = function (options) {
-  options = $.extend({}, this.defaults, options);
+  options = jQuery.extend({}, this.defaults, options);
 
   this.ias = null;
   this.prevSelector = options.prev;
@@ -64,7 +64,7 @@ var IASHistoryExtension = function (options) {
     }
 
     // always take the last matching item
-    return $(this.prevSelector, container).last().attr('href');
+    return jQuery(this.prevSelector, container).last().attr('href');
   };
 
   /**
@@ -102,11 +102,11 @@ var IASHistoryExtension = function (options) {
 
     ias.fire('render', [items]);
 
-    $(items).hide(); // at first, hide it so we can fade it in later
+    jQuery(items).hide(); // at first, hide it so we can fade it in later
 
     $firstItem.before(items);
 
-    $(items).fadeIn(400, function () {
+    jQuery(items).fadeIn(400, function () {
       if (++count < items.length) {
         return;
       }
@@ -150,8 +150,8 @@ IASHistoryExtension.prototype.initialize = function (ias) {
 IASHistoryExtension.prototype.bind = function (ias) {
   var self = this;
 
-  ias.on('pageChange', $.proxy(this.onPageChange, this));
-  ias.on('scroll', $.proxy(this.onScroll, this));
+  ias.on('pageChange', jQuery.proxy(this.onPageChange, this));
+  ias.on('scroll', jQuery.proxy(this.onScroll, this));
   ias.on('ready', function () {
     var currentScrollOffset = ias.getCurrentScrollOffset(ias.$scrollContainer),
         firstItemScrollThreshold = self.getScrollThresholdFirstItem();

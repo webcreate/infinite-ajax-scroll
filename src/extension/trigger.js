@@ -9,7 +9,7 @@
  */
 
 var IASTriggerExtension = function(options) {
-  options = $.extend({}, this.defaults, options);
+  options = jQuery.extend({}, this.defaults, options);
 
   this.ias = null;
   this.html = (options.html).replace('{text}', options.text);
@@ -68,10 +68,10 @@ var IASTriggerExtension = function(options) {
         $trigger;
 
     html = html || this.html;
-    $trigger = $(html).attr('id', 'ias_trigger_' + uid);
+    $trigger = jQuery(html).attr('id', 'ias_trigger_' + uid);
 
     $trigger.hide();
-    $trigger.on('click', $.proxy(clickCallback, this));
+    $trigger.on('click', jQuery.proxy(clickCallback, this));
 
     return $trigger;
   };
@@ -89,10 +89,10 @@ IASTriggerExtension.prototype.bind = function(ias) {
   this.ias = ias;
 
   try {
-    ias.on('prev', $.proxy(this.showTriggerPrev, this), this.priority);
+    ias.on('prev', jQuery.proxy(this.showTriggerPrev, this), this.priority);
   } catch (exception) {}
 
-  ias.on('next', $.proxy(this.showTriggerNext, this), this.priority);
+  ias.on('next', jQuery.proxy(this.showTriggerNext, this), this.priority);
   ias.on('rendered', function () { self.enabled = true; }, this.priority);
 };
 
