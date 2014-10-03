@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## 2.1.3
+
+* Bug #152 Improve compatibility support when Prototype is used along with jQuery (antoinekociuba)
+* Added docs
+
 ## 2.1.2
 
 * Added `htmlPrev` and `textPrev` options to IASTriggerExtension

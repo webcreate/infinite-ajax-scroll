@@ -24,7 +24,6 @@ To contribute to Infinite AJAX Scroll please follow these instructions:
 * Write the feature/bugfix
 * Write tests for the feature/bugfix
 * Run tests
-* Update README
 * Submit your Pull Request
 
 ### Installing development tools
