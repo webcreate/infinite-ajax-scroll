@@ -64,6 +64,8 @@ Enter the selector of the link element that links to the next page. The href att
 
 Minimal number of milliseconds to stay in a loading state.
 
+To improve user experience, website visitors should be aware when fresh results are appended to the current list. Infinite AJAX Scroll displays a spinner/loader (only when the spinner extension is used). When the loading of the next page only takes a few miliseconds the spinner isn't displayed long enough to be noticed by the visitor. With the delay option you can extend the time at which to spinner is shown, before new items are appended.
+
 ### negativeMargin
 
 <dl>
@@ -74,8 +76,10 @@ Minimal number of milliseconds to stay in a loading state.
     <dd>10</dd>
 </dl>
 
-On default IAS starts loading new items when you scroll to the latest `.item` element. The `negativeMargin` will be added to the items' offset, giving you the ability to load new items earlier (please note that the margin is always transformed to a negative integer).
+On default IAS starts loading new items when you scroll to the last `.item` element. The `negativeMargin` will be added to the items' offset, giving you the ability to load new items earlier (please note that the margin is always transformed to a negative integer).
 
 For example:
 
 Setting a `negativeMargin` of 250 means that IAS will start loading 250 pixel before the last item has scrolled into view.
+
+Note: user experience can degrade if new pages are loaded too quickly without visual feedback (also see [delay](options.html#delay)). Use with caution.
