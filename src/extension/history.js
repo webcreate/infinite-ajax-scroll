@@ -30,6 +30,8 @@ var IASHistoryExtension = function (options) {
     if (!window.history || !window.history.replaceState) {
       return;
     }
+    
+    state = history.state;
 
     history.replaceState(state, document.title, url);
   };
