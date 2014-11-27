@@ -347,6 +347,33 @@
   };
 
   /**
+   * Reload IAS
+   *
+   * Note: Useful when the items container DOM is modified by external actions
+   *
+   * @public
+   */
+  IAS.prototype.reload = function() {
+    // IMPORTANT: Redefine items container to get correct item in getLastItem method
+    this.$itemsContainer = $(this.itemsContainerSelector);
+
+    var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
+        scrollThreshold = this.getScrollThreshold();
+
+    this.hidePagination();
+    this.bind();
+
+    this.nextUrl = this.getNextUrl();
+
+    // start loading next page if content is shorter than page fold
+    if (currentScrollOffset >= scrollThreshold) {
+        this.next();
+    }
+
+    return this;
+  };
+
+  /**
    * Binds IAS to DOM events
    *
    * @public
