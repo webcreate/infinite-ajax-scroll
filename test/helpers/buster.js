@@ -1,3 +1,6 @@
+buster.spec.expose();
+var expect = buster.assertions.expect;
+var when = buster.when;
 
 function loadFixture(path, callback) {
   jQuery.ajax({

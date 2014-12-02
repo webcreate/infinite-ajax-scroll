@@ -63,7 +63,7 @@ describe("IAS", function () {
   it("extension can add listeners", function() {
     var anExtension = function() {
       this.listeners = {
-        test: jQuery.Callbacks()
+        test: new IASCallbacks()
       };
     };
 
@@ -71,7 +71,7 @@ describe("IAS", function () {
       jQuery.extend(ias.listeners, this.listeners);
     };
 
-    // when the extension isnt bound, this will throw an error
+    // when the extension isn't bound, this will throw an error
     expect(
         function () {
           jQuery.ias().on('test', function () {

@@ -1,8 +1,3 @@
-buster.spec.expose();
-var expect = buster.assertions.expect;
-var when = buster.when;
-
-
 describe("IAS", function () {
   before(function() {
     this.timeout = 10000;
@@ -81,6 +76,8 @@ describe("IAS", function () {
         wait(2000).then(function() {
           expect($('#post11').length).toEqual(1);
           expect($('#post21').length).toEqual(0);
+
+          $element.ias('destroy');
 
           deferred.resolve();
         });
