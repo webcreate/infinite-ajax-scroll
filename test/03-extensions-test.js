@@ -68,10 +68,13 @@ describe("IAS", function () {
     };
 
     anExtension.prototype.bind = function(ias) {
+    };
+
+    anExtension.prototype.initialize = function(ias) {
       jQuery.extend(ias.listeners, this.listeners);
     };
 
-    // when the extension isn't bound, this will throw an error
+    // when the extension isn't added, this will throw an error
     expect(
         function () {
           jQuery.ias().on('test', function () {

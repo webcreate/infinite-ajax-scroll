@@ -23,7 +23,6 @@
     this.nextSelector = options.next;
     this.paginationSelector = options.pagination;
     this.$scrollContainer = $element;
-    this.$itemsContainer = $(this.itemsContainerSelector);
     this.$container = (window === $element.get(0) ? $(document) : $element);
     this.defaultDelay = options.delay;
     this.negativeMargin = options.negativeMargin;
@@ -71,13 +70,23 @@
     };
 
     /**
+     * Returns the items container currently in the DOM
+     *
+     * @private
+     * @returns {object}
+     */
+    this.getItemsContainer = function() {
+      return $(this.itemsContainerSelector);
+    };
+
+    /**
      * Returns the last item currently in the DOM
      *
      * @private
      * @returns {object}
      */
     this.getLastItem = function() {
-      return $(this.itemSelector, this.$itemsContainer.get(0)).last();
+      return $(this.itemSelector, this.getItemsContainer().get(0)).last();
     };
 
     /**
@@ -87,7 +96,7 @@
      * @returns {object}
      */
     this.getFirstItem = function() {
-      return $(this.itemSelector, this.$itemsContainer.get(0)).first();
+      return $(this.itemSelector, this.getItemsContainer().get(0)).first();
     };
 
     /**
@@ -146,9 +155,7 @@
      * @private
      */
     this.getNextUrl = function(container) {
-      if (!container) {
-        container = this.$container;
-      }
+      container = container || this.$container;
 
       // always take the last matching item
       return $(this.nextSelector, container).last().attr('href');
@@ -344,6 +351,16 @@
     }
 
     return this;
+  };
+
+  /**
+   * Reinitializes IAS, for example after an ajax page update
+   *
+   * @public
+   */
+  IAS.prototype.reinitialize = function () {
+    this.unbind();
+    this.initialize();
   };
 
   /**

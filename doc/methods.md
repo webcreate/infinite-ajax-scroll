@@ -29,6 +29,14 @@ Initializes Infinite AJAX Scroll. Normally this happens when the DOM is ready (`
 jQuery.ias().initialize();
 ```
 
+### reinitialize
+
+Reinitializes Infinite AJAX Scroll after a DOM update. DOM updates could be made by page updates via AJAX, like changing the sorting of a list, or filtering a result.
+
+```javascript
+jQuery.ias().reinitialize();
+```
+
 ### next
 
 Loads the next page.
