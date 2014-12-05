@@ -51,7 +51,6 @@ describe("IAS", function () {
     };
 
     jQuery.ias().extension(new anExtension());
-    jQuery.ias().initialize();
 
     expect(spy1).toHaveBeenCalledOnce();
 
@@ -84,7 +83,6 @@ describe("IAS", function () {
 
     // now let's register the extension
     jQuery.ias().extension(new anExtension());
-    jQuery.ias().initialize();
 
     // this should now be possible and not throw an error
     jQuery.ias().on('test', function() {});

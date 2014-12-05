@@ -11,7 +11,7 @@ jQuery.ias().bind();
 
 ### destroy
 
-Alias of [unbind](methods.html#unbind) method.
+Unbinds and destroys instance.
 
 ### extension
 

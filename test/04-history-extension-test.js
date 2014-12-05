@@ -23,8 +23,6 @@ describe("IAS", function () {
       prev: '.prev-posts a'
     }));
 
-    ias.initialize();
-
     expect(ias.prev).toBeDefined();
   });
 

@@ -90,12 +90,24 @@ IASSpinnerExtension.prototype.bind = function(ias) {
   this.ias = ias;
 
   ias.on('next', jQuery.proxy(this.showSpinner, this));
+  ias.on('render', jQuery.proxy(this.removeSpinner, this));
 
   try {
     ias.on('prev', jQuery.proxy(this.showSpinnerBefore, this));
   } catch (exception) {}
+};
 
-  ias.on('render', jQuery.proxy(this.removeSpinner, this));
+/**
+ * @public
+ * @param {object} ias
+ */
+IASSpinnerExtension.prototype.unbind = function(ias) {
+  ias.off('next', this.showSpinner);
+  ias.off('render', this.removeSpinner);
+
+  try {
+    ias.off('prev', this.showSpinnerBefore);
+  } catch (exception) {}
 };
 
 /**

@@ -28,6 +28,7 @@
     this.negativeMargin = options.negativeMargin;
     this.nextUrl = null;
     this.isBound = false;
+    this.isPaused = false;
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -48,14 +49,14 @@
      * @private
      */
     this.scrollHandler = function() {
+      // the throttle method can call the scrollHandler even thought we have called unbind()
+      if (!this.isBound || this.isPaused) {
+        return;
+      }
+
       var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
           scrollThreshold = this.getScrollThreshold()
       ;
-
-      // the throttle method can call the scrollHandler even thought we have called unbind()
-      if (!this.isBound) {
-        return;
-      }
 
       // invalid scrollThreshold. The DOM might not have loaded yet...
       if (UNDETERMINED_SCROLLOFFSET == scrollThreshold) {
@@ -320,6 +321,28 @@
       return this.listeners[event].fireWith(this, args);
     };
 
+    /**
+     * Pauses the scroll handler
+     *
+     * Note: internal use only, if you need to pause IAS use `unbind` method.
+     *
+     * @private
+     */
+    this.pause = function() {
+      this.isPaused = true;
+    };
+
+    /**
+     * Resumes the scroll handler
+     *
+     * Note: internal use only, if you need to resume IAS use `bind` method.
+     *
+     * @private
+     */
+    this.resume = function() {
+      this.isPaused = false;
+    };
+
     return this;
   };
 
@@ -336,10 +359,6 @@
 
     this.hidePagination();
     this.bind();
-
-    for (var i = 0, l = this.extensions.length; i < l; i++) {
-      this.extensions[i].bind(this);
-    }
 
     this.fire('ready');
 
@@ -375,7 +394,12 @@
 
     this.$scrollContainer.on('scroll', $.proxy(this.throttle(this.scrollHandler, 150), this));
 
+    for (var i = 0, l = this.extensions.length; i < l; i++) {
+      this.extensions[i].bind(this);
+    }
+
     this.isBound = true;
+    this.resume();
   };
 
   /**
@@ -389,6 +413,13 @@
     }
 
     this.$scrollContainer.off('scroll', this.scrollHandler);
+
+    // notify extensions about unbinding
+    for (var i = 0, l = this.extensions.length; i < l; i++) {
+      if (typeof this.extensions[i]['unbind'] != 'undefined') {
+        this.extensions[i].unbind(this);
+      }
+    }
 
     this.isBound = false;
   };
@@ -474,13 +505,13 @@
     var url = this.nextUrl,
         self = this;
 
-    this.unbind();
+    this.pause();
 
     if (!url) {
       this.fire('noneLeft', [this.getLastItem()]);
       this.listeners['noneLeft'].disable(); // disable it so it only fires once
 
-      self.bind();
+      self.resume();
 
       return false;
     }
@@ -492,13 +523,13 @@
         self.render(items, function() {
           self.nextUrl = self.getNextUrl(data);
 
-          self.bind();
+          self.resume();
         });
       });
     });
 
     promise.fail(function() {
-      self.bind();
+      self.resume();
     });
 
     return true;
@@ -519,6 +550,8 @@
     }
 
     this.extensions.push(extension);
+
+    this.reinitialize();
 
     return this;
   };

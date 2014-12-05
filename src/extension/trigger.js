@@ -58,6 +58,10 @@ var IASTriggerExtension = function(options) {
     return false;
   };
 
+  this.onRendered = function() {
+    this.enabled = true;
+  };
+
   /**
    * @param clickCallback
    * @returns {*|jQuery}
@@ -88,12 +92,25 @@ IASTriggerExtension.prototype.bind = function(ias) {
 
   this.ias = ias;
 
+  ias.on('next', jQuery.proxy(this.showTriggerNext, this), this.priority);
+  ias.on('rendered', jQuery.proxy(this.onRendered, this), this.priority);
+
   try {
     ias.on('prev', jQuery.proxy(this.showTriggerPrev, this), this.priority);
   } catch (exception) {}
+};
 
-  ias.on('next', jQuery.proxy(this.showTriggerNext, this), this.priority);
-  ias.on('rendered', function () { self.enabled = true; }, this.priority);
+/**
+ * @public
+ * @param {object} ias
+ */
+IASTriggerExtension.prototype.unbind = function(ias) {
+  ias.off('next', this.showTriggerNext);
+  ias.off('rendered', this.onRendered);
+
+  try {
+    ias.off('prev', this.showTriggerPrev);
+  } catch (exception) {}
 };
 
 /**
@@ -101,7 +118,7 @@ IASTriggerExtension.prototype.bind = function(ias) {
  */
 IASTriggerExtension.prototype.next = function() {
   this.enabled = false;
-  this.ias.unbind();
+  this.ias.pause();
 
   if (this.$triggerNext) {
     this.$triggerNext.remove();
@@ -116,7 +133,7 @@ IASTriggerExtension.prototype.next = function() {
  */
 IASTriggerExtension.prototype.prev = function() {
   this.enabled = false;
-  this.ias.unbind();
+  this.ias.pause();
 
   if (this.$triggerPrev) {
     this.$triggerPrev.remove();

@@ -119,6 +119,19 @@ IASPagingExtension.prototype.bind = function(ias) {
 };
 
 /**
+ * @public
+ * @param {object} ias
+ */
+IASPagingExtension.prototype.unbind = function(ias) {
+  try {
+    ias.off('prev', this.onPrev);
+  } catch (exception) {}
+
+  ias.off('next', this.onNext);
+  ias.off('scroll', this.onScroll);
+};
+
+/**
  * Returns current page number based on scroll offset
  *
  * @param {number} scrollOffset
