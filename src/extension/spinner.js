@@ -53,7 +53,7 @@ var IASSpinnerExtension = function(options) {
   this.getSpinner = function() {
     var $spinner = jQuery('#ias_spinner_' + this.uid);
 
-    if ($spinner.size() > 0) {
+    if ($spinner.length > 0) {
       return $spinner;
     }
 
@@ -66,7 +66,7 @@ var IASSpinnerExtension = function(options) {
   this.hasSpinner = function() {
     var $spinner = jQuery('#ias_spinner_' + this.uid);
 
-    return ($spinner.size() > 0);
+    return ($spinner.length > 0);
   };
 
   /**

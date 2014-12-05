@@ -118,7 +118,7 @@
 
       // if the don't have a last element, the DOM might not have been loaded,
       // or the selector is invalid
-      if (0 === $lastElement.size()) {
+      if (0 === $lastElement.length) {
         return UNDETERMINED_SCROLLOFFSET;
       }
 

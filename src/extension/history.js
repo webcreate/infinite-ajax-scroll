@@ -92,7 +92,7 @@ var IASHistoryExtension = function (options) {
 
     // if the don't have a first element, the DOM might not have been loaded,
     // or the selector is invalid
-    if (0 === $firstElement.size()) {
+    if (0 === $firstElement.length) {
       return -1;
     }
 
