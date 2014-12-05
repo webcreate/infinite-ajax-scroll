@@ -400,6 +400,8 @@
    */
   IAS.prototype.destroy = function() {
     this.unbind();
+
+    this.$scrollContainer.data('ias', null);
   };
 
   /**
@@ -547,32 +549,28 @@
 
     this.each(function() {
       var $this = $(this),
-          data = $this.data('ias'),
+          instance = $this.data('ias'),
           options = $.extend({}, $.fn.ias.defaults, $this.data(), typeof option == 'object' && option)
-      ;
+          ;
 
       // set a new instance as data
-      if (!data) {
-        $this.data('ias', (data = new IAS($this, options)));
+      if (!instance) {
+        $this.data('ias', (instance = new IAS($this, options)));
 
-        $(document).ready($.proxy(data.initialize, data));
+        $(document).ready($.proxy(instance.initialize, instance));
       }
 
       // when the plugin is called with a method
       if (typeof option === 'string') {
-        if (typeof data[option] !== 'function') {
+        if (typeof instance[option] !== 'function') {
           throw new Error('There is no method called "' + option + '"');
         }
 
         args.shift(); // remove first argument ('option')
-        data[option].apply(data, args);
-
-        if (option === 'destroy') {
-          $this.data('ias', null);
-        }
+        instance[option].apply(instance, args);
       }
 
-      retval = $this.data('ias');
+      retval = instance;
     });
 
     return retval;
