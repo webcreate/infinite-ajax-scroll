@@ -37,7 +37,8 @@
       rendered: new IASCallbacks(),
       scroll:   new IASCallbacks(),
       noneLeft: new IASCallbacks(),
-      ready:    new IASCallbacks()
+      ready:    new IASCallbacks(),
+      pageChange:    new IASCallbacks()
     };
     this.extensions = [];
 
