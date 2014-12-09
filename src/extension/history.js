@@ -25,13 +25,11 @@ var IASHistoryExtension = function (options) {
    * @param url
    */
   this.onPageChange = function (pageNum, scrollOffset, url) {
-    var state = {};
-
     if (!window.history || !window.history.replaceState) {
       return;
     }
     
-    state = history.state;
+    var state = history.state;
 
     history.replaceState(state, document.title, url);
   };
@@ -47,6 +45,17 @@ var IASHistoryExtension = function (options) {
     if (!this.prevUrl) {
       return;
     }
+
+    currentScrollOffset -= this.ias.$scrollContainer.height();
+
+    if (currentScrollOffset <= firstItemScrollThreshold) {
+      this.prev();
+    }
+  };
+
+  this.onReady = function () {
+    var currentScrollOffset = this.ias.getCurrentScrollOffset(this.ias.$scrollContainer),
+        firstItemScrollThreshold = this.getScrollThresholdFirstItem();
 
     currentScrollOffset -= this.ias.$scrollContainer.height();
 
@@ -83,7 +92,7 @@ var IASHistoryExtension = function (options) {
 
     // if the don't have a first element, the DOM might not have been loaded,
     // or the selector is invalid
-    if (0 === $firstElement.size()) {
+    if (0 === $firstElement.length) {
       return -1;
     }
 
@@ -150,20 +159,19 @@ IASHistoryExtension.prototype.initialize = function (ias) {
  * @param ias
  */
 IASHistoryExtension.prototype.bind = function (ias) {
-  var self = this;
-
   ias.on('pageChange', jQuery.proxy(this.onPageChange, this));
   ias.on('scroll', jQuery.proxy(this.onScroll, this));
-  ias.on('ready', function () {
-    var currentScrollOffset = ias.getCurrentScrollOffset(ias.$scrollContainer),
-        firstItemScrollThreshold = self.getScrollThresholdFirstItem();
+  ias.on('ready', jQuery.proxy(this.onReady, this));
+};
 
-    currentScrollOffset -= ias.$scrollContainer.height();
-
-    if (currentScrollOffset <= firstItemScrollThreshold) {
-      self.prev();
-    }
-  });
+/**
+ * @public
+ * @param {object} ias
+ */
+IASHistoryExtension.prototype.unbind = function(ias) {
+  ias.off('pageChange', this.onPageChange);
+  ias.off('scroll', this.onScroll);
+  ias.off('ready', this.onReady);
 };
 
 /**
@@ -180,7 +188,7 @@ IASHistoryExtension.prototype.prev = function () {
     return false;
   }
 
-  ias.unbind();
+  ias.pause();
 
   var promise = ias.fire('prev', [url]);
 
@@ -189,7 +197,7 @@ IASHistoryExtension.prototype.prev = function () {
       self.renderBefore(items, function () {
         self.prevUrl = self.getPrevUrl(data);
 
-        ias.bind();
+        ias.resume();
 
         if (self.prevUrl) {
           self.prev();
@@ -199,7 +207,7 @@ IASHistoryExtension.prototype.prev = function () {
   });
 
   promise.fail(function () {
-    ias.bind();
+    ias.resume();
   });
 
   return true;

@@ -23,12 +23,12 @@
     this.nextSelector = options.next;
     this.paginationSelector = options.pagination;
     this.$scrollContainer = $element;
-    this.$itemsContainer = $(this.itemsContainerSelector);
     this.$container = (window === $element.get(0) ? $(document) : $element);
     this.defaultDelay = options.delay;
     this.negativeMargin = options.negativeMargin;
     this.nextUrl = null;
     this.isBound = false;
+    this.isPaused = false;
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -49,14 +49,14 @@
      * @private
      */
     this.scrollHandler = function() {
+      // the throttle method can call the scrollHandler even thought we have called unbind()
+      if (!this.isBound || this.isPaused) {
+        return;
+      }
+
       var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
           scrollThreshold = this.getScrollThreshold()
       ;
-
-      // the throttle method can call the scrollHandler even thought we have called unbind()
-      if (!this.isBound) {
-        return;
-      }
 
       // invalid scrollThreshold. The DOM might not have loaded yet...
       if (UNDETERMINED_SCROLLOFFSET == scrollThreshold) {
@@ -71,13 +71,23 @@
     };
 
     /**
+     * Returns the items container currently in the DOM
+     *
+     * @private
+     * @returns {object}
+     */
+    this.getItemsContainer = function() {
+      return $(this.itemsContainerSelector);
+    };
+
+    /**
      * Returns the last item currently in the DOM
      *
      * @private
      * @returns {object}
      */
     this.getLastItem = function() {
-      return $(this.itemSelector, this.$itemsContainer.get(0)).last();
+      return $(this.itemSelector, this.getItemsContainer().get(0)).last();
     };
 
     /**
@@ -87,7 +97,7 @@
      * @returns {object}
      */
     this.getFirstItem = function() {
-      return $(this.itemSelector, this.$itemsContainer.get(0)).first();
+      return $(this.itemSelector, this.getItemsContainer().get(0)).first();
     };
 
     /**
@@ -108,7 +118,7 @@
 
       // if the don't have a last element, the DOM might not have been loaded,
       // or the selector is invalid
-      if (0 === $lastElement.size()) {
+      if (0 === $lastElement.length) {
         return UNDETERMINED_SCROLLOFFSET;
       }
 
@@ -146,9 +156,7 @@
      * @private
      */
     this.getNextUrl = function(container) {
-      if (!container) {
-        container = this.$container;
-      }
+      container = container || this.$container;
 
       // always take the last matching item
       return $(this.nextSelector, container).last().attr('href');
@@ -313,6 +321,28 @@
       return this.listeners[event].fireWith(this, args);
     };
 
+    /**
+     * Pauses the scroll handler
+     *
+     * Note: internal use only, if you need to pause IAS use `unbind` method.
+     *
+     * @private
+     */
+    this.pause = function() {
+      this.isPaused = true;
+    };
+
+    /**
+     * Resumes the scroll handler
+     *
+     * Note: internal use only, if you need to resume IAS use `bind` method.
+     *
+     * @private
+     */
+    this.resume = function() {
+      this.isPaused = false;
+    };
+
     return this;
   };
 
@@ -330,10 +360,6 @@
     this.hidePagination();
     this.bind();
 
-    for (var i = 0, l = this.extensions.length; i < l; i++) {
-      this.extensions[i].bind(this);
-    }
-
     this.fire('ready');
 
     this.nextUrl = this.getNextUrl();
@@ -344,6 +370,16 @@
     }
 
     return this;
+  };
+
+  /**
+   * Reinitializes IAS, for example after an ajax page update
+   *
+   * @public
+   */
+  IAS.prototype.reinitialize = function () {
+    this.unbind();
+    this.initialize();
   };
 
   /**
@@ -358,7 +394,12 @@
 
     this.$scrollContainer.on('scroll', $.proxy(this.throttle(this.scrollHandler, 150), this));
 
+    for (var i = 0, l = this.extensions.length; i < l; i++) {
+      this.extensions[i].bind(this);
+    }
+
     this.isBound = true;
+    this.resume();
   };
 
   /**
@@ -373,6 +414,13 @@
 
     this.$scrollContainer.off('scroll', this.scrollHandler);
 
+    // notify extensions about unbinding
+    for (var i = 0, l = this.extensions.length; i < l; i++) {
+      if (typeof this.extensions[i]['unbind'] != 'undefined') {
+        this.extensions[i].unbind(this);
+      }
+    }
+
     this.isBound = false;
   };
 
@@ -383,6 +431,8 @@
    */
   IAS.prototype.destroy = function() {
     this.unbind();
+
+    this.$scrollContainer.data('ias', null);
   };
 
   /**
@@ -455,13 +505,13 @@
     var url = this.nextUrl,
         self = this;
 
-    this.unbind();
+    this.pause();
 
     if (!url) {
       this.fire('noneLeft', [this.getLastItem()]);
       this.listeners['noneLeft'].disable(); // disable it so it only fires once
 
-      self.bind();
+      self.resume();
 
       return false;
     }
@@ -473,13 +523,13 @@
         self.render(items, function() {
           self.nextUrl = self.getNextUrl(data);
 
-          self.bind();
+          self.resume();
         });
       });
     });
 
     promise.fail(function() {
-      self.bind();
+      self.resume();
     });
 
     return true;
@@ -500,6 +550,8 @@
     }
 
     this.extensions.push(extension);
+
+    this.reinitialize();
 
     return this;
   };
@@ -530,32 +582,28 @@
 
     this.each(function() {
       var $this = $(this),
-          data = $this.data('ias'),
+          instance = $this.data('ias'),
           options = $.extend({}, $.fn.ias.defaults, $this.data(), typeof option == 'object' && option)
-      ;
+          ;
 
       // set a new instance as data
-      if (!data) {
-        $this.data('ias', (data = new IAS($this, options)));
+      if (!instance) {
+        $this.data('ias', (instance = new IAS($this, options)));
 
-        $(document).ready($.proxy(data.initialize, data));
+        $(document).ready($.proxy(instance.initialize, instance));
       }
 
       // when the plugin is called with a method
       if (typeof option === 'string') {
-        if (typeof data[option] !== 'function') {
+        if (typeof instance[option] !== 'function') {
           throw new Error('There is no method called "' + option + '"');
         }
 
         args.shift(); // remove first argument ('option')
-        data[option].apply(data, args);
-
-        if (option === 'destroy') {
-          $this.data('ias', null);
-        }
+        instance[option].apply(instance, args);
       }
 
-      retval = $this.data('ias');
+      retval = instance;
     });
 
     return retval;

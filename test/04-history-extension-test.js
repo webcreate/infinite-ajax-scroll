@@ -1,5 +1,3 @@
-buster.spec.expose();
-
 describe("IAS", function () {
   before(function() {
     this.timeout = 10000;
@@ -25,8 +23,6 @@ describe("IAS", function () {
       prev: '.prev-posts a'
     }));
 
-    ias.initialize();
-
     expect(ias.prev).toBeDefined();
   });
 
@@ -47,7 +43,7 @@ describe("IAS", function () {
       }));
 
       // ias auto-loads the prev page when initialized,
-      // this prevents the autoloading
+      // this prevents the auto loading
       var firstTime = true;
       ias.on('prev', function () {
         if (firstTime) {

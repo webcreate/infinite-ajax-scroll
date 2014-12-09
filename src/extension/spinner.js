@@ -53,7 +53,7 @@ var IASSpinnerExtension = function(options) {
   this.getSpinner = function() {
     var $spinner = jQuery('#ias_spinner_' + this.uid);
 
-    if ($spinner.size() > 0) {
+    if ($spinner.length > 0) {
       return $spinner;
     }
 
@@ -66,7 +66,7 @@ var IASSpinnerExtension = function(options) {
   this.hasSpinner = function() {
     var $spinner = jQuery('#ias_spinner_' + this.uid);
 
-    return ($spinner.size() > 0);
+    return ($spinner.length > 0);
   };
 
   /**
@@ -90,12 +90,24 @@ IASSpinnerExtension.prototype.bind = function(ias) {
   this.ias = ias;
 
   ias.on('next', jQuery.proxy(this.showSpinner, this));
+  ias.on('render', jQuery.proxy(this.removeSpinner, this));
 
   try {
     ias.on('prev', jQuery.proxy(this.showSpinnerBefore, this));
   } catch (exception) {}
+};
 
-  ias.on('render', jQuery.proxy(this.removeSpinner, this));
+/**
+ * @public
+ * @param {object} ias
+ */
+IASSpinnerExtension.prototype.unbind = function(ias) {
+  ias.off('next', this.showSpinner);
+  ias.off('render', this.removeSpinner);
+
+  try {
+    ias.off('prev', this.showSpinnerBefore);
+  } catch (exception) {}
 };
 
 /**

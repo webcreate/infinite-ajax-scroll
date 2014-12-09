@@ -1,6 +1,3 @@
-buster.spec.expose();
-var expect = buster.assertions.expect;
-
 describe("Callbacks", function () {
   before(function() {
     this.timeout = 10000;
@@ -73,8 +70,8 @@ describe("Callbacks", function () {
         spy1 = function() { lastedCalledSpy = "spy1"; },
         spy2 = function() { lastedCalledSpy = "spy2"; };
 
-    callbacks.add(spy1, 1000); // lowest prio, get's called last
-    callbacks.add(spy2, 2000); // highest prio, get's called first
+    callbacks.add(spy1, 1000); // lowest priority, gets called last
+    callbacks.add(spy2, 2000); // highest priority, gets called first
 
     callbacks.fireWith(this, ['arg1']);
 

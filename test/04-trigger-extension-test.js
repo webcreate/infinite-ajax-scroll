@@ -1,5 +1,3 @@
-buster.spec.expose();
-
 describe("IAS", function () {
   before(function() {
     this.timeout = 10000;
@@ -129,6 +127,8 @@ describe("IAS", function () {
         next: '.next-posts a'
       });
 
+      expect($('.ias-trigger-prev:visible').length).toEqual(0); // ensure it isn't already there
+
       jQuery.ias().extension(new IASPagingExtension());
       jQuery.ias().extension(new IASTriggerExtension({
         textPrev: 'trigger prev text'
@@ -136,10 +136,6 @@ describe("IAS", function () {
       jQuery.ias().extension(new IASHistoryExtension({
         prev: '.prev-posts a'
       }));
-
-      expect($('.ias-trigger-prev:visible').length).toEqual(0); // ensure it isn't already there
-
-      jQuery.ias().initialize();
 
       wait(1000).then(function() {
         expect($('.ias-trigger-prev:visible').length).toEqual(1);

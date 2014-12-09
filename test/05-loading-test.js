@@ -1,5 +1,3 @@
-buster.spec.expose();
-
 describe("IAS", function () {
   before(function() {
     this.timeout = 10000;

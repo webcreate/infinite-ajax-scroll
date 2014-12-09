@@ -51,7 +51,6 @@ describe("IAS", function () {
     };
 
     jQuery.ias().extension(new anExtension());
-    jQuery.ias().initialize();
 
     expect(spy1).toHaveBeenCalledOnce();
 
@@ -63,15 +62,18 @@ describe("IAS", function () {
   it("extension can add listeners", function() {
     var anExtension = function() {
       this.listeners = {
-        test: jQuery.Callbacks()
+        test: new IASCallbacks()
       };
     };
 
     anExtension.prototype.bind = function(ias) {
+    };
+
+    anExtension.prototype.initialize = function(ias) {
       jQuery.extend(ias.listeners, this.listeners);
     };
 
-    // when the extension isnt bound, this will throw an error
+    // when the extension isn't added, this will throw an error
     expect(
         function () {
           jQuery.ias().on('test', function () {
@@ -81,7 +83,6 @@ describe("IAS", function () {
 
     // now let's register the extension
     jQuery.ias().extension(new anExtension());
-    jQuery.ias().initialize();
 
     // this should now be possible and not throw an error
     jQuery.ias().on('test', function() {});
