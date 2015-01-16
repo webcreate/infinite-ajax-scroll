@@ -8,6 +8,8 @@ If you have found a bug please [report those to Github](https://github.com/webcr
 FAQ
 ===
 
+Below are some of the most frequently asked questions.
+
 ### Next page is loaded too early. How can I fix this?
 
 This might happen if your container contains images with a non-fixed height. Try to set the height attribute on your images, or initialize Infinite AJAX Scroll after the images have loaded.
