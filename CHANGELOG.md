@@ -1,6 +1,19 @@
 Changelog
 =========
 
+## 2.2.0
+
+* Improved documentation on delay and negativeMargin options
+* Added FAQ to support documentation
+* Added Wordpress cookbook
+* Fix: Maintain history state object when changing pages (longzheng)
+* Fix: no longer caching $itemsContainer (fixes #153)
+* Fix: really destroy instance on destroy method (fixes #160)
+* Fix: Replaced deprecated size() with .length (fixes #162)
+* Fix: Reworked binding and unbinding (fixes various issues with unbinding)
+* Fix: Bail out when device doesn't support onScroll event (like Opera Mini) (fixes #146 by fflewddur)
+* Added reinitialize method
+
 ## 2.1.3
 
 * Bug #152 Improve compatibility support when Prototype is used along with jQuery (antoinekociuba)
