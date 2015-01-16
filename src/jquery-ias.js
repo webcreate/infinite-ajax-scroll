@@ -354,8 +354,14 @@
    * @public
    */
   IAS.prototype.initialize = function() {
-    var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
+    var supportsOnScroll = (!!('onscroll' in this.$scrollContainer.get(0))),
+        currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
         scrollThreshold = this.getScrollThreshold();
+
+    // bail out when the browser doesn't support the scroll event
+    if (!supportsOnScroll) {
+      return false;
+    }
 
     this.hidePagination();
     this.bind();
