@@ -244,6 +244,12 @@
           }
         });
       });
+      
+      promise.fail(function() {
+        if (callback) {
+          callback();
+        }
+      });
     };
 
     /**
