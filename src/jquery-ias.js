@@ -29,6 +29,7 @@
     this.nextUrl = null;
     this.isBound = false;
     this.isPaused = false;
+    this.isInitialized = false;
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -354,6 +355,10 @@
    * @public
    */
   IAS.prototype.initialize = function() {
+    if (this.isInitialized) {
+      return false;
+    }
+
     var supportsOnScroll = (!!('onscroll' in this.$scrollContainer.get(0))),
         currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
         scrollThreshold = this.getScrollThreshold();
@@ -373,6 +378,13 @@
     // start loading next page if content is shorter than page fold
     if (currentScrollOffset >= scrollThreshold) {
       this.next();
+
+      // flag as initialized when rendering is completed
+      this.one('rendered', function() {
+        this.isInitialized = true;
+      });
+    } else {
+      this.isInitialized = true;
     }
 
     return this;
@@ -384,6 +396,8 @@
    * @public
    */
   IAS.prototype.reinitialize = function () {
+    this.isInitialized = false;
+
     this.unbind();
     this.initialize();
   };
@@ -557,7 +571,9 @@
 
     this.extensions.push(extension);
 
-    this.reinitialize();
+    if (this.isInitialized) {
+      this.reinitialize();
+    }
 
     return this;
   };
