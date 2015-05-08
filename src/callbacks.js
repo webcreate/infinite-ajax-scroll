@@ -4,7 +4,7 @@
  *
  * This file is part of the Infinite AJAX Scroll package
  *
- * Copyright 2014 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2015 Webcreate (Jeroen Fiege)
  */
 
 var IASCallbacks = function () {
