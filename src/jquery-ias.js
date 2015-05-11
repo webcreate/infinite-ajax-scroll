@@ -51,7 +51,7 @@
      * @private
      */
     this.scrollHandler = function() {
-      // the throttle method can call the scrollHandler even thought we have called unbind()
+      // the throttle method can call the scrollHandler even though we have called unbind()
       if (!this.isBound || this.isPaused) {
         return;
       }
@@ -252,7 +252,7 @@
           }
         });
       });
-      
+
       promise.fail(function() {
         if (callback) {
           callback();
@@ -557,6 +557,9 @@
           self.nextUrl = self.getNextUrl(data);
 
           self.resume();
+
+          // The user may have scrolled further while we were paused
+          self.scrollHandler();
         });
       });
     });
