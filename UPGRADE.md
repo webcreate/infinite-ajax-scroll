@@ -1,3 +1,11 @@
+Upgrade from 2.1 to 2.2
+=======================
+
+Specific changes for extensions.
+
+* `extension.bind` is now called during `bind` instead of `initialize`
+* `extension.unbind` is added and called during `unbind`
+
 Upgrade from 2.0 to 2.1
 =======================
 

@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 2.2.1
+
+* Fix: prevent multiple initialisations causing duplicate items (fixes #175, #183)
+
 ## 2.2.0
 
 * Improved documentation on delay and negativeMargin options

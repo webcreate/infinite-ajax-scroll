@@ -1,5 +1,5 @@
 /**
- * Infinite Ajax Scroll v2.2.0
+ * Infinite Ajax Scroll v2.2.1
  * A jQuery plugin for infinite scrolling
  * http://infiniteajaxscroll.com
  *
@@ -8,7 +8,7 @@
  *
  * Non-commercial use is licensed under the MIT License
  *
- * Copyright 2014 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2015 Webcreate (Jeroen Fiege)
  */
 
 (function($) {
@@ -30,6 +30,7 @@
     this.nextUrl = null;
     this.isBound = false;
     this.isPaused = false;
+    this.isInitialized = false;
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -251,6 +252,12 @@
           }
         });
       });
+      
+      promise.fail(function() {
+        if (callback) {
+          callback();
+        }
+      });
     };
 
     /**
@@ -361,6 +368,10 @@
    * @public
    */
   IAS.prototype.initialize = function() {
+    if (this.isInitialized) {
+      return false;
+    }
+
     var supportsOnScroll = (!!('onscroll' in this.$scrollContainer.get(0))),
         currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
         scrollThreshold = this.getScrollThreshold();
@@ -380,6 +391,13 @@
     // start loading next page if content is shorter than page fold
     if (currentScrollOffset >= scrollThreshold) {
       this.next();
+
+      // flag as initialized when rendering is completed
+      this.one('rendered', function() {
+        this.isInitialized = true;
+      });
+    } else {
+      this.isInitialized = true;
     }
 
     return this;
@@ -391,6 +409,8 @@
    * @public
    */
   IAS.prototype.reinitialize = function () {
+    this.isInitialized = false;
+
     this.unbind();
     this.initialize();
   };
@@ -564,7 +584,9 @@
 
     this.extensions.push(extension);
 
-    this.reinitialize();
+    if (this.isInitialized) {
+      this.reinitialize();
+    }
 
     return this;
   };
