@@ -26,7 +26,6 @@
     this.$container = (window === $element.get(0) ? $(document) : $element);
     this.defaultDelay = options.delay;
     this.negativeMargin = options.negativeMargin;
-    this.cacheAjaxResults = options.cacheAjaxResults;
     this.nextUrl = null;
     this.isBound = false;
     this.isPaused = false;
@@ -187,37 +186,31 @@
 
       self.fire('load', [loadEvent]);
 
-      return $.ajax({
-        url: loadEvent.url,
-        data: null,
-        success: $.proxy(function(data) {
-          $itemContainer = $(this.itemsContainerSelector, data).eq(0);
-          if (0 === $itemContainer.length) {
-            $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
-          }
+      return $.get(loadEvent.url, null, $.proxy(function(data) {
+        $itemContainer = $(this.itemsContainerSelector, data).eq(0);
+        if (0 === $itemContainer.length) {
+          $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
+        }
 
-          if ($itemContainer) {
-            $itemContainer.find(this.itemSelector).each(function() {
-              items.push(this);
-            });
-          }
+        if ($itemContainer) {
+          $itemContainer.find(this.itemSelector).each(function() {
+            items.push(this);
+          });
+        }
 
-          self.fire('loaded', [data, items]);
+        self.fire('loaded', [data, items]);
 
-          if (callback) {
-            timeDiff = +new Date() - timeStart;
-            if (timeDiff < delay) {
-              setTimeout(function() {
-                callback.call(self, data, items);
-              }, delay - timeDiff);
-            } else {
+        if (callback) {
+          timeDiff = +new Date() - timeStart;
+          if (timeDiff < delay) {
+            setTimeout(function() {
               callback.call(self, data, items);
-            }
+            }, delay - timeDiff);
+          } else {
+            callback.call(self, data, items);
           }
-        }, self),
-        dataType: 'html',
-        cache: this.cacheAjaxResults
-      });
+        }
+      }, self), 'html');
     };
 
     /**
@@ -659,7 +652,6 @@
     next: '.next',
     pagination: false,
     delay: 600,
-    negativeMargin: 10,
-    cacheAjaxResults: true
+    negativeMargin: 10
   };
 })(jQuery);
