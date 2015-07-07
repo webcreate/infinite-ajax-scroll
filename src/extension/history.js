@@ -8,148 +8,150 @@
  * Copyright 2014-2015 Webcreate (Jeroen Fiege)
  */
 
-var IASHistoryExtension = function (options) {
-  options = jQuery.extend({}, this.defaults, options);
+var IASHistoryExtension2 = function (options) {
+    options = jQuery.extend({}, this.defaults, options);
 
-  this.ias = null;
-  this.prevSelector = options.prev;
-  this.prevUrl = null;
-  this.listeners = {
-    prev: new IASCallbacks()
-  };
+    this.ias = null;
+    this.prevSelector = options.prev;
+    this.updateHistory = options.updateHistory;
+    this.prevUrl = null;
+    this.listeners = {
+        prev: new IASCallbacks()
+    };
 
-  /**
-   * @private
-   * @param pageNum
-   * @param scrollOffset
-   * @param url
-   */
-  this.onPageChange = function (pageNum, scrollOffset, url) {
-    if (!window.history || !window.history.replaceState) {
-      return;
-    }
-    
-    var state = history.state;
+    /**
+     * @private
+     * @param pageNum
+     * @param scrollOffset
+     * @param url
+     */
+    this.onPageChange = function (pageNum, scrollOffset, url) {
+        if (!this.updateHistory || !window.history || !window.history.pushState) {
+            console.log('no update');
+            return;
+        }
 
-    history.replaceState(state, document.title, url);
-  };
+        var state = history.state;
 
-  /**
-   * @private
-   * @param currentScrollOffset
-   * @param scrollThreshold
-   */
-  this.onScroll = function (currentScrollOffset, scrollThreshold) {
-    var firstItemScrollThreshold = this.getScrollThresholdFirstItem();
+        history.pushState(state, document.title, url);
+    };
 
-    if (!this.prevUrl) {
-      return;
-    }
+    /**
+     * @private
+     * @param currentScrollOffset
+     * @param scrollThreshold
+     */
+    this.onScroll = function (currentScrollOffset, scrollThreshold) {
+        var firstItemScrollThreshold = this.getScrollThresholdFirstItem();
 
-    currentScrollOffset -= this.ias.$scrollContainer.height();
+        if (!this.prevUrl) {
+            return;
+        }
 
-    if (currentScrollOffset <= firstItemScrollThreshold) {
-      this.prev();
-    }
-  };
+        currentScrollOffset -= this.ias.$scrollContainer.height();
 
-  this.onReady = function () {
-    var currentScrollOffset = this.ias.getCurrentScrollOffset(this.ias.$scrollContainer),
-        firstItemScrollThreshold = this.getScrollThresholdFirstItem();
+        if (currentScrollOffset <= firstItemScrollThreshold) {
+            this.prev();
+        }
+    };
 
-    currentScrollOffset -= this.ias.$scrollContainer.height();
+    this.onReady = function () {
+        var currentScrollOffset = this.ias.getCurrentScrollOffset(this.ias.$scrollContainer),
+                firstItemScrollThreshold = this.getScrollThresholdFirstItem();
 
-    if (currentScrollOffset <= firstItemScrollThreshold) {
-      this.prev();
-    }
-  };
+        currentScrollOffset -= this.ias.$scrollContainer.height();
 
-  /**
-   * Returns the url for the next page
-   *
-   * @private
-   */
-  this.getPrevUrl = function (container) {
-    if (!container) {
-      container = this.ias.$container;
-    }
+        if (currentScrollOffset <= firstItemScrollThreshold) {
+            this.prev();
+        }
+    };
 
-    // always take the last matching item
-    return jQuery(this.prevSelector, container).last().attr('href');
-  };
+    /**
+     * Returns the url for the next page
+     *
+     * @private
+     */
+    this.getPrevUrl = function (container) {
+        if (!container) {
+            container = this.ias.$container;
+        }
 
-  /**
-   * Returns scroll threshold. This threshold marks the line from where
-   * IAS should start loading the next page.
-   *
-   * @private
-   * @return {number}
-   */
-  this.getScrollThresholdFirstItem = function () {
-    var $firstElement;
+        // always take the last matching item
+        return jQuery(this.prevSelector, container).last().attr('href');
+    };
 
-    $firstElement = this.ias.getFirstItem();
+    /**
+     * Returns scroll threshold. This threshold marks the line from where
+     * IAS should start loading the next page.
+     *
+     * @private
+     * @return {number}
+     */
+    this.getScrollThresholdFirstItem = function () {
+        var $firstElement;
 
-    // if the don't have a first element, the DOM might not have been loaded,
-    // or the selector is invalid
-    if (0 === $firstElement.length) {
-      return -1;
-    }
+        $firstElement = this.ias.getFirstItem();
 
-    return ($firstElement.offset().top);
-  };
+        // if the don't have a first element, the DOM might not have been loaded,
+        // or the selector is invalid
+        if (0 === $firstElement.length) {
+            return -1;
+        }
 
-  /**
-   * Renders items
-   *
-   * @private
-   * @param items
-   * @param callback
-   */
-  this.renderBefore = function (items, callback) {
-    var ias = this.ias,
-        $firstItem = ias.getFirstItem(),
-        count = 0;
+        return ($firstElement.offset().top);
+    };
 
-    ias.fire('render', [items]);
+    /**
+     * Renders items
+     *
+     * @private
+     * @param items
+     * @param callback
+     */
+    this.renderBefore = function (items, callback) {
+        var ias = this.ias,
+                $firstItem = ias.getFirstItem(),
+                count = 0;
 
-    jQuery(items).hide(); // at first, hide it so we can fade it in later
+        ias.fire('render', [items]);
 
-    $firstItem.before(items);
+        jQuery(items).hide(); // at first, hide it so we can fade it in later
 
-    jQuery(items).fadeIn(400, function () {
-      if (++count < items.length) {
-        return;
-      }
+        $firstItem.before(items);
 
-      ias.fire('rendered', [items]);
+        jQuery(items).fadeIn(400, function () {
+            if (++count < items.length) {
+                return;
+            }
 
-      if (callback) {
-        callback();
-      }
-    });
-  };
+            ias.fire('rendered', [items]);
 
-  return this;
+            if (callback) {
+                callback();
+            }
+        });
+    };
+
+    return this;
 };
 
 /**
  * @public
  */
-IASHistoryExtension.prototype.initialize = function (ias) {
-  var self = this;
+IASHistoryExtension2.prototype.initialize = function (ias) {
+    var self = this;
 
-  this.ias = ias;
+    this.ias = ias;
 
-  // expose the extensions listeners
-  jQuery.extend(ias.listeners, this.listeners);
+    // expose the extensions listeners
+    jQuery.extend(ias.listeners, this.listeners);
 
-  // expose prev method
-  ias.prev = function() {
-    return self.prev();
-  };
+    // expose prev method
+    ias.prev = function () {
+        return self.prev();
+    };
 
-  this.prevUrl = this.getPrevUrl();
+    this.prevUrl = this.getPrevUrl();
 };
 
 /**
@@ -158,20 +160,20 @@ IASHistoryExtension.prototype.initialize = function (ias) {
  * @public
  * @param ias
  */
-IASHistoryExtension.prototype.bind = function (ias) {
-  ias.on('pageChange', jQuery.proxy(this.onPageChange, this));
-  ias.on('scroll', jQuery.proxy(this.onScroll, this));
-  ias.on('ready', jQuery.proxy(this.onReady, this));
+IASHistoryExtension2.prototype.bind = function (ias) {
+    ias.on('pageChange', jQuery.proxy(this.onPageChange, this));
+    ias.on('scroll', jQuery.proxy(this.onScroll, this));
+    ias.on('ready', jQuery.proxy(this.onReady, this));
 };
 
 /**
  * @public
  * @param {object} ias
  */
-IASHistoryExtension.prototype.unbind = function(ias) {
-  ias.off('pageChange', this.onPageChange);
-  ias.off('scroll', this.onScroll);
-  ias.off('ready', this.onReady);
+IASHistoryExtension2.prototype.unbind = function (ias) {
+    ias.off('pageChange', this.onPageChange);
+    ias.off('scroll', this.onScroll);
+    ias.off('ready', this.onReady);
 };
 
 /**
@@ -179,43 +181,44 @@ IASHistoryExtension.prototype.unbind = function(ias) {
  *
  * @public
  */
-IASHistoryExtension.prototype.prev = function () {
-  var url = this.prevUrl,
-      self = this,
-      ias = this.ias;
+IASHistoryExtension2.prototype.prev = function () {
+    var url = this.prevUrl,
+            self = this,
+            ias = this.ias;
 
-  if (!url) {
-    return false;
-  }
+    if (!url) {
+        return false;
+    }
 
-  ias.pause();
+    ias.pause();
 
-  var promise = ias.fire('prev', [url]);
+    var promise = ias.fire('prev', [url]);
 
-  promise.done(function () {
-    ias.load(url, function (data, items) {
-      self.renderBefore(items, function () {
-        self.prevUrl = self.getPrevUrl(data);
+    promise.done(function () {
+        ias.load(url, function (data, items) {
+            self.renderBefore(items, function () {
+                self.prevUrl = self.getPrevUrl(data);
 
-        ias.resume();
+                ias.resume();
 
-        if (self.prevUrl) {
-          self.prev();
-        }
-      });
+                if (self.prevUrl) {
+                    self.prev();
+                }
+            });
+        });
     });
-  });
 
-  promise.fail(function () {
-    ias.resume();
-  });
+    promise.fail(function () {
+        ias.resume();
+    });
 
-  return true;
+    return true;
 };
 
 /**
  * @public
  */
-IASHistoryExtension.prototype.defaults = {
-  prev: ".prev"
+IASHistoryExtension2.prototype.defaults = {
+    prev: ".prev",
+    updateHistory: true
 };
