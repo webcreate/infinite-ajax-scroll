@@ -20,6 +20,18 @@ You can optionally set options for this extension. See below.
 
 ## Options
 
+### triggerContainer
+
+<dl>
+    <dt>Type</dt>
+    <dd>string</dd>
+
+    <dt>Default</dt>
+    <dd>".listing"</dd>
+</dl>
+
+Enter the unique selector of the element you want to append the trigget to.
+
 ### text
 
 <dl>

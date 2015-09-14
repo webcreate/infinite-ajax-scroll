@@ -14,15 +14,17 @@ var IASNoneLeftExtension = function(options) {
   this.ias = null;
   this.uid = (new Date()).getTime();
   this.html = (options.html).replace('{text}', options.text);
+  this.noneLeftContainer = options.noneLeftContainer;
 
   /**
    * Shows none left message
    */
   this.showNoneLeft = function() {
     var $element = jQuery(this.html).attr('id', 'ias_noneleft_' + this.uid),
-        $lastItem = this.ias.getLastItem();
-
-    $lastItem.after($element);
+	$paginationContainer = $(this.noneLeftContainer); 
+	
+    $paginationContainer.append($element);
+    
     $element.fadeIn();
   };
 
@@ -50,6 +52,7 @@ IASNoneLeftExtension.prototype.unbind = function(ias) {
  * @public
  */
 IASNoneLeftExtension.prototype.defaults = {
+  noneLeftContainer: '.listing',
   text: 'You reached the end.',
   html: '<div class="ias-noneleft" style="text-align: center;">{text}</div>'
 };

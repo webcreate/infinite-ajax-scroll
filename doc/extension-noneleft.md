@@ -19,6 +19,18 @@ You can optionally set options for this extension. See below.
 
 ## Options
 
+### noneLeftContainer
+
+<dl>
+    <dt>Type</dt>
+    <dd>string</dd>
+
+    <dt>Default</dt>
+    <dd>".listing"</dd>
+</dl>
+
+Enter the unique selector of the element you want to append the 'none left' text to.
+
 ### text
 
 <dl>
