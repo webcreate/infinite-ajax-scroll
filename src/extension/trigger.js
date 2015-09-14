@@ -19,7 +19,7 @@ var IASTriggerExtension = function(options) {
   this.offset = options.offset;
   this.$triggerNext = null;
   this.$triggerPrev = null;
-
+  this.triggerContainer = options.triggerContainer;
   /**
    * Shows trigger for next page
    */
@@ -33,9 +33,9 @@ var IASTriggerExtension = function(options) {
     }
 
     var $trigger = this.$triggerNext || (this.$triggerNext = this.createTrigger(this.next, this.html));
-    var $lastItem = this.ias.getLastItem();
-
-    $lastItem.after($trigger);
+	var $paginationContainer = $(this.triggerContainer);
+	
+    $paginationContainer.append($trigger); 
     $trigger.fadeIn();
 
     return false;
@@ -50,9 +50,9 @@ var IASTriggerExtension = function(options) {
     }
 
     var $trigger = this.$triggerPrev || (this.$triggerPrev = this.createTrigger(this.prev, this.htmlPrev));
-    var $firstItem = this.ias.getFirstItem();
-
-    $firstItem.before($trigger);
+    var $paginationContainer = $(this.triggerContainer); 
+    
+    $paginationContainer.prepend($trigger); 
     $trigger.fadeIn();
 
     return false;
@@ -147,6 +147,7 @@ IASTriggerExtension.prototype.prev = function() {
  * @public
  */
 IASTriggerExtension.prototype.defaults = {
+  triggerContainer: '.listing',
   text: 'Load more items',
   html: '<div class="ias-trigger ias-trigger-next" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
   textPrev: 'Load previous items',
