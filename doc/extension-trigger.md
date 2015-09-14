@@ -30,7 +30,7 @@ You can optionally set options for this extension. See below.
     <dd>".listing"</dd>
 </dl>
 
-Enter the unique selector of the element you want to append the trigget to.
+Enter the unique selector of the element you want to append the trigger to.
 
 ### text
 
