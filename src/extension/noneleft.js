@@ -21,9 +21,9 @@ var IASNoneLeftExtension = function(options) {
    */
   this.showNoneLeft = function() {
     var $element = jQuery(this.html).attr('id', 'ias_noneleft_' + this.uid),
-	$paginationContainer = $(this.noneLeftContainer); 
+	paginationContainer = jQuery(this.noneLeftContainer); 
 	
-    $paginationContainer.append($element);
+    jQuery(paginationContainer.append($element));
     
     $element.fadeIn();
   };

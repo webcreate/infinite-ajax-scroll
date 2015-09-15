@@ -33,9 +33,9 @@ var IASTriggerExtension = function(options) {
     }
 
     var $trigger = this.$triggerNext || (this.$triggerNext = this.createTrigger(this.next, this.html));
-	var $paginationContainer = $(this.triggerContainer);
+	var paginationContainer = jQuery(this.triggerContainer);
 	
-    $paginationContainer.append($trigger); 
+    jQuery(paginationContainer.append($trigger)); 
     $trigger.fadeIn();
 
     return false;
@@ -50,9 +50,9 @@ var IASTriggerExtension = function(options) {
     }
 
     var $trigger = this.$triggerPrev || (this.$triggerPrev = this.createTrigger(this.prev, this.htmlPrev));
-    var $paginationContainer = $(this.triggerContainer); 
+    var paginationContainer = jQuery(this.triggerContainer); 
     
-    $paginationContainer.prepend($trigger); 
+    jQuery(paginationContainer.prepend($trigger)); 
     $trigger.fadeIn();
 
     return false;
@@ -147,7 +147,7 @@ IASTriggerExtension.prototype.prev = function() {
  * @public
  */
 IASTriggerExtension.prototype.defaults = {
-  triggerContainer: '.listing',
+  triggerContainer: '#postgridBlocks',
   text: 'Load more items',
   html: '<div class="ias-trigger ias-trigger-next" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
   textPrev: 'Load previous items',

@@ -22,9 +22,9 @@ var IASSpinnerExtension = function(options) {
    */
   this.showSpinner = function() {
     var $spinner = this.getSpinner() || this.createSpinner(),
-    $paginationContainer = $(this.spinnerContainer); 
+    paginationContainer = jQuery(this.spinnerContainer); 
     
-    $paginationContainer.append($spinner);
+    jQuery(paginationContainer.append($spinner));
 
     $spinner.fadeIn();
   };
@@ -34,9 +34,9 @@ var IASSpinnerExtension = function(options) {
    */
   this.showSpinnerBefore = function() {
     var $spinner = this.getSpinner() || this.createSpinner(),
-    $paginationContainer = $(this.spinnerContainer);
+    paginationContainer = jQuery(this.spinnerContainer);
     
-    $paginationContainer.prepend($spinner);
+    jQuery(paginationContainer.prepend($spinner));
     
     $spinner.fadeIn();
   };
