@@ -26,6 +26,7 @@
     this.$container = (window === $element.get(0) ? $(document) : $element);
     this.defaultDelay = options.delay;
     this.negativeMargin = options.negativeMargin;
+    this.dataType = options.dataType || 'html';
     this.nextUrl = null;
     this.isBound = false;
     this.isPaused = false;
@@ -187,18 +188,24 @@
       self.fire('load', [loadEvent]);
 
       return $.get(loadEvent.url, null, $.proxy(function(data) {
-        $itemContainer = $(this.itemsContainerSelector, data).eq(0);
-        if (0 === $itemContainer.length) {
-          $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
-        }
+        if(self.dataType == 'json') {
 
-        if ($itemContainer) {
-          $itemContainer.find(this.itemSelector).each(function() {
-            items.push(this);
-          });
-        }
+          self.fire('loaded', [items]);
 
-        self.fire('loaded', [data, items]);
+        } else {
+          $itemContainer = $(this.itemsContainerSelector, data).eq(0);
+          if (0 === $itemContainer.length) {
+            $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
+          }
+
+          if ($itemContainer) {
+            $itemContainer.find(this.itemSelector).each(function () {
+              items.push(this);
+            });
+          }
+
+          self.fire('loaded', [data, items]);
+        }
 
         if (callback) {
           timeDiff = +new Date() - timeStart;
@@ -210,7 +217,7 @@
             callback.call(self, data, items);
           }
         }
-      }, self), 'html');
+      }, self), this.dataType);
     };
 
     /**
@@ -245,7 +252,6 @@
           }
         });
       });
-      
       promise.fail(function() {
         if (callback) {
           callback();
