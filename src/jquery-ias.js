@@ -190,7 +190,7 @@
       return $.get(loadEvent.url, null, $.proxy(function(data) {
         if(self.dataType == 'json') {
 
-          self.fire('loaded', [items]);
+          self.fire('loaded', [data]);
 
         } else {
           $itemContainer = $(this.itemsContainerSelector, data).eq(0);
