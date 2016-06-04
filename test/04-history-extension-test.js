@@ -1,6 +1,6 @@
 describe("IAS", function () {
   before(function() {
-    this.timeout = 20000;
+    this.timeout = 10000;
 
     window.scrollTo(0, 0);
   });

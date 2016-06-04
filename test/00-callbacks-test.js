@@ -1,6 +1,6 @@
 describe("Callbacks", function () {
   before(function() {
-    this.timeout = 20000;
+    this.timeout = 10000;
   });
 
   it("can add callback", function() {
