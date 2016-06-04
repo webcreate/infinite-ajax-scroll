@@ -2,7 +2,7 @@ describe('IAS', function () {
   before(function () {
     var deferred = when.defer();
 
-    this.timeout = 10000;
+    this.timeout = 20000;
 
     loadFixture('multiple1.html', function () {
       [$('.overflow1'), $('.overflow2')].forEach(function ($overflow) {
