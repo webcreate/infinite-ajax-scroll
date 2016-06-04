@@ -2,15 +2,15 @@ describe('IAS', function () {
   before(function () {
     var deferred = when.defer();
 
-    this.timeout = 100000;
+    this.timeout = 10000;
 
     loadFixture('multiple1.html', function () {
       [$('.overflow1'), $('.overflow2')].forEach(function ($overflow) {
         $overflow.ias({
-          container:      '.container',
-          item:           '.item',
-          pagination:     '.pagination',
-          next:           '.next',
+          container:  '.container',
+          item:       '.item',
+          pagination: '.pagination',
+          next:       '.next',
         });
 
         deferred.resolve();
