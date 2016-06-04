@@ -32,7 +32,10 @@ config["My tests"] = {
     { path: "/framed.html", file: "test/fixtures/framed.html" },
     { path: "/short.html",  file: "test/fixtures/short.html" },
     { path: "/ajax1.html",   file: "test/fixtures/ajax1.html" },
-    { path: "/ajax2.html",   file: "test/fixtures/ajax2.html" }
+    { path: "/ajax2.html",   file: "test/fixtures/ajax2.html" },
+    { path: "/multiple1.html",   file: "test/fixtures/multiple1.html" },
+    { path: "/multiple2.html",   file: "test/fixtures/multiple2.html" },
+    { path: "/multiple3.html",   file: "test/fixtures/multiple3.html" }
   ],
   specs: [
     "test/*-test.js"
