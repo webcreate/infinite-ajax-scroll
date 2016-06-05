@@ -20,6 +20,9 @@ node_js:
   - 0.10
 
 env:
+  - JQUERY_VERSION=1.10.*
   - JQUERY_VERSION=1.11.*
+  - JQUERY_VERSION=1.12.*
   - JQUERY_VERSION=2.0.*
   - JQUERY_VERSION=2.1.*
+  - JQUERY_VERSION=2.2.*
