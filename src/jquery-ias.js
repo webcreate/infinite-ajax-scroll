@@ -78,7 +78,7 @@
      * @returns {object}
      */
     this.getItemsContainer = function() {
-      return $(this.itemsContainerSelector);
+      return $(this.itemsContainerSelector, this.$container);
     };
 
     /**
@@ -245,7 +245,7 @@
           }
         });
       });
-      
+
       promise.fail(function() {
         if (callback) {
           callback();
