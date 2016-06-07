@@ -26,6 +26,7 @@
     this.$container = (window === $element.get(0) ? $(document) : $element);
     this.defaultDelay = options.delay;
     this.negativeMargin = options.negativeMargin;
+    this.cacheAjaxResults = options.cacheAjaxResults;
     this.nextUrl = null;
     this.isBound = false;
     this.isPaused = false;
@@ -50,7 +51,7 @@
      * @private
      */
     this.scrollHandler = function() {
-      // the throttle method can call the scrollHandler even thought we have called unbind()
+      // the throttle method can call the scrollHandler even though we have called unbind()
       if (!this.isBound || this.isPaused) {
         return;
       }
@@ -186,31 +187,37 @@
 
       self.fire('load', [loadEvent]);
 
-      return $.get(loadEvent.url, null, $.proxy(function(data) {
-        $itemContainer = $(this.itemsContainerSelector, data).eq(0);
-        if (0 === $itemContainer.length) {
-          $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
-        }
-
-        if ($itemContainer) {
-          $itemContainer.find(this.itemSelector).each(function() {
-            items.push(this);
-          });
-        }
-
-        self.fire('loaded', [data, items]);
-
-        if (callback) {
-          timeDiff = +new Date() - timeStart;
-          if (timeDiff < delay) {
-            setTimeout(function() {
-              callback.call(self, data, items);
-            }, delay - timeDiff);
-          } else {
-            callback.call(self, data, items);
+      return $.ajax({
+        url: loadEvent.url,
+        data: null,
+        success: $.proxy(function(data) {
+          $itemContainer = $(this.itemsContainerSelector, data).eq(0);
+          if (0 === $itemContainer.length) {
+            $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
           }
-        }
-      }, self), 'html');
+
+          if ($itemContainer) {
+            $itemContainer.find(this.itemSelector).each(function() {
+              items.push(this);
+            });
+          }
+
+          self.fire('loaded', [data, items]);
+
+          if (callback) {
+            timeDiff = +new Date() - timeStart;
+            if (timeDiff < delay) {
+              setTimeout(function() {
+                callback.call(self, data, items);
+              }, delay - timeDiff);
+            } else {
+              callback.call(self, data, items);
+            }
+          }
+        }, self),
+        dataType: 'html',
+        cache: this.cacheAjaxResults
+      });
     };
 
     /**
@@ -550,6 +557,9 @@
           self.nextUrl = self.getNextUrl(data);
 
           self.resume();
+
+          // The user may have scrolled further while we were paused
+          self.scrollHandler();
         });
       });
     });
@@ -649,6 +659,7 @@
     next: '.next',
     pagination: false,
     delay: 600,
-    negativeMargin: 10
+    negativeMargin: 10,
+    cacheAjaxResults: true
   };
 })(jQuery);
