@@ -459,9 +459,9 @@
    * @public
    */
   IAS.prototype.destroy = function() {
-  	try {
-	  	this.jsXhr.abort();
-  	} catch (e) {}
+    try {
+      this.jsXhr.abort();
+    } catch (e) {}
 
     this.unbind();
 
