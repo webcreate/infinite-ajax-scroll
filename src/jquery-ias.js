@@ -30,7 +30,6 @@
     this.isBound = false;
     this.isPaused = false;
     this.isInitialized = false;
-    this.initializationCounter = 0;
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -177,8 +176,7 @@
           $itemContainer,
           items = [],
           timeStart = +new Date(),
-          timeDiff,
-          initializationId = this.initializationCounter;
+          timeDiff;
 
       delay = delay || this.defaultDelay;
 
@@ -189,30 +187,27 @@
       self.fire('load', [loadEvent]);
 
       return $.get(loadEvent.url, null, $.proxy(function(data) {
-        if (this.isInitialized && this.initializationCounter === initializationId) {
+        $itemContainer = $(this.itemsContainerSelector, data).eq(0);
+        if (0 === $itemContainer.length) {
+          $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
+        }
 
-          $itemContainer = $(this.itemsContainerSelector, data).eq(0);
-          if (0 === $itemContainer.length) {
-            $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
-          }
+        if ($itemContainer) {
+          $itemContainer.find(this.itemSelector).each(function() {
+            items.push(this);
+          });
+        }
 
-          if ($itemContainer) {
-            $itemContainer.find(this.itemSelector).each(function() {
-              items.push(this);
-            });
-          }
+        self.fire('loaded', [data, items]);
 
-          self.fire('loaded', [data, items]);
-
-          if (callback) {
-            timeDiff = +new Date() - timeStart;
-            if (timeDiff < delay) {
-              setTimeout(function() {
-                callback.call(self, data, items);
-              }, delay - timeDiff);
-            } else {
+        if (callback) {
+          timeDiff = +new Date() - timeStart;
+          if (timeDiff < delay) {
+            setTimeout(function() {
               callback.call(self, data, items);
-            }
+            }, delay - timeDiff);
+          } else {
+            callback.call(self, data, items);
           }
         }
       }, self), 'html');
@@ -393,11 +388,9 @@
       // flag as initialized when rendering is completed
       this.one('rendered', function() {
         this.isInitialized = true;
-        this.initializationCounter = ++this.initializationCounter;
       });
     } else {
       this.isInitialized = true;
-      this.initializationCounter = ++this.initializationCounter;
     }
 
     return this;
@@ -466,7 +459,6 @@
     this.unbind();
 
     this.$scrollContainer.data('ias', null);
-    this.isInitialized = false;
   };
 
   /**
