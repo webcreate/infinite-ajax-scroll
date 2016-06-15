@@ -30,6 +30,7 @@
     this.isBound = false;
     this.isPaused = false;
     this.isInitialized = false;
+    this.jsXhr = false;
     this.listeners = {
       next:     new IASCallbacks(),
       load:     new IASCallbacks(),
@@ -186,7 +187,7 @@
 
       self.fire('load', [loadEvent]);
 
-      return $.get(loadEvent.url, null, $.proxy(function(data) {
+      this.jsXhr = $.get(loadEvent.url, null, $.proxy(function(data) {
         $itemContainer = $(this.itemsContainerSelector, data).eq(0);
         if (0 === $itemContainer.length) {
           $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
@@ -211,6 +212,8 @@
           }
         }
       }, self), 'html');
+
+      return this.jsXhr;
     };
 
     /**
@@ -456,6 +459,10 @@
    * @public
    */
   IAS.prototype.destroy = function() {
+    try {
+      this.jsXhr.abort();
+    } catch (e) {}
+
     this.unbind();
 
     this.$scrollContainer.data('ias', null);
