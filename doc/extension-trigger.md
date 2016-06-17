@@ -81,3 +81,15 @@ Allows you to override the html. The `{text}` placeholder will be replace by the
 The number of pages which should load automatically. After that the trigger is shown for every subsequent page.
 
 For example: if you set the offset to 2, the pages 2 and 3 (page 1 is always shown) would load automatically and for every subsequent page the user has to press the trigger to load it.
+
+### showOnce
+
+<dl>
+    <dt>Type</dt>
+    <dd>boolean</dd>
+
+    <dt>Default</dt>
+    <dd>false</dd>
+</dl>
+
+If the trigger should be shown more than once. If true, once the trigger is clicked, every subsequent page will load automatically.

@@ -17,6 +17,8 @@ var IASTriggerExtension = function(options) {
   this.enabled = true;
   this.count = 0;
   this.offset = options.offset;
+  this.showOnce = !!options.showOnce;
+  this.shown = false;
   this.$triggerNext = null;
   this.$triggerPrev = null;
 
@@ -28,7 +30,7 @@ var IASTriggerExtension = function(options) {
       return true;
     }
 
-    if (false === this.offset || ++this.count < this.offset) {
+    if (false === this.offset || ++this.count < this.offset || (true === this.shown && null === this.$triggerNext)) {
       return true;
     }
 
@@ -37,6 +39,8 @@ var IASTriggerExtension = function(options) {
 
     $lastItem.after($trigger);
     $trigger.fadeIn();
+
+    this.shown = true;
 
     return false;
   };
@@ -151,6 +155,7 @@ IASTriggerExtension.prototype.defaults = {
   html: '<div class="ias-trigger ias-trigger-next" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
   textPrev: 'Load previous items',
   htmlPrev: '<div class="ias-trigger ias-trigger-prev" style="text-align: center; cursor: pointer;"><a>{text}</a></div>',
+  showOnce: false,
   offset: 0
 };
 
