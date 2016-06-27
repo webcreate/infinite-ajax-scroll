@@ -30,7 +30,7 @@ var IASTriggerExtension = function(options) {
       return true;
     }
 
-    if (false === this.offset || ++this.count < this.offset || (true === this.shown && null === this.$triggerNext)) {
+    if (false === this.offset || ++this.count < this.offset || (true === this.showOnce && true === this.shown && null === this.$triggerNext)) {
       return true;
     }
 
