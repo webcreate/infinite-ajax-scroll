@@ -213,7 +213,7 @@
           }
         }
       }
-      this.jsXhr = $.get(loadEvent)
+      this.jsXhr = $.ajax(loadEvent)
         .done($.proxy(xhrDoneCallback, self));
 
       return this.jsXhr;
