@@ -24,11 +24,18 @@ The load event object contains the following properties.
 |-----------|---------------|-------------------------|
 | event.url | string        | url that will be loaded |
 
-Using this event it is possible to change the requested url. This can be useful to append an arbitrary parameter to the requested url so the server can handle the request differently. For example to optimize the returned html by stripping everything outside the container element (header, footer, etc.).
+Using this event it is possible to change the requested url. This can be useful to append an arbitrary parameter to the requested url so the server can handle the request differently. For example to optimize the returned url by stripping everything outside the container element (header, footer, etc.). Because it is used as the settings object in $.get, you can also use this for more exotic configuration.
 
 ```javascript
 ias.on('load', function(event) {
     event.url = event.url + "?ajax=1";
+    // alternatively...
+    event.data = { ajax: 1 };
+
+    // And as a more exotic example, timeout and HTTP auth
+    event.timeout = 7000; //ms
+    event.username = 'shirley';
+    event.password = 'temple';
 })
 ```
 
