@@ -7,7 +7,7 @@
  * Copyright 2014-2016 Webcreate (Jeroen Fiege)
  */
 
-var IASCallbacks = function () {
+var IASCallbacks = function ($) {
   this.list = [];
   this.fireStack = [];
   this.isFiring = false;
@@ -129,7 +129,7 @@ IASCallbacks.prototype = {
    * @returns {object|void}
    */
   fireWith: function (context, args) {
-    var deferred = jQuery.Deferred();
+    var deferred = $.Deferred();
 
     if (this.isDisabled) {
       return deferred.reject();

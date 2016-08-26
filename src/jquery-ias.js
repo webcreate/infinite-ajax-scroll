@@ -32,14 +32,14 @@
     this.isInitialized = false;
     this.jsXhr = false;
     this.listeners = {
-      next:     new IASCallbacks(),
-      load:     new IASCallbacks(),
-      loaded:   new IASCallbacks(),
-      render:   new IASCallbacks(),
-      rendered: new IASCallbacks(),
-      scroll:   new IASCallbacks(),
-      noneLeft: new IASCallbacks(),
-      ready:    new IASCallbacks()
+      next:     new IASCallbacks($),
+      load:     new IASCallbacks($),
+      loaded:   new IASCallbacks($),
+      render:   new IASCallbacks($),
+      rendered: new IASCallbacks($),
+      scroll:   new IASCallbacks($),
+      noneLeft: new IASCallbacks($),
+      ready:    new IASCallbacks($)
     };
     this.extensions = [];
 
