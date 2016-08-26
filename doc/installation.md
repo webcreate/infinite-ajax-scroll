@@ -21,7 +21,9 @@ Installation
 
 It is possible to install Infinite AJAX Scroll using Bower. Only caveat is that the javascript files won't be minified.
 
-1) bower install infinite-ajax-scroll --save
+1) Type the following on the command line:
+
+    `bower install infinite-ajax-scroll --save`
 
 2) Paste the following code before the line with "`</head>`":
 
