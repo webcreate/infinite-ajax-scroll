@@ -351,6 +351,15 @@
      */
     this.resume = function() {
       this.isPaused = false;
+
+      // load the next page when content is too short
+      var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
+          scrollThreshold = this.getScrollThreshold()
+          ;
+
+      if (currentScrollOffset >= scrollThreshold) {
+        this.next();
+      }
     };
 
     return this;
