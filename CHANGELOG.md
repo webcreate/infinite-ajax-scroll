@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2.2.2
+
+* Fix: render callback is not executed when using a custom render function (fixes #198)
+* Fix: unpredictable behaviour when multiple instances used the same selectors for sub-elements (fixes #93)
+* Stop ajax responder if instance was destroyed or reinitialized
+
 ## 2.2.1
 
 * Fix: prevent multiple initialisations causing duplicate items (fixes #175, #183)
