@@ -1,3 +1,5 @@
+sudo: false
+
 before_script:
   - npm install
   - npm install -g bower
