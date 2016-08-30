@@ -3,7 +3,7 @@ Methods
 
 ### bind
 
-Binds IAS from to window or document events.
+Binds IAS to window or document events.
 
 ```javascript
 jQuery.ias().bind();
@@ -15,7 +15,7 @@ Unbinds and destroys instance.
 
 ### extension
 
-Adds a extension to Infinite AJAX Scroll.
+Adds an extension to Infinite AJAX Scroll.
 
 ```javascript
 jQuery.ias().extension(new anExtension());
@@ -23,7 +23,7 @@ jQuery.ias().extension(new anExtension());
 
 ### initialize
 
-Initializes Infinite AJAX Scroll. Normally this happens when the DOM is ready (`$(document).ready()`), but if you want to dynamically create an IAS instance after the this event, you can initialize it yourself using this method.
+Initializes Infinite AJAX Scroll. Normally this happens when the DOM is ready (`$(document).ready()`), but if you want to dynamically create an IAS instance after this event, you can initialize it yourself using this method.
 
 ```javascript
 jQuery.ias().initialize();

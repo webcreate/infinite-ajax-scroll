@@ -46,3 +46,7 @@ Loads the previous page.
 ```javascript
 jQuery.ias().prev();
 ```
+
+## Remarks
+
+When using the history extension it is not possible to use IAS in a overflow div.
