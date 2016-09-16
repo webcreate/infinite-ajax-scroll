@@ -15,7 +15,7 @@ var IASTriggerExtension = function(options) {
   this.html = (options.html).replace('{text}', options.text);
   this.htmlPrev = (options.htmlPrev).replace('{text}', options.textPrev);
   this.enabled = true;
-  this.count = 0;
+  this.count = {};
   this.offset = options.offset;
   this.$triggerNext = null;
   this.$triggerPrev = null;
@@ -27,8 +27,9 @@ var IASTriggerExtension = function(options) {
     if (!this.enabled) {
       return true;
     }
-
-    if (false === this.offset || ++this.count < this.offset) {
+    var count=this.ias.itemsContainerSelector in this.count?this.count[this.ias.itemsContainerSelector]:0;
+    if (false === this.offset || ++count < this.offset) {
+      this.count[this.ias.itemsContainerSelector]=count;
       return true;
     }
 
@@ -56,10 +57,6 @@ var IASTriggerExtension = function(options) {
     $trigger.fadeIn();
 
     return false;
-  };
-
-  this.onRendered = function() {
-    this.enabled = true;
   };
 
   /**
@@ -92,25 +89,12 @@ IASTriggerExtension.prototype.bind = function(ias) {
 
   this.ias = ias;
 
-  ias.on('next', jQuery.proxy(this.showTriggerNext, this), this.priority);
-  ias.on('rendered', jQuery.proxy(this.onRendered, this), this.priority);
-
   try {
     ias.on('prev', jQuery.proxy(this.showTriggerPrev, this), this.priority);
   } catch (exception) {}
-};
 
-/**
- * @public
- * @param {object} ias
- */
-IASTriggerExtension.prototype.unbind = function(ias) {
-  ias.off('next', this.showTriggerNext);
-  ias.off('rendered', this.onRendered);
-
-  try {
-    ias.off('prev', this.showTriggerPrev);
-  } catch (exception) {}
+  ias.on('next', jQuery.proxy(this.showTriggerNext, this), this.priority);
+  ias.on('rendered', function () { self.enabled = true; }, this.priority);
 };
 
 /**
@@ -118,7 +102,7 @@ IASTriggerExtension.prototype.unbind = function(ias) {
  */
 IASTriggerExtension.prototype.next = function() {
   this.enabled = false;
-  this.ias.pause();
+  this.ias.unbind();
 
   if (this.$triggerNext) {
     this.$triggerNext.remove();
@@ -133,7 +117,7 @@ IASTriggerExtension.prototype.next = function() {
  */
 IASTriggerExtension.prototype.prev = function() {
   this.enabled = false;
-  this.ias.pause();
+  this.ias.unbind();
 
   if (this.$triggerPrev) {
     this.$triggerPrev.remove();

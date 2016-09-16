@@ -40,14 +40,6 @@ IASNoneLeftExtension.prototype.bind = function(ias) {
 
 /**
  * @public
- * @param {object} ias
- */
-IASNoneLeftExtension.prototype.unbind = function(ias) {
-  ias.off('noneLeft', this.showNoneLeft);
-};
-
-/**
- * @public
  */
 IASNoneLeftExtension.prototype.defaults = {
   text: 'You reached the end.',
