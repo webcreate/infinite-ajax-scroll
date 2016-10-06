@@ -66,7 +66,7 @@ Text of the link that will load the previous page.
     <dd>&lt;div class="ias-trigger ias-trigger-prev" style="text-align: center; cursor: pointer;">&lt;a>{text}&lt;/a>&lt;/div></dd>
 </dl>
 
-Allows you to override the html. The `{text}` placeholder will be replace by the value of the option `textPrev`.
+Allows you to override the html. The `{text}` placeholder will be replace by the value of the option `text`.
 
 ### offset
 
