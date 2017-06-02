@@ -26,7 +26,7 @@
   ],
   "license": "Dual-license",
   "dependencies": {
-    "jquery": ">=1.7"
+    "jquery": ">=1.12"
   },
   "devDependencies": {
     "grunt": "~0.4",

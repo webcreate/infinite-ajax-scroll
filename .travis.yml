@@ -1,7 +1,9 @@
 sudo: false
 
+addons:
+  firefox: latest
+
 before_script:
-  - npm install
   - npm install -g bower
   - bower install --production
   - bower install --force jquery#$JQUERY_VERSION
@@ -18,13 +20,14 @@ script:
 
 language: node_js
 
+cache:
+  directories:
+  - node_modules # NPM packages
+
 node_js:
   - 0.10
 
 env:
-  - JQUERY_VERSION=1.10.*
-  - JQUERY_VERSION=1.11.*
-  - JQUERY_VERSION=1.12.*
-  - JQUERY_VERSION=2.0.*
-  - JQUERY_VERSION=2.1.*
-  - JQUERY_VERSION=2.2.*
+  - JQUERY_VERSION=^1.12
+  - JQUERY_VERSION=^2.0
+  - JQUERY_VERSION=^3.0

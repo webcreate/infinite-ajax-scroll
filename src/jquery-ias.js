@@ -380,8 +380,6 @@
     this.hidePagination();
     this.bind();
 
-    this.fire('ready');
-
     this.nextUrl = this.getNextUrl();
 
     // start loading next page if content is shorter than page fold
@@ -391,9 +389,13 @@
       // flag as initialized when rendering is completed
       this.one('rendered', function() {
         this.isInitialized = true;
+
+        this.fire('ready');
       });
     } else {
       this.isInitialized = true;
+
+      this.fire('ready');
     }
 
     return this;
@@ -584,7 +586,7 @@
 
     this.extensions.push(extension);
 
-    if (this.isInitialized) {
+    if (this.isBound) {
       this.reinitialize();
     }
 

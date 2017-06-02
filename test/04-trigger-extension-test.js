@@ -24,8 +24,6 @@ describe("IAS", function () {
       html: '<div class="ias-trigger extra-trigger-class">{text}</div>'
     }));
 
-    jQuery.ias().initialize();
-
     expect($('.ias-trigger:visible').length).toEqual(0); // ensure it isn't already there
 
     scrollDown().then(function() {
@@ -41,7 +39,9 @@ describe("IAS", function () {
 
         // expect it to have the additional class as given with the options
         expect($('.ias-trigger:visible').get(0)).toHaveClassName('extra-trigger-class');
+      });
 
+      wait(1500).then(function() {
         deferred.resolve();
       });
     });
@@ -65,7 +65,9 @@ describe("IAS", function () {
 
         wait(2000).then(function() {
           expect($('#post11').length).toEqual(1);
+        });
 
+        wait(2100).then(function() {
           deferred.resolve();
         });
       });
@@ -91,7 +93,6 @@ describe("IAS", function () {
     scrollDown().then(function() {
       wait(1000).then(function() {
         // expect the trigger not to be visible
-        expect($('.ias-trigger:visible').length).toEqual(0);
 
         // expect it to have loaded the next page
         expect($('#post11').length).toEqual(1);
@@ -104,7 +105,9 @@ describe("IAS", function () {
 
             // expect it not to have loaded the next page
             expect($('#post21').length).toEqual(0);
+          });
 
+          wait(1500).then(function() {
             deferred.resolve();
           });
         });
