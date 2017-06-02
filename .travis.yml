@@ -1,7 +1,6 @@
 sudo: false
 
 before_script:
-  - npm install
   - npm install -g bower
   - bower install --production
   - bower install --force jquery#$JQUERY_VERSION
