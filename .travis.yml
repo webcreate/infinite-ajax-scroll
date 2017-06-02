@@ -20,6 +20,10 @@ script:
 
 language: node_js
 
+cache:
+  directories:
+  - node_modules # NPM packages
+
 node_js:
   - 0.10
 
