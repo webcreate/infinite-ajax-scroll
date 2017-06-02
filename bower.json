@@ -11,6 +11,6 @@
     "dist"
   ],
   "dependencies": {
-    "jquery": "git://github.com/components/jquery.git#>=1.7"
+    "jquery": "git://github.com/components/jquery.git#>=1.12"
   }
 }
