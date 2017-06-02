@@ -587,8 +587,7 @@
     this.extensions.push(extension);
 
     if (this.isBound) {
-      this.unbind();
-      this.bind();
+      this.reinitialize();
     }
 
     return this;
