@@ -61,34 +61,35 @@
     <div class="navigation">
         <ul>
             <li>1</li>
-            <li><a href="../fixtures/page2.html">2</a></li>
-            <li><a href="../fixtures/page3.html">3</a></li>
-            <li class="next-posts"><a href="../fixtures/page2.html">next</a></li>
+            <li><a href="page2.html">2</a></li>
+            <li><a href="page3.html">3</a></li>
+            <li class="next-posts"><a href="page2.html">next</a></li>
         </ul>
     </div>
-
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script type="text/javascript" src="../../src/callbacks.js"></script>
-    <script type="text/javascript" src="../../src/jquery-ias.js"></script>
-    <script type="text/javascript" src="../../src/extension/history.js"></script>
-    <script type="text/javascript" src="../../src/extension/noneleft.js"></script>
-    <script type="text/javascript" src="../../src/extension/paging.js"></script>
-    <script type="text/javascript" src="../../src/extension/spinner.js"></script>
-    <script type="text/javascript" src="../../src/extension/trigger.js"></script>
-
-    <script type="text/javascript">
-      var ias = $.ias({
-        container: "#content",
-        item: ".post",
-        pagination: ".navigation",
-        next: ".next-posts a"
-      });
-
-      ias.extension(new IASSpinnerExtension());
-      ias.extension(new IASTriggerExtension({offset: 3}));
-      ias.extension(new IASNoneLeftExtension({text: 'There are no more pages left to load.'}));
-    </script>
 </div>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="../../src/callbacks.js"></script>
+<script type="text/javascript" src="../../src/jquery-ias.js"></script>
+<script type="text/javascript" src="../../src/extension/history.js"></script>
+<script type="text/javascript" src="../../src/extension/noneleft.js"></script>
+<script type="text/javascript" src="../../src/extension/paging.js"></script>
+<script type="text/javascript" src="../../src/extension/spinner.js"></script>
+<script type="text/javascript" src="../../src/extension/trigger.js"></script>
+
+<script type="text/javascript">
+  var ias = $.ias({
+    container: "#content",
+    item: ".post",
+    pagination: ".navigation",
+    next: ".next-posts a"
+  });
+
+  ias.extension(new IASSpinnerExtension());
+  ias.extension(new IASTriggerExtension({offset: 3}));
+  ias.extension(new IASNoneLeftExtension({text: 'There are no more pages left to load.'}));
+</script>
 
 </body>
 </html>
