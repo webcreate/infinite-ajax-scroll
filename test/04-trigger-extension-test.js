@@ -29,7 +29,7 @@ describe("IAS", function () {
     expect($('.ias-trigger:visible').length).toEqual(0); // ensure it isn't already there
 
     scrollDown().then(function() {
-      wait(1000).then(function() {
+      wait(2000).then(function() {
         // expect the trigger to be visible
         expect($('.ias-trigger:visible').length).toEqual(1);
 
