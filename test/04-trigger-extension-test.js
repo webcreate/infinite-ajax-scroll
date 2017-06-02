@@ -29,7 +29,7 @@ describe("IAS", function () {
     expect($('.ias-trigger:visible').length).toEqual(0); // ensure it isn't already there
 
     scrollDown().then(function() {
-      wait(2000).then(function() {
+      wait(1000).then(function() {
         // expect the trigger to be visible
         expect($('.ias-trigger:visible').length).toEqual(1);
 
@@ -41,7 +41,9 @@ describe("IAS", function () {
 
         // expect it to have the additional class as given with the options
         expect($('.ias-trigger:visible').get(0)).toHaveClassName('extra-trigger-class');
+      });
 
+      wait(1200).then(function() {
         deferred.resolve();
       });
     });
@@ -65,7 +67,9 @@ describe("IAS", function () {
 
         wait(2000).then(function() {
           expect($('#post11').length).toEqual(1);
+        });
 
+        wait(2100).then(function() {
           deferred.resolve();
         });
       });
@@ -105,6 +109,9 @@ describe("IAS", function () {
             // expect it not to have loaded the next page
             expect($('#post21').length).toEqual(0);
 
+          });
+
+          wait(1200).then(function() {
             deferred.resolve();
           });
         });
