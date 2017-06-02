@@ -1,5 +1,8 @@
 sudo: false
 
+addons:
+  firefox: latest
+
 before_script:
   - npm install -g bower
   - bower install --production
