@@ -1,7 +1,7 @@
 sudo: false
 
 addons:
-  firefox: latest
+  firefox: 53.0
 
 before_script:
   - npm install -g bower
@@ -13,7 +13,7 @@ before_script:
   - ./node_modules/.bin/grunt buster::server:block &
   - sleep 5
   - firefox http://localhost:1111/capture &
-  - sleep 10
+  - sleep 5
 
 script:
   - "./node_modules/.bin/grunt buster::test"
