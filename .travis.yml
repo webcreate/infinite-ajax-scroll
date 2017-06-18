@@ -13,7 +13,7 @@ before_script:
   - ./node_modules/.bin/grunt buster::server:block &
   - sleep 5
   - firefox http://localhost:1111/capture &
-  - sleep 5
+  - sleep 10
 
 script:
   - "./node_modules/.bin/grunt buster::test"
