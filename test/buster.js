@@ -17,13 +17,14 @@ config["My tests"] = {
     "bower_components/jquery/" + bower.jquery.main.replace(/^\.\//, ''),
   ],
   sources: [
-    "src/callbacks.js",
-    "src/jquery-ias.js",
-    "src/extension/paging.js",
-    "src/extension/spinner.js",
-    "src/extension/trigger.js",
-    "src/extension/noneleft.js",
-    "src/extension/history.js"
+    "dist/jquery-ias.min.js",
+    // "src/callbacks.js",
+    // "src/jquery-ias.js",
+    // "src/extension/paging.js",
+    // "src/extension/spinner.js",
+    // "src/extension/trigger.js",
+    // "src/extension/noneleft.js",
+    // "src/extension/history.js"
   ],
   resources: [
     { path: "/",            file: "test/fixtures/page1.html" },

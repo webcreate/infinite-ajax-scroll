@@ -14,7 +14,7 @@ var IASPagingExtension = function() {
   this.lastPageNum = 1;
   this.enabled = true;
   this.listeners = {
-    pageChange: new IASCallbacks()
+    pageChange: new IASCallbacks(jQuery)
   };
 
   /**

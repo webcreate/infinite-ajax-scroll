@@ -65,7 +65,7 @@ describe("IAS", function () {
   it("extension can add listeners", function() {
     var anExtension = function() {
       this.listeners = {
-        test: new IASCallbacks()
+        test: new IASCallbacks(jQuery)
       };
     };
 
