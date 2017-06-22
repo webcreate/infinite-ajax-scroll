@@ -15,7 +15,7 @@ var IASHistoryExtension = function (options) {
   this.prevSelector = options.prev;
   this.prevUrl = null;
   this.listeners = {
-    prev: new IASCallbacks()
+    prev: new IASCallbacks(jQuery)
   };
 
   /**

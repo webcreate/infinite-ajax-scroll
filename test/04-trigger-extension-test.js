@@ -24,6 +24,8 @@ describe("IAS", function () {
       html: '<div class="ias-trigger extra-trigger-class">{text}</div>'
     }));
 
+    jQuery.ias().initialize();
+
     expect($('.ias-trigger:visible').length).toEqual(0); // ensure it isn't already there
 
     scrollDown().then(function() {

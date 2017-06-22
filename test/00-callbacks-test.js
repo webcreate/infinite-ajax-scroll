@@ -4,7 +4,7 @@ describe("Callbacks", function () {
   });
 
   it("can add callback", function() {
-    var callbacks = new IASCallbacks(),
+    var callbacks = new IASCallbacks(jQuery),
         spy1 = this.spy();
 
     expect(callbacks.has(spy1)).toBeFalse();
@@ -15,7 +15,7 @@ describe("Callbacks", function () {
   });
 
   it("can remove callback", function() {
-    var callbacks = new IASCallbacks(),
+    var callbacks = new IASCallbacks(jQuery),
         spy1 = this.spy();
 
     callbacks.add(spy1);
@@ -28,7 +28,7 @@ describe("Callbacks", function () {
   });
 
   it("can fire callback", function() {
-    var callbacks = new IASCallbacks(),
+    var callbacks = new IASCallbacks(jQuery),
         spy1 = this.spy(),
         spy2 = this.spy();
 
@@ -42,7 +42,7 @@ describe("Callbacks", function () {
   });
 
   it("can be enabled/disabled", function() {
-    var callbacks = new IASCallbacks(),
+    var callbacks = new IASCallbacks(jQuery),
         spy1 = this.spy(),
         spy2 = this.spy();
 
@@ -65,7 +65,7 @@ describe("Callbacks", function () {
   });
 
   it("can add callback with priority", function() {
-    var callbacks = new IASCallbacks(),
+    var callbacks = new IASCallbacks(jQuery),
         lastedCalledSpy = null,
         spy1 = function() { lastedCalledSpy = "spy1"; },
         spy2 = function() { lastedCalledSpy = "spy2"; };
