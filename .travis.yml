@@ -1,7 +1,7 @@
 sudo: false
 
 addons:
-  firefox: latest
+  firefox: 53
 
 before_script:
   - npm install -g bower
