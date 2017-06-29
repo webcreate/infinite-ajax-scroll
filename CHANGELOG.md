@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## 2.2.3
+
+* Improved documentation
+* Fix: Cannot read property 'Deferred' of undefined (in jQuery noConflict mode) (fixes #188, #271, #291)
+
 ## 2.2.2
 
 * Fix: render callback is not executed when using a custom render function (fixes #198)
