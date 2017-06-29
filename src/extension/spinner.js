@@ -5,7 +5,7 @@
  *
  * This file is part of the Infinite AJAX Scroll package
  *
- * Copyright 2014-2016 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2017 Webcreate (Jeroen Fiege)
  */
 
 var IASSpinnerExtension = function(options) {
