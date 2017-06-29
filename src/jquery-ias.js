@@ -1,5 +1,5 @@
 /**
- * Infinite Ajax Scroll v2.2.2
+ * Infinite Ajax Scroll v2.2.3
  * A jQuery plugin for infinite scrolling
  * http://infiniteajaxscroll.com
  *
@@ -8,7 +8,7 @@
  *
  * Non-commercial use is licensed under the MIT License
  *
- * Copyright 2014-2016 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2017 Webcreate (Jeroen Fiege)
  */
 
 (function($) {
