@@ -1,7 +1,11 @@
 Infinite Ajax Scroll
 ====================
 
-Turn your existing pagination into infinite scrolling pages with ease.
+Turn your existing pagination into infinite scrolling pages with ease. Key features include:
+
+* SEO friendly
+* Doesn't break browsers back button
+* Highly customizable
 
 Documentation, demos and license info available at: https://infiniteajaxscroll.com/
 
