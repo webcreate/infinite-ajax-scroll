@@ -1,59 +1,72 @@
-Infinite AJAX Scroll
+Infinite Ajax Scroll
 ====================
 
-A jQuery plugin to turn your paginated pages into infinite scrolling pages with ease.
+Turn your existing pagination into infinite scrolling pages with ease.
 
-Downloads, documentation and demos available at: http://infiniteajaxscroll.com/
+Documentation, demos and license info available at: https://infiniteajaxscroll.com/
 
 [![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.png?branch=master)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
+
+## Installation
+
+Download [jquery-ias.min.js](https://infiniteajaxscroll.com/download.html) (latest).
+
+Include Infinite Ajax Scroll into your html pages.
+
+```html
+<script src="jquery-ias.min.js"></script>
+```
+
+Include jQuery if you haven't already. For example:
+
+```html
+<script   
+    src="https://code.jquery.com/jquery-3.2.1.min.js"   
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   
+    crossorigin="anonymous"></script>
+```
+
+# Usage
+
+Infinite Ajax Scroll requires markup similar to this:
+
+```html
+<div id="container">
+    <div class="post">...</div>
+    <div class="post">...</div>
+</div>
+
+<div id="pagination">
+    <a href="/page1/" class="prev">prev</a>
+    <a href="/page3/" class="next">next</a>
+</div>
+```
+
+Then configure Infinite Ajax Scroll:
+
+```html
+<script type="text/javascript">
+var ias = jQuery.ias({
+  container:  '#container',
+  item:       '.post',
+  pagination: '#pagination',
+  next:       '#pagination a.next'
+});
+
+ias.extension(new IASSpinnerExtension());
+ias.extension(new IASTriggerExtension({offset: 2}));
+ias.extension(new IASNoneLeftExtension({text: "You reached the end"}));
+ias.extension(new IASPagingExtension());
+ias.extension(new IASHistoryExtension({prev: '#pagination a.prev'}));
+</script>
+```
+
+For complete documentation about options and extensions visit https://infiniteajaxscroll.com/docs/.
 
 ## Licensing
 
 Infinite AJAX Scroll may be used in commercial projects and applications with the one-time purchase of a commercial license.
 
-http://infiniteajaxscroll.com/docs/license.html
+https://infiniteajaxscroll.com/docs/license.html
 
 For non-commercial, personal, or open source projects and applications, you may use Infinite AJAX Scroll under the terms of the MIT License. You may use Infinite AJAX Scroll for free.
-
-## Contributing
-
-To contribute to Infinite AJAX Scroll please follow these instructions:
-
-* Fork the project and create a new feature branch
-* Install the development tools
-* Write the feature/bugfix
-* Write tests for the feature/bugfix
-* Run tests
-* Submit your Pull Request
-
-### Installing development tools
-
-1. Install bower components
-
-    ``` sh
-    $ bower install
-    ```
-
-2. Install npm modules
-
-    ``` sh
-    $ npm install
-    ```
-
-### Running tests
-
-Testing is done with [Busterjs](https://github.com/busterjs/buster) and [Grunt](https://github.com/gruntjs/grunt).
-
-1. Start a buster server:
-
-    ``` sh
-    $ grunt buster::server:block
-    ```
-
-2. Launch some browsers and connect to `http://localhost:1111` and capture them.
-
-3. Run tests:
-
-    ``` sh
-    $ grunt buster::test
-    ```
