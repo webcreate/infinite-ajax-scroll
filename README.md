@@ -30,7 +30,7 @@ Include jQuery if you haven't already.
     crossorigin="anonymous"></script>
 ```
 
-# Usage
+## Usage
 
 Infinite Ajax Scroll requires markup similar to this:
 
