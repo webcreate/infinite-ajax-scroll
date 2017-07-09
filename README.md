@@ -32,13 +32,13 @@ Infinite Ajax Scroll requires markup similar to this:
 
 ```html
 <div id="container">
-    <div class="post">...</div>
-    <div class="post">...</div>
+  <div class="post">...</div>
+  <div class="post">...</div>
 </div>
 
 <div id="pagination">
-    <a href="/page1/" class="prev">prev</a>
-    <a href="/page3/" class="next">next</a>
+  <a href="/page1/" class="prev">prev</a>
+  <a href="/page3/" class="next">next</a>
 </div>
 ```
 
@@ -46,18 +46,18 @@ Then configure Infinite Ajax Scroll:
 
 ```html
 <script type="text/javascript">
-var ias = jQuery.ias({
-  container:  '#container',
-  item:       '.post',
-  pagination: '#pagination',
-  next:       '#pagination a.next'
-});
+  var ias = jQuery.ias({
+    container:  '#container',
+    item:       '.post',
+    pagination: '#pagination',
+    next:       '#pagination a.next'
+  });
 
-ias.extension(new IASSpinnerExtension());
-ias.extension(new IASTriggerExtension({offset: 2}));
-ias.extension(new IASNoneLeftExtension({text: "You reached the end"}));
-ias.extension(new IASPagingExtension());
-ias.extension(new IASHistoryExtension({prev: '#pagination a.prev'}));
+  ias.extension(new IASSpinnerExtension());
+  ias.extension(new IASTriggerExtension({offset: 2}));
+  ias.extension(new IASNoneLeftExtension({text: "You reached the end"}));
+  ias.extension(new IASPagingExtension());
+  ias.extension(new IASHistoryExtension({prev: '#pagination a.prev'}));
 </script>
 ```
 
