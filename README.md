@@ -17,7 +17,7 @@ Include Infinite Ajax Scroll into your html pages.
 <script src="jquery-ias.min.js"></script>
 ```
 
-Include jQuery if you haven't already. For example:
+Include jQuery if you haven't already.
 
 ```html
 <script   
