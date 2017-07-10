@@ -5,7 +5,7 @@ Turn your existing pagination into infinite scrolling pages with ease. Key featu
 
 * SEO friendly
 * Doesn't break browsers back button
-* Highly customizable
+* Highly customizable through extensions
 
 Documentation, demos and license info available at: https://infiniteajaxscroll.com/
 
