@@ -3,11 +3,11 @@ Infinite Ajax Scroll
 
 Turn your existing pagination into infinite scrolling pages with ease. Key features include:
 
-* SEO friendly
-* Doesn't break browsers back button
-* Highly customizable through extensions
+* SEO friendly 🥇
+* Doesn't break browsers back button 💯
+* Highly customizable through extensions ✨
 
-Documentation, demos and license info available at: https://infiniteajaxscroll.com/
+More features, docs and demos available at: https://infiniteajaxscroll.com/
 
 [![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.png?branch=master)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
 
