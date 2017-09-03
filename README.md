@@ -1,13 +1,12 @@
 <p align="center">
   <a href="https://infiniteajaxscroll.com" target="_blank">
-    <img alt="Infinite Ajax Scroll" title="Infinite Ajax Scroll" src="https://infiniteajaxscroll.com/img/infinite-ajax-scroll-mark.svg" width="180">
+    <img alt="Infinite Ajax Scroll" title="Infinite Ajax Scroll" src="https://infiniteajaxscroll.com/img/infinite-ajax-scroll-mark.svg" width="256">
   </a>
-  <h1 align="center">Infinite Ajax Scroll</h1>
 </p>
 
-Turn your existing pagination into infinite scrolling pages with ease. 
+<h1 align="center">Infinite Ajax Scroll</h1>
 
-Key features include:
+Turn your existing pagination into infinite scrolling pages with ease. 
 
 * SEO friendly 🥇
 * Doesn't break browsers back button 💯
