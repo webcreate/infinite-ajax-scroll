@@ -4,3 +4,4 @@ dist/
 conveyor.yml
 /vendor/
 composer.lock
+package-lock.json

@@ -3,11 +3,11 @@
   "title": "Infinite Ajax Scroll",
   "version": "2.2.3",
   "description": "A jQuery plugin that turns your server-side pagination into an infinite scrolling one using AJAX",
-  "homepage": "http://infiniteajaxscroll.com",
+  "homepage": "https://infiniteajaxscroll.com",
   "main": "src/jquery-ias.js",
-  "repository": "http://github.com/webcreate/infinite-ajax-scroll",
+  "repository": "https://github.com/webcreate/infinite-ajax-scroll",
   "bugs": {
-    "url" : "http://infiniteajaxscroll.com/docs/support.html"
+    "url": "https://infiniteajaxscroll.com/docs/support.html"
   },
   "author": {
     "company": "Webcreate",
