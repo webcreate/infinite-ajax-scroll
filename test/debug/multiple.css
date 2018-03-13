@@ -1,0 +1,17 @@
+body {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.overflow1, .overflow2 {
+  padding: 8px;
+  height: 300px;
+  overflow: scroll;
+  outline: solid 1px #777;
+  margin: 0 20px;
+}
