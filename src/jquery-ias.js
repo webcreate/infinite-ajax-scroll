@@ -627,7 +627,9 @@
       if (!instance) {
         $this.data('ias', (instance = new IAS($this, options)));
 
-        $(document).ready($.proxy(instance.initialize, instance));
+        if (options.initialize) {
+          $(document).ready($.proxy(instance.initialize, instance));
+        }
       }
 
       // when the plugin is called with a method
@@ -658,6 +660,7 @@
     next: '.next',
     pagination: false,
     delay: 600,
-    negativeMargin: 10
+    negativeMargin: 10,
+    initialize: true
   };
 })(jQuery);
