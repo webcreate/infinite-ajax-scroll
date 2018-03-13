@@ -22,7 +22,7 @@ describe("IAS", function () {
 
     ias.on('ready', spy);
 
-    wait(100).then(function() {
+    wait(300).then(function() {
       expect(spy).toHaveBeenCalledOnce();
 
       deferred.resolve();
@@ -45,7 +45,7 @@ describe("IAS", function () {
 
     ias.on('ready', spy);
 
-    wait(100).then(function() {
+    wait(300).then(function() {
       expect(spy).not.toHaveBeenCalled();
 
       deferred.resolve();
