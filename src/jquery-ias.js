@@ -487,6 +487,12 @@
 
     this.listeners[event].add($.proxy(callback, this), priority);
 
+    // ready is already fired, before on() could even be called, so
+    // let's call the callback right away
+    if (event === 'ready' && this.isInitialized) {
+      $.proxy(callback, this)();
+    }
+
     return this;
   };
 
@@ -627,7 +633,9 @@
       if (!instance) {
         $this.data('ias', (instance = new IAS($this, options)));
 
-        $(document).ready($.proxy(instance.initialize, instance));
+        if (options.initialize) {
+          $(document).ready($.proxy(instance.initialize, instance));
+        }
       }
 
       // when the plugin is called with a method
@@ -658,6 +666,7 @@
     next: '.next',
     pagination: false,
     delay: 600,
-    negativeMargin: 10
+    negativeMargin: 10,
+    initialize: true
   };
 })(jQuery);
