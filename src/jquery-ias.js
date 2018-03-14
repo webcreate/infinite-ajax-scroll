@@ -182,12 +182,15 @@
       delay = delay || this.defaultDelay;
 
       var loadEvent = {
-        url: url
+        url: url,
+        ajaxOptions: {
+          dataType: 'html'
+        }
       };
 
       self.fire('load', [loadEvent]);
 
-      this.jsXhr = $.get(loadEvent.url, null, $.proxy(function(data) {
+      function xhrDoneCallback(data) {
         $itemContainer = $(this.itemsContainerSelector, data).eq(0);
         if (0 === $itemContainer.length) {
           $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
@@ -211,7 +214,10 @@
             callback.call(self, data, items);
           }
         }
-      }, self), 'html');
+      }
+
+      this.jsXhr = $.ajax(loadEvent.url, loadEvent.ajaxOptions)
+        .done($.proxy(xhrDoneCallback, self));
 
       return this.jsXhr;
     };
