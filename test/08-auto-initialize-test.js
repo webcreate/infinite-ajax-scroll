@@ -1,4 +1,4 @@
-describe("IAS", function () {
+describe("auto initialize", function () {
   before(function() {
     this.timeout = 10000;
 

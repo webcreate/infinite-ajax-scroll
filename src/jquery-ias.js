@@ -487,6 +487,12 @@
 
     this.listeners[event].add($.proxy(callback, this), priority);
 
+    // ready is already fired, before on() could even be called, so
+    // let's call the callback right away
+    if (event === 'ready' && this.isInitialized) {
+      $.proxy(callback, this)();
+    }
+
     return this;
   };
 
