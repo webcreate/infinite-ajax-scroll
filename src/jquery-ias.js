@@ -183,7 +183,9 @@
 
       var loadEvent = {
         url: url,
-        dataType: 'html'
+        ajaxOptions: {
+          dataType: 'html'
+        }
       };
 
       self.fire('load', [loadEvent]);
@@ -213,7 +215,8 @@
           }
         }
       }
-      this.jsXhr = $.ajax(loadEvent)
+
+      this.jsXhr = $.ajax(loadEvent.url, loadEvent.ajaxOptions)
         .done($.proxy(xhrDoneCallback, self));
 
       return this.jsXhr;
