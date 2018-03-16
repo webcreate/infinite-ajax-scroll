@@ -179,16 +179,9 @@ describe("IAS", function () {
         // scroll to page 3
         scrollDown().then(function() {
           wait(1500).then(function() {
-            expect(spy1).not.toHaveBeenCalled();
+            expect(spy1).toHaveBeenCalledOnce();
 
-            // now on the final page, scroll down, and expect to have been called
-            scrollDown().then(function() {
-              wait(1500).then(function() {
-                expect(spy1).toHaveBeenCalledOnce();
-
-                deferred.resolve();
-              });
-            });
+            deferred.resolve();
           });
         });
       });
