@@ -23,7 +23,7 @@ The load event object contains the following properties.
 | property          | type   | description                                                                    |
 |-------------------|--------|--------------------------------------------------------------------------------|
 | event.url         | string | url that will be loaded                                                        |
-| event.ajaxOptions | object | options that are passed to [$.ajax method](http://api.jquery.com/jquery.ajax/) |
+| event.ajaxOptions | object | options that are passed to [$.ajax method](https://api.jquery.com/jquery.ajax/) |
 
 Using this event it is possible to change the requested url. This can be useful to append an arbitrary parameter to the requested url so the server can handle the request differently. For example to optimize the returned html by stripping everything outside the container element (header, footer, etc.).
 
@@ -47,7 +47,7 @@ ias.on('load', function(event) {
 })
 ```
 
-See http://api.jquery.com/jquery.ajax/ for a complete list of options.
+See https://api.jquery.com/jquery.ajax/ for a complete list of options.
 
 ### loaded
 

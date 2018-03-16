@@ -1,11 +1,11 @@
 /**
  * IAS None Left Extension
  * An IAS extension to show a message when there are no more pages te load
- * http://infiniteajaxscroll.com
+ * https://infiniteajaxscroll.com
  *
  * This file is part of the Infinite AJAX Scroll package
  *
- * Copyright 2014-2017 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2018 Webcreate (Jeroen Fiege)
  */
 
 var IASNoneLeftExtension = function(options) {

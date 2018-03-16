@@ -1,7 +1,7 @@
 {
   "name": "jquery-ias",
-  "version": "2.2.3",
-  "homepage": "http://infiniteajaxscroll.com",
+  "version": "2.3.0",
+  "homepage": "https://infiniteajaxscroll.com",
   "main": "src/jquery-ias.js",
   "ignore": [
     "**/.*",

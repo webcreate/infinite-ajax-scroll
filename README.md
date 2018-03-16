@@ -75,8 +75,8 @@ For complete documentation about options and extensions visit https://infiniteaj
 
 ## Licensing
 
-Infinite AJAX Scroll may be used in commercial projects and applications with the one-time purchase of a commercial license.
+Infinite Ajax Scroll may be used in commercial projects and applications with the one-time purchase of a commercial license.
 
 https://infiniteajaxscroll.com/docs/license.html
 
-For non-commercial, personal, or open source projects and applications, you may use Infinite AJAX Scroll under the terms of the MIT License. You may use Infinite AJAX Scroll for free.
+For non-commercial, personal, or open source projects and applications, you may use Infinite Ajax Scroll under the terms of the MIT License. You may use Infinite AJAX Scroll for free.

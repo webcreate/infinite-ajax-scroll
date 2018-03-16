@@ -1,6 +1,6 @@
 ## Contributing
 
-To contribute to Infinite AJAX Scroll please follow these instructions:
+To contribute to Infinite Ajax Scroll please follow these instructions:
 
 * Fork the project and create a new feature branch
 * Install the development tools

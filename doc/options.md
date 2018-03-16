@@ -96,4 +96,4 @@ Note: user experience can degrade if new pages are loaded too quickly without vi
 
 By default IAS initializes when the document is ready. During initialisation IAS binds to the scroll event and prefills the container when the content is shorter then the page fold.
 
-If you want to control when IAS initializes yourself, you can set this value to false.
+If you want to control when IAS initializes yourself, you can set this value to false. Then initialize IAS yourself with the [initialize](methods.html#initialize) method.

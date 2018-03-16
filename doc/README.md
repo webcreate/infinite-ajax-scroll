@@ -1,1 +1,1 @@
-All documentation is made available at http://infiniteajaxscroll.com/docs.
+All documentation is made available at https://infiniteajaxscroll.com/docs.
