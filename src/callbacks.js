@@ -1,10 +1,10 @@
 /**
- * IASCallbacks v2.2.3
- * http://infiniteajaxscroll.com
+ * IASCallbacks v2.3.0
+ * https://infiniteajaxscroll.com
  *
  * This file is part of the Infinite AJAX Scroll package
  *
- * Copyright 2014-2017 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2018 Webcreate (Jeroen Fiege)
  */
 
 var IASCallbacks = function (aJquery) {

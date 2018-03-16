@@ -3,7 +3,7 @@ Installation
 
 ### Manual
 
-1) Download [jquery-ias.min.js](http://infiniteajaxscroll.com/download.html).
+1) Download [jquery-ias.min.js](https://infiniteajaxscroll.com/download.html).
 
 2) Copy `jquery-ias.min.js` into your web directory
 

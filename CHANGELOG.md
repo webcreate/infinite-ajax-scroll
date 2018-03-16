@@ -1,6 +1,12 @@
 Changelog
 =========
 
+## 2.3.0
+
+* Added new option: `initialize`
+* Fix: `ready` event to fire when ready (see commit f6b44a7)
+* Added `ajaxOptions` to `load` event (PR by campadrenalin)
+
 ## 2.2.3
 
 * Improved documentation

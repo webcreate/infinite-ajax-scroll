@@ -13,7 +13,7 @@ With the purchase of a commercial license:
 
 * You may use Infinite AJAX Scroll in commercial applications.
 
-<a href="http://infiniteajaxscroll.com/order/94183.html" title="Buy Infinite AJAX Scroll Commercial License" class="btn btn-buy clicky">Buy Commercial License</a>
+<a href="https://infiniteajaxscroll.com/download.html" title="Buy Infinite AJAX Scroll Commercial License" class="btn btn-buy clicky">Buy Commercial License</a>
 
 ## Infinite AJAX Scroll Commercial License Agreement
 
