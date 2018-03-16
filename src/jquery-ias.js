@@ -552,16 +552,11 @@
     var url = this.nextUrl,
         self = this;
 
-    this.pause();
-
     if (!url) {
-      this.fire('noneLeft', [this.getLastItem()]);
-      this.listeners['noneLeft'].disable(); // disable it so it only fires once
-
-      self.resume();
-
       return false;
     }
+
+    this.pause();
 
     var promise = this.fire('next', [url]);
 
@@ -569,6 +564,11 @@
       self.load(url, function(data, items) {
         self.render(items, function() {
           self.nextUrl = self.getNextUrl(data);
+
+          if (!self.nextUrl) {
+            self.fire('noneLeft', [self.getLastItem()]);
+            self.listeners['noneLeft'].disable(); // disable it so it only fires once
+          }
 
           self.resume();
         });
