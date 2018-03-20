@@ -189,4 +189,29 @@ describe("IAS", function () {
 
     return deferred.promise;
   });
+
+  it("should call noneLeft listeners when content is short without next", function() {
+    var deferred = when.defer();
+    var spy1 = this.spy();
+
+    jQuery.ias('destroy');
+
+    loadFixture("short-without-next.html", function() {
+      jQuery.ias({
+        container : '.listing',
+        item: '.post',
+        pagination: '.navigation',
+        next: '.next-posts a',
+        initialize: true
+      })
+          // register listener
+          .on('noneLeft', spy1);
+
+      expect(spy1).toHaveBeenCalledOnce();
+
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  });
 });
