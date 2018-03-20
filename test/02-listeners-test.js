@@ -171,6 +171,8 @@ describe("IAS", function () {
         // register listener
         .on('noneLeft', spy1);
 
+    expect(spy1).not.toHaveBeenCalled();
+
     // scroll to page 2
     scrollDown().then(function() {
       wait(2000).then(function() {
@@ -190,22 +192,55 @@ describe("IAS", function () {
     return deferred.promise;
   });
 
-  it("should call noneLeft listeners when content is short without next", function() {
+  it("should call noneLeft listeners when content is short without next (before init)", function() {
     var deferred = when.defer();
     var spy1 = this.spy();
 
     jQuery.ias('destroy');
 
     loadFixture("short-without-next.html", function() {
-      jQuery.ias({
+      var ias = jQuery.ias({
         container : '.listing',
         item: '.post',
         pagination: '.navigation',
         next: '.next-posts a',
-        initialize: true
-      })
-          // register listener
-          .on('noneLeft', spy1);
+        initialize: false
+      });
+
+      // register listener
+      ias.on('noneLeft', spy1);
+
+      expect(spy1).not.toHaveBeenCalled();
+
+      ias.initialize();
+
+      expect(spy1).toHaveBeenCalledOnce();
+
+      deferred.resolve();
+    });
+
+    return deferred.promise;
+  });
+
+  it("should call noneLeft listeners when content is short without next (after init)", function() {
+    var deferred = when.defer();
+    var spy1 = this.spy();
+
+    jQuery.ias('destroy');
+
+    loadFixture("short-without-next.html", function() {
+      var ias = jQuery.ias({
+        container : '.listing',
+        item: '.post',
+        pagination: '.navigation',
+        next: '.next-posts a',
+        initialize: false
+      });
+
+      ias.initialize();
+
+      // register listener
+      ias.on('noneLeft', spy1);
 
       expect(spy1).toHaveBeenCalledOnce();
 
