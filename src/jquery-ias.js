@@ -388,8 +388,12 @@
 
     this.nextUrl = this.getNextUrl();
 
+    if (!this.nextUrl) {
+      this.fire('noneLeft', [this.getLastItem()]);
+    }
+
     // start loading next page if content is shorter than page fold
-    if (currentScrollOffset >= scrollThreshold) {
+    if (this.nextUrl && currentScrollOffset >= scrollThreshold) {
       this.next();
 
       // flag as initialized when rendering is completed
@@ -495,8 +499,14 @@
 
     // ready is already fired, before on() could even be called, so
     // let's call the callback right away
-    if (event === 'ready' && this.isInitialized) {
-      $.proxy(callback, this)();
+    if (this.isInitialized) {
+      if (event === 'ready') {
+        $.proxy(callback, this)();
+      }
+      // same applies to noneLeft
+      else if (event === 'noneLeft' && !this.nextUrl) {
+        $.proxy(callback, this)();
+      }
     }
 
     return this;
@@ -567,7 +577,6 @@
 
           if (!self.nextUrl) {
             self.fire('noneLeft', [self.getLastItem()]);
-            self.listeners['noneLeft'].disable(); // disable it so it only fires once
           }
 
           self.resume();
