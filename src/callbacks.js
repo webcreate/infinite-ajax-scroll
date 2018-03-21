@@ -1,5 +1,5 @@
 /**
- * IASCallbacks v2.3.0
+ * IASCallbacks v2.3.1
  * https://infiniteajaxscroll.com
  *
  * This file is part of the Infinite AJAX Scroll package
