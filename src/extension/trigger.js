@@ -105,6 +105,7 @@ IASTriggerExtension.prototype.bind = function(ias) {
  * @param {object} ias
  */
 IASTriggerExtension.prototype.unbind = function(ias) {
+  this.$triggerNext = null;
   ias.off('next', this.showTriggerNext);
   ias.off('rendered', this.onRendered);
 
