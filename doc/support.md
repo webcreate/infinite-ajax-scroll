@@ -14,6 +14,14 @@ Below are some of the most frequently asked questions.
 
 This might happen if your container contains images with a non-fixed height. Try to set the height attribute on your images, or initialize Infinite AJAX Scroll after the images have loaded.
 
+One possible way to achieve this is using the window.onload event:
+
+```
+$(window).on("load", function() {
+  // IAS code here
+});
+```
+
 ### Uncaught Error: Syntax error, unrecognized expression
 
 This might happen if there is content (most of the time whitespace) before the `!DOCTYPE` tag. Make sure there is no whitespace before the `<!DOCTYPE>` tag.
