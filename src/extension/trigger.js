@@ -107,6 +107,7 @@ IASTriggerExtension.prototype.bind = function(ias) {
 IASTriggerExtension.prototype.unbind = function(ias) {
   this.$triggerNext = null;
   this.$triggerPrev = null;
+  this.count = 0;
   ias.off('next', this.showTriggerNext);
   ias.off('rendered', this.onRendered);
 
