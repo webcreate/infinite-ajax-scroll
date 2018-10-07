@@ -1,18 +1,18 @@
 {
-  "name": "jquery-ias",
+  "name": "infinite-ajax-scroll",
   "title": "Infinite Ajax Scroll",
-  "version": "2.3.1",
-  "description": "A jQuery plugin that turns your server-side pagination into an infinite scrolling one using AJAX",
+  "version": "3.0",
+  "description": "Turn your existing pagination into infinite scrolling pages with ease",
   "homepage": "https://infiniteajaxscroll.com",
-  "main": "src/jquery-ias.js",
+  "main": "src/index.js",
   "repository": "https://github.com/webcreate/infinite-ajax-scroll",
   "bugs": {
-    "url": "https://infiniteajaxscroll.com/docs/support.html"
+    "url": "https://github.com/webcreate/infinite-ajax-scroll/issues"
   },
   "author": {
     "company": "Webcreate",
     "name": "Jeroen Fiege",
-    "web": "http://webcreate.nl"
+    "web": "https://webcreate.nl"
   },
   "keywords": [
     "scroll",
@@ -26,17 +26,7 @@
   ],
   "license": "Dual-license",
   "dependencies": {
-    "jquery": ">=1.12"
   },
   "devDependencies": {
-    "grunt": "~0.4",
-    "grunt-cli": "~0.1",
-    "buster": "~0.7",
-    "grunt-buster": "~0.3",
-    "phantomjs": "~1.9",
-    "grunt-contrib-copy": "~0.5.0",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-uglify": "~0.3.0",
-    "grunt-contrib-concat": "~0.3.0"
   }
 }

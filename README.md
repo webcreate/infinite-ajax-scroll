@@ -12,65 +12,17 @@ Turn your existing pagination into infinite scrolling pages with ease.
 * Doesn't break browsers back button 💯
 * Highly customizable through extensions ✨
 
-More features, docs and demos available at: https://infiniteajaxscroll.com/
+More features, documentation and examples available at: https://infiniteajaxscroll.com/
 
-[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.png?branch=master)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
+[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.png?branch=3.x)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
 
 ## Installation
 
-Download [jquery-ias.min.js](https://infiniteajaxscroll.com/download.html) (latest).
-
-Include Infinite Ajax Scroll into your html pages.
-
-```html
-<script src="jquery-ias.min.js"></script>
-```
-
-Include jQuery if you haven't already.
-
-```html
-<script   
-    src="https://code.jquery.com/jquery-3.2.1.min.js"   
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   
-    crossorigin="anonymous"></script>
-```
+TDB
 
 ## Usage
 
-Infinite Ajax Scroll requires markup similar to this:
-
-```html
-<div id="container">
-  <div class="post">...</div>
-  <div class="post">...</div>
-</div>
-
-<div id="pagination">
-  <a href="/page1/" class="prev">prev</a>
-  <a href="/page3/" class="next">next</a>
-</div>
-```
-
-Then configure Infinite Ajax Scroll:
-
-```html
-<script type="text/javascript">
-  var ias = jQuery.ias({
-    container:  '#container',
-    item:       '.post',
-    pagination: '#pagination',
-    next:       '#pagination a.next'
-  });
-
-  ias.extension(new IASSpinnerExtension());
-  ias.extension(new IASTriggerExtension({offset: 2}));
-  ias.extension(new IASNoneLeftExtension({text: "You reached the end"}));
-  ias.extension(new IASPagingExtension());
-  ias.extension(new IASHistoryExtension({prev: '#pagination a.prev'}));
-</script>
-```
-
-For complete documentation about options and extensions visit https://infiniteajaxscroll.com/docs/.
+TDB
 
 ## Licensing
 

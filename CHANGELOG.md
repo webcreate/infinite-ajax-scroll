@@ -1,6 +1,10 @@
 Changelog
 =========
 
+## 3.0.0
+
+TBD
+
 ## 2.3.1
 
 * Fix: noneLeft event not being triggered when there was only one page
