@@ -1,0 +1,14 @@
+{
+  "ignoreTestFiles": [
+    "test/fixtures",
+    "test/screenshots",
+    "test/videos"
+  ],
+  "integrationFolder": "test",
+  "fixturesFolder": "test/fixtures",
+  "screenshotsFolder": "test/screenshots",
+  "videosFolder": "test/videos",
+  "supportFile": false,
+  "pluginsFile": false,
+  "video": false
+}
