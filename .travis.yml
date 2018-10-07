@@ -1,1 +1,20 @@
 sudo: false
+
+language: node_js
+
+node_js:
+  - 10
+
+cache:
+  directories:
+    - ~/.npm
+    - ~/.cache
+
+install:
+  - npm ci
+
+before_script:
+  - npm run start
+
+script:
+  - npm run test
