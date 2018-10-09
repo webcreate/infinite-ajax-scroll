@@ -1,7 +1,7 @@
 import $ from 'tealight';
 
 export default {
-  singleElement: function(elementOrSelector, property) {
+  singleElement(elementOrSelector, property) {
     const $element = $(elementOrSelector);
 
     if ($element.length > 1) {
