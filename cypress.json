@@ -1,8 +1,8 @@
 {
   "ignoreTestFiles": [
-    "test/fixtures",
-    "test/screenshots",
-    "test/videos"
+    "**/screenshots/**",
+    "**/videos/**",
+    "**/fixtures/**"
   ],
   "integrationFolder": "test",
   "fixturesFolder": "test/fixtures",
