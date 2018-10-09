@@ -41,7 +41,10 @@
     "infinite"
   ],
   "license": "ISC",
-  "dependencies": {},
+  "dependencies": {
+    "merge-options": "^1.0.1",
+    "tealight": "^0.3.6"
+  },
   "devDependencies": {
     "cypress": "^3.1.0",
     "eslint": "^5.6.1",
