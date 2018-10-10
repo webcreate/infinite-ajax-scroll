@@ -1,3 +1,5 @@
+import Emitter from "tiny-emitter";
+
 export default {
   item: '',
   pagination: {},
@@ -6,4 +8,5 @@ export default {
   bind: true,
   scrollContainer: window,
   spinner: false,
+  emitter: new Emitter(),
 };

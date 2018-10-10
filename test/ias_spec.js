@@ -14,7 +14,7 @@ describe('InfiniteAjaxScroll', () => {
   });
 
   it('should return a new instance with HTMLElement', () => {
-    let div = document.createElement('div');
+    const div = document.createElement('div');
 
     const ias = new InfiniteAjaxScroll(div);
 
@@ -42,7 +42,7 @@ describe('InfiniteAjaxScroll', () => {
 
   it('should throw error when scrollContainer selector is not found', () => {
     expect(() => {
-      let container = document.createElement('div');
+      const container = document.createElement('div');
 
       new InfiniteAjaxScroll(container, {'scrollContainer': '.scroller'});
     }).to.throw();
@@ -54,7 +54,7 @@ describe('InfiniteAjaxScroll', () => {
       <div class="scroller"></div>
     `;
 
-    let container = document.createElement('div');
+    const container = document.createElement('div');
 
     expect(() => {
       new InfiniteAjaxScroll(container, {'scrollContainer': '.scroller'});

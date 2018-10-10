@@ -43,7 +43,8 @@
   "license": "ISC",
   "dependencies": {
     "merge-options": "^1.0.1",
-    "tealight": "^0.3.6"
+    "tealight": "^0.3.6",
+    "tiny-emitter": "^2.0.2"
   },
   "devDependencies": {
     "cypress": "^3.1.0",
