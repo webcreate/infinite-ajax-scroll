@@ -7,7 +7,7 @@ describe('InfiniteAjaxScroll', () => {
 
     const container = document.createElement('div');
 
-    const ias = new InfiniteAjaxScroll(container, {'emitter': emitter});
+    const ias = new InfiniteAjaxScroll(container, {emitter});
 
     const spy = {
       foo() {}
@@ -28,7 +28,7 @@ describe('InfiniteAjaxScroll', () => {
 
     const container = document.createElement('div');
 
-    const ias = new InfiniteAjaxScroll(container, {'emitter': emitter});
+    const ias = new InfiniteAjaxScroll(container, {emitter});
 
     const spy = {
       foo() {}
@@ -52,7 +52,7 @@ describe('InfiniteAjaxScroll', () => {
 
     const container = document.createElement('div');
 
-    const ias = new InfiniteAjaxScroll(container, {'emitter': emitter});
+    const ias = new InfiniteAjaxScroll(container, {emitter});
 
     const spy = {
       foo() {}
