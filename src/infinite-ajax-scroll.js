@@ -16,10 +16,34 @@ export default class InfiniteAjaxScroll {
 
       this.options.scrollContainer = $(this.options.scrollContainer)[0];
     }
+
+    this.scrollContainer = this.options.scrollContainer;
+    this.binded = false;
+
+    if (this.options.bind) {
+      // @todo on document.ready?
+      this.bind();
+    }
+  }
+
+  bind() {
+    this.binded = true;
+
+    this.emitter.emit('binded');
+  }
+
+  unbind() {
+    this.binded = false;
+
+    this.emitter.emit('unbinded');
   }
 
   on(event, callback) {
     this.emitter.on(event, callback, this);
+
+    if (event === 'binded' && this.binded) {
+      callback.bind(this)();
+    }
   }
 
   off(event, callback) {
@@ -28,5 +52,9 @@ export default class InfiniteAjaxScroll {
 
   once(event, callback) {
     this.emitter.once(event, callback, this);
+
+    if (event === 'binded' && this.binded) {
+      callback.bind(this)();
+    }
   }
 }
