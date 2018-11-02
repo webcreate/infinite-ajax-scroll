@@ -8,7 +8,10 @@
   "fixturesFolder": "test/fixtures",
   "screenshotsFolder": "test/screenshots",
   "videosFolder": "test/videos",
-  "supportFile": false,
+  "supportFile": "test/support/commands.js",
   "pluginsFile": false,
-  "video": false
+  "video": false,
+
+  "viewportWidth": 640,
+  "viewportHeight": 400
 }
