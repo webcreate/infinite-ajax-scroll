@@ -53,6 +53,51 @@ export default class InfiniteAjaxScroll {
     this.emitter.emit('unbinded');
   }
 
+  load(url) {
+    let ias = this;
+
+    return new Promise((resolve, reject) => {
+      let xhr = new XMLHttpRequest();
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+          return;
+        }
+
+        if (xhr.status === 200) {
+          let items = xhr.response;
+
+          if (ias.options.responseType === 'document') {
+            items = $(ias.options.item, xhr.response);
+          }
+
+          // @todo define event variable and pass that around so it can be manipulated
+
+          ias.emitter.emit('loaded', items, url, xhr);
+
+          resolve({items, url, xhr});
+        } else {
+          // @todo this console.error the best approach?
+          console.error('Request failed');
+
+          reject(xhr);
+        }
+      };
+
+      // FIXME: make no-caching configurable
+      // @see https://developer.mozilla.org/nl/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
+      url = url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
+
+      xhr.open('GET', url, true);
+      xhr.responseType = ias.options.responseType;
+      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+      ias.emitter.emit('load', url, xhr);
+
+      xhr.send();
+    });
+  }
+
   sentinel() {
     const items = $(this.options.item, this.container);
 

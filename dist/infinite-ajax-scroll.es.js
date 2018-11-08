@@ -118,7 +118,7 @@ var InfiniteAjaxScroll = function InfiniteAjaxScroll(container, options) {
   if (this.options.scrollContainer !== window) {
     Assert.singleElement(this.options.scrollContainer, 'options.scrollContainer');
 
-    this.options.scrollContainer = $(this.options.scrollContainer)[0];
+    this.scrollContainer = $(this.options.scrollContainer)[0];
   }
 
   this.binded = false;
@@ -148,6 +148,51 @@ InfiniteAjaxScroll.prototype.unbind = function unbind () {
   this.binded = false;
 
   this.emitter.emit('unbinded');
+};
+
+InfiniteAjaxScroll.prototype.load = function load (url) {
+  var ias = this;
+
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== XMLHttpRequest.DONE) {
+        return;
+      }
+
+      if (xhr.status === 200) {
+        var items = xhr.response;
+
+        if (ias.options.responseType === 'document') {
+          items = $(ias.options.item, xhr.response);
+        }
+
+        // @todo define event variable and pass that around so it can be manipulated
+
+        ias.emitter.emit('loaded', items, url, xhr);
+
+        resolve({items: items, url: url, xhr: xhr});
+      } else {
+        // @todo this console.error the best approach?
+        console.error('Request failed');
+
+        reject(xhr);
+      }
+    };
+
+    // FIXME: make no-caching configurable
+    // @see https://developer.mozilla.org/nl/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
+    url = url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
+
+    xhr.open('GET', url, true);
+    xhr.responseType = ias.options.responseType;
+    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+    ias.emitter.emit('load', url, xhr);
+
+    xhr.send();
+  });
 };
 
 InfiniteAjaxScroll.prototype.sentinel = function sentinel () {
