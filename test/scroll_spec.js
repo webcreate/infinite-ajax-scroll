@@ -41,4 +41,22 @@ describe('InfiniteAjaxScroll', () => {
       expect(spy.hit).to.have.been.called;
     });
   });
+
+  it('should not emit a hit event when unbinded', () => {
+    const spy = {
+      hit() {}
+    };
+
+    cy.spy(spy, 'hit');
+
+    ias.on('hit', spy.hit);
+
+    ias.unbind();
+
+    cy.scrollTo('bottom', {duration: 300});
+
+    cy.wait(200).then(() => {
+      expect(spy.hit).to.not.have.been.called;
+    });
+  });
 });
