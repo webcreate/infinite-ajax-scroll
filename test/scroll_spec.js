@@ -3,11 +3,11 @@ let ias;
 describe('InfiniteAjaxScroll', () => {
   beforeEach(() => {
     // runs before each test in the block
-    cy.visit('http://localhost:8080/test/fixtures/default/page1.html').then(() => {
-      cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
-        ias = new InfiniteAjaxScroll('.blocks', {
-          item: '.blocks__block',
-        });
+    cy.visit('http://localhost:8080/test/fixtures/default/page1.html')
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      ias = new InfiniteAjaxScroll('.blocks', {
+        item: '.blocks__block',
       });
     });
   });

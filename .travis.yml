@@ -7,11 +7,12 @@ node_js:
 
 cache:
   directories:
-    - ~/.npm
-    - ~/.cache
+    - "$HOME/.npm"
+    - "$HOME/.cache"
 
 install:
   - npm ci
+  - npm build
 
 before_script:
   - npm run start
