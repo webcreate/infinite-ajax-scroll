@@ -24,7 +24,7 @@ describe('InfiniteAjaxScroll', () => {
 
     ias.load(url);
 
-    cy.wait(500).then(() => {
+    cy.wait(5000).then(() => {
       expect(spy.loaded).to.have.been.calledOnce;
 
       // test arguments of loaded event
@@ -51,7 +51,7 @@ describe('InfiniteAjaxScroll', () => {
 
     ias.load(url);
 
-    cy.wait(500).then(() => {
+    cy.wait(5000).then(() => {
       // test arguments of loaded event
       expect(spy.loaded).to.have.been.calledWith(
           Cypress.sinon.match.has("items", Cypress.sinon.match.array)
@@ -70,7 +70,7 @@ describe('InfiniteAjaxScroll', () => {
 
     ias.load('http://localhost:8080/test/fixtures/default/page3.html');
 
-    cy.wait(500).then(() => {
+    cy.wait(5000).then(() => {
       expect(spy.loaded).to.not.have.been.calledOnce;
     });
   });
