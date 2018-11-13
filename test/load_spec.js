@@ -29,9 +29,13 @@ describe('Load', () => {
 
       // test arguments of loaded event
       expect(spy.loaded).to.have.been.calledWith(
-          Cypress.sinon.match.array,
-          Cypress.sinon.match(url),
-          Cypress.sinon.match.any
+          Cypress.sinon.match.has("url", Cypress.sinon.match(url))
+      );
+      expect(spy.loaded).to.have.been.calledWith(
+          Cypress.sinon.match.has("items", Cypress.sinon.match.array)
+      );
+      expect(spy.loaded).to.have.been.calledWith(
+          Cypress.sinon.match.has("xhr", Cypress.sinon.match.any)
       );
     });
   });
@@ -52,9 +56,9 @@ describe('Load', () => {
     ias.load(url);
 
     cy.wait(5000).then(() => {
-      // test arguments of loaded event
+      // test that the items property contains the json object
       expect(spy.loaded).to.have.been.calledWith(
-          Cypress.sinon.match.has("items", Cypress.sinon.match.array)
+          Cypress.sinon.match.has("items", Cypress.sinon.match.has("blocks", Cypress.sinon.match.array))
       );
     });
   });

@@ -964,7 +964,7 @@
 
 	        // @todo define event variable and pass that around so it can be manipulated
 
-	        ias.emitter.emit('loaded', items, url, xhr);
+	        ias.emitter.emit('loaded', {items: items, url: url, xhr: xhr});
 
 	        resolve({items: items, url: url, xhr: xhr});
 	      } else {
@@ -983,10 +983,52 @@
 	    xhr.responseType = ias.options.responseType;
 	    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
-	    ias.emitter.emit('load', url, xhr);
+	    ias.emitter.emit('load', {url: url, xhr: xhr});
 
 	    xhr.send();
 	  });
+	};
+
+	/**
+	 * @param {array<Element>} items
+	 * @param {Element|null} parent
+	 */
+	InfiniteAjaxScroll.prototype.append = function append (items, parent) {
+	  var ias = this;
+	  parent = parent || ias.container;
+
+	  // @todo move fragment creation into executor?
+	  var insert = document.createDocumentFragment();
+
+	  items.forEach(function (item) {
+	    insert.appendChild(item);
+	  });
+
+	  var executor = function (resolve) {
+	    window.requestAnimationFrame(function () {
+	      var last = ias.sentinel();
+	      var sibling = last ? last.nextSibling : null;
+
+	      parent.insertBefore(insert, sibling);
+
+	      window.requestAnimationFrame(function () {
+	        // @todo define event variable and pass that around so it can be manipulated
+	        resolve({items: items, parent: parent});
+
+	        ias.emitter.emit('appended', {items: items, parent: parent});
+	      });
+	    });
+	  };
+
+	  var event = {
+	    items: items,
+	    parent: parent,
+	    executor: executor,
+	  };
+
+	  ias.emitter.emit('append', event);
+
+	  return new Promise(event.executor);
 	};
 
 	InfiniteAjaxScroll.prototype.sentinel = function sentinel () {

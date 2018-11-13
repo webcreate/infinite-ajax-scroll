@@ -115,7 +115,7 @@ export default class InfiniteAjaxScroll {
 
           // @todo define event variable and pass that around so it can be manipulated
 
-          ias.emitter.emit('loaded', items, url, xhr);
+          ias.emitter.emit('loaded', {items, url, xhr});
 
           resolve({items, url, xhr});
         } else {
@@ -134,10 +134,52 @@ export default class InfiniteAjaxScroll {
       xhr.responseType = ias.options.responseType;
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 
-      ias.emitter.emit('load', url, xhr);
+      ias.emitter.emit('load', {url, xhr});
 
       xhr.send();
     });
+  }
+
+  /**
+   * @param {array<Element>} items
+   * @param {Element|null} parent
+   */
+  append(items, parent) {
+    let ias = this;
+    parent = parent || ias.container;
+
+    // @todo move fragment creation into executor?
+    let insert = document.createDocumentFragment();
+
+    items.forEach((item) => {
+      insert.appendChild(item);
+    });
+
+    let executor = (resolve) => {
+      window.requestAnimationFrame(() => {
+        let last = ias.sentinel();
+        let sibling = last ? last.nextSibling : null;
+
+        parent.insertBefore(insert, sibling);
+
+        window.requestAnimationFrame(() => {
+          // @todo define event variable and pass that around so it can be manipulated
+          resolve({items, parent});
+
+          ias.emitter.emit('appended', {items, parent});
+        });
+      });
+    };
+
+    let event = {
+      items,
+      parent,
+      executor,
+    };
+
+    ias.emitter.emit('append', event);
+
+    return new Promise(event.executor);
   }
 
   sentinel() {
