@@ -1,0 +1,87 @@
+let ias;
+
+describe('Next', () => {
+  beforeEach(() => {
+    // runs before each test in the block
+    cy.visit('http://localhost:8080/test/fixtures/default/page1.html');
+  });
+
+  it('should emit a next event when scrolled to bottom', () => {
+    const spy = {
+      hit() {},
+      next() {},
+    };
+
+    cy.spy(spy, 'hit');
+    cy.spy(spy, 'next');
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      ias = new InfiniteAjaxScroll('.blocks', {
+        item: '.blocks__block',
+        next: '.pager__next',
+      });
+
+      ias.on('hit', spy.hit);
+      ias.on('next', spy.next);
+
+      cy.scrollTo('bottom', {duration: 300});
+
+      cy.wait(200).then(() => {
+        expect(spy.next).to.have.been.calledOnce;
+        // @todo would expect to have `next` called after `hit`,
+        //       but this is not supported by tiny-emitter
+        // expect(spy.next).to.have.been.calledAfter(spy.hit);
+
+        expect(spy.next).to.have.been.calledWith(
+            Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(0))
+        );
+      });
+    });
+  });
+
+  it('should emit a next event when next called manually', () => {
+    const spy = {
+      next() {},
+    };
+
+    cy.spy(spy, 'next');
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      ias = new InfiniteAjaxScroll('.blocks', {
+        item: '.blocks__block',
+        next: '.pager__next',
+      });
+
+      ias.on('next', spy.next);
+
+      ias.next();
+
+      expect(spy.next).to.have.been.calledOnce;
+      expect(spy.next).to.have.been.calledWith(
+          Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(0))
+      );
+    });
+  });
+
+  it('should call custom next handler', () => {
+    const spy = {
+      nextHandler() {},
+    };
+
+    cy.spy(spy, 'nextHandler');
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      ias = new InfiniteAjaxScroll('.blocks', {
+        item: '.blocks__block',
+        next: spy.nextHandler,
+      });
+
+      ias.next();
+
+      expect(spy.nextHandler).to.have.been.calledOnce;
+      expect(spy.nextHandler).to.have.been.calledWith(
+          Cypress.sinon.match(0)
+      );
+    });
+  });
+});

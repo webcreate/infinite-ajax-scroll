@@ -698,79 +698,16 @@
 	  }
 	};
 
-	function getScrollPosition(el) {
-	  if (el !== window) {
-	    return {
-	      x: el.scrollLeft,
-	      y: el.scrollTop,
-	    };
-	  }
-
-	  var supportPageOffset = window.pageXOffset !== undefined;
-	  var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
-
-	  return {
-	    x: supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft,
-	    y: supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop
-	  };
-	}
-
-	function getRootRect(el) {
-	  var rootRect;
-
-	  if (el !== window) {
-	    rootRect = el.getBoundingClientRect();
-	  } else {
-	    // Use <html>/<body> instead of window since scroll bars affect size.
-	    var html = document.documentElement;
-	    var body = document.body;
-
-	    rootRect = {
-	      top: 0,
-	      left: 0,
-	      right: html.clientWidth || body.clientWidth,
-	      width: html.clientWidth || body.clientWidth,
-	      bottom: html.clientHeight || body.clientHeight,
-	      height: html.clientHeight || body.clientHeight
-	    };
-	  }
-
-	  return rootRect;
-	}
-
-	function getDistanceToFold(el, scrollContainer) {
-	  var scroll = getScrollPosition(scrollContainer);
-	  var rootRect = getRootRect(scrollContainer);
-	  var boundingRect = el.getBoundingClientRect();
-
-	  var scrollYBottom = scroll.y + rootRect.height;
-	  var bottom = scroll.y + boundingRect.bottom - rootRect.top;
-
-	  return bottom - scrollYBottom;
-	}
-
 	function scrollHandler() {
-	  var distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
-
 	  this.emitter.emit('scrolled');
 
-	  if (distance <= 0) {
-	    this.emitter.emit('hit', {
-	      distance: distance
-	    });
-	  }
+	  this.measure();
 	}
 
 	function resizeHandler() {
-	  var distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
-
 	  this.emitter.emit('resized');
 
-	  if (distance <= 0) {
-	    this.emitter.emit('hit', {
-	      distance: distance
-	    });
-	  }
+	  this.measure();
 	}
 
 	function E () {
@@ -839,6 +776,84 @@
 
 	var tinyEmitter = E;
 
+	function getScrollPosition(el) {
+	  if (el !== window) {
+	    return {
+	      x: el.scrollLeft,
+	      y: el.scrollTop,
+	    };
+	  }
+
+	  var supportPageOffset = window.pageXOffset !== undefined;
+	  var isCSS1Compat = ((document.compatMode || "") === "CSS1Compat");
+
+	  return {
+	    x: supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft,
+	    y: supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop
+	  };
+	}
+
+	function getRootRect(el) {
+	  var rootRect;
+
+	  if (el !== window) {
+	    rootRect = el.getBoundingClientRect();
+	  } else {
+	    // Use <html>/<body> instead of window since scroll bars affect size.
+	    var html = document.documentElement;
+	    var body = document.body;
+
+	    rootRect = {
+	      top: 0,
+	      left: 0,
+	      right: html.clientWidth || body.clientWidth,
+	      width: html.clientWidth || body.clientWidth,
+	      bottom: html.clientHeight || body.clientHeight,
+	      height: html.clientHeight || body.clientHeight
+	    };
+	  }
+
+	  return rootRect;
+	}
+
+	function getDistanceToFold(el, scrollContainer) {
+	  var scroll = getScrollPosition(scrollContainer);
+	  var rootRect = getRootRect(scrollContainer);
+	  var boundingRect = el.getBoundingClientRect();
+
+	  var scrollYBottom = scroll.y + rootRect.height;
+	  var bottom = scroll.y + boundingRect.bottom - rootRect.top;
+
+	  return bottom - scrollYBottom;
+	}
+
+	var lastResponse = document;
+	var nextUrl;
+
+	function nextHandler(pageIndex) {
+	  var ias = this;
+
+	  var nextEl = tealight(ias.options.next, lastResponse)[0];
+
+	  if (!nextEl) {
+	    return;
+	  }
+
+	  nextUrl = nextEl.href;
+
+	  return ias.load(nextUrl)
+	      .then(function (data) {
+	        lastResponse = data.xhr.response;
+
+	        var nextEl = tealight(ias.options.next, lastResponse)[0];
+
+	        return ias.append(data.items)
+	            .then(function () {
+	              return !!nextEl;
+	            });
+	      });
+	}
+
 	var scrollListener;
 	var resizeListener;
 
@@ -858,7 +873,16 @@
 	    this.scrollContainer = tealight(this.options.scrollContainer)[0];
 	  }
 
+	  this.nextHandler = nextHandler;
+	  if (typeof this.options.next === 'function') {
+	    this.nextHandler = this.options.next;
+	  }
+
 	  this.binded = false;
+	  this.paused = false;
+	  this.pageIndex = 0;
+
+	  this.on('hit', this.next);
 
 	  if (this.options.bind) {
 	    // @todo on document.ready?
@@ -867,6 +891,10 @@
 	};
 
 	InfiniteAjaxScroll.prototype.bind = function bind () {
+	  if (this.binded) {
+	    return;
+	  }
+
 	  scrollListener = lodash_throttle(scrollHandler, 200).bind(this);
 	  resizeListener = lodash_throttle(resizeHandler, 200).bind(this);
 
@@ -879,12 +907,41 @@
 	};
 
 	InfiniteAjaxScroll.prototype.unbind = function unbind () {
+	  if (!this.binded) {
+	    return;
+	  }
+
 	  this.scrollContainer.removeEventListener('resize', resizeListener);
 	  this.scrollContainer.removeEventListener('scroll', scrollListener);
 
 	  this.binded = false;
 
 	  this.emitter.emit('unbinded');
+	};
+
+	InfiniteAjaxScroll.prototype.next = function next () {
+	    var this$1 = this;
+
+	  this.pause();
+
+	  var event = {
+	    pageIndex: this.pageIndex,
+	  };
+
+	  this.emitter.emit('next', event);
+
+	  Promise.resolve(this.nextHandler(event.pageIndex))
+	      .then(function (result) {
+	        if (!result) {
+	          this$1.emitter.emit('noneLeft');
+
+	          return;
+	        }
+
+	        this$1.pageIndex++;
+	        this$1.resume();
+	      })
+	  ;
 	};
 
 	InfiniteAjaxScroll.prototype.load = function load (url) {
@@ -940,6 +997,28 @@
 	  }
 
 	  return items[items.length-1];
+	};
+
+	InfiniteAjaxScroll.prototype.pause = function pause () {
+	  this.paused = true;
+	};
+
+	InfiniteAjaxScroll.prototype.resume = function resume () {
+	  this.paused = false;
+
+	  this.measure();
+	};
+
+	InfiniteAjaxScroll.prototype.measure = function measure () {
+	  if (this.paused) {
+	    return;
+	  }
+
+	  var distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
+
+	  if (distance <= 0) {
+	    this.emitter.emit('hit', {distance: distance});
+	  }
 	};
 
 	InfiniteAjaxScroll.prototype.on = function on (event, callback) {

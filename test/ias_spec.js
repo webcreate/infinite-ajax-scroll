@@ -1,6 +1,6 @@
 import InfiniteAjaxScroll from '../src/infinite-ajax-scroll';
 
-describe('InfiniteAjaxScroll', () => {
+describe('Constructor', () => {
   it('should return a new instance with selector', () => {
     document.body.innerHTML = `
         <div class="container"></div>

@@ -1,6 +1,6 @@
 let ias;
 
-describe('InfiniteAjaxScroll', () => {
+describe('Resize', () => {
   beforeEach(() => {
     // runs before each test in the block
     cy.visit('http://localhost:8080/test/fixtures/default/page1.html');

@@ -1,6 +1,6 @@
 let ias;
 
-describe('InfiniteAjaxScroll', () => {
+describe('Load', () => {
   beforeEach(() => {
     // runs before each test in the block
     cy.visit('http://localhost:8080/test/fixtures/default/page1.html');
@@ -71,7 +71,7 @@ describe('InfiniteAjaxScroll', () => {
     ias.load('http://localhost:8080/test/fixtures/default/page3.html');
 
     cy.wait(5000).then(() => {
-      expect(spy.loaded).to.not.have.been.calledOnce;
+      expect(spy.loaded).to.not.have.been.called;
     });
   });
 

@@ -3,8 +3,10 @@ import extend from 'extend';
 import throttle from 'lodash.throttle';
 import defaults from './defaults';
 import Assert from './assert';
-import {scrollHandler, resizeHandler} from "./handlers";
+import {scrollHandler, resizeHandler} from "./event-handlers";
 import Emitter from "tiny-emitter";
+import {getDistanceToFold} from "./dimensions";
+import {nextHandler} from './next-handler';
 
 let scrollListener;
 let resizeListener;
@@ -24,7 +26,16 @@ export default class InfiniteAjaxScroll {
       this.scrollContainer = $(this.options.scrollContainer)[0];
     }
 
+    this.nextHandler = nextHandler;
+    if (typeof this.options.next === 'function') {
+      this.nextHandler = this.options.next;
+    }
+
     this.binded = false;
+    this.paused = false;
+    this.pageIndex = 0;
+
+    this.on('hit', this.next);
 
     if (this.options.bind) {
       // @todo on document.ready?
@@ -33,6 +44,10 @@ export default class InfiniteAjaxScroll {
   }
 
   bind() {
+    if (this.binded) {
+      return;
+    }
+
     scrollListener = throttle(scrollHandler, 200).bind(this);
     resizeListener = throttle(resizeHandler, 200).bind(this);
 
@@ -45,12 +60,39 @@ export default class InfiniteAjaxScroll {
   }
 
   unbind() {
+    if (!this.binded) {
+      return;
+    }
+
     this.scrollContainer.removeEventListener('resize', resizeListener);
     this.scrollContainer.removeEventListener('scroll', scrollListener);
 
     this.binded = false;
 
     this.emitter.emit('unbinded');
+  }
+
+  next() {
+    this.pause();
+
+    let event = {
+      pageIndex: this.pageIndex,
+    };
+
+    this.emitter.emit('next', event);
+
+    Promise.resolve(this.nextHandler(event.pageIndex))
+        .then((result) => {
+          if (!result) {
+            this.emitter.emit('noneLeft');
+
+            return;
+          }
+
+          this.pageIndex++;
+          this.resume();
+        })
+    ;
   }
 
   load(url) {
@@ -106,6 +148,28 @@ export default class InfiniteAjaxScroll {
     }
 
     return items[items.length-1];
+  }
+
+  pause() {
+    this.paused = true;
+  }
+
+  resume() {
+    this.paused = false;
+
+    this.measure();
+  }
+
+  measure() {
+    if (this.paused) {
+      return;
+    }
+
+    const distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
+
+    if (distance <= 0) {
+      this.emitter.emit('hit', {distance});
+    }
   }
 
   on(event, callback) {

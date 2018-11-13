@@ -27,6 +27,18 @@ var Assert = {
   }
 };
 
+function scrollHandler() {
+  this.emitter.emit('scrolled');
+
+  this.measure();
+}
+
+function resizeHandler() {
+  this.emitter.emit('resized');
+
+  this.measure();
+}
+
 function getScrollPosition(el) {
   if (el !== window) {
     return {
@@ -78,28 +90,31 @@ function getDistanceToFold(el, scrollContainer) {
   return bottom - scrollYBottom;
 }
 
-function scrollHandler() {
-  var distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
+var lastResponse = document;
+var nextUrl;
 
-  this.emitter.emit('scrolled');
+function nextHandler(pageIndex) {
+  var ias = this;
 
-  if (distance <= 0) {
-    this.emitter.emit('hit', {
-      distance: distance
-    });
+  var nextEl = $(ias.options.next, lastResponse)[0];
+
+  if (!nextEl) {
+    return;
   }
-}
 
-function resizeHandler() {
-  var distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
+  nextUrl = nextEl.href;
 
-  this.emitter.emit('resized');
+  return ias.load(nextUrl)
+      .then(function (data) {
+        lastResponse = data.xhr.response;
 
-  if (distance <= 0) {
-    this.emitter.emit('hit', {
-      distance: distance
-    });
-  }
+        var nextEl = $(ias.options.next, lastResponse)[0];
+
+        return ias.append(data.items)
+            .then(function () {
+              return !!nextEl;
+            });
+      });
 }
 
 var scrollListener;
@@ -121,7 +136,16 @@ var InfiniteAjaxScroll = function InfiniteAjaxScroll(container, options) {
     this.scrollContainer = $(this.options.scrollContainer)[0];
   }
 
+  this.nextHandler = nextHandler;
+  if (typeof this.options.next === 'function') {
+    this.nextHandler = this.options.next;
+  }
+
   this.binded = false;
+  this.paused = false;
+  this.pageIndex = 0;
+
+  this.on('hit', this.next);
 
   if (this.options.bind) {
     // @todo on document.ready?
@@ -130,6 +154,10 @@ var InfiniteAjaxScroll = function InfiniteAjaxScroll(container, options) {
 };
 
 InfiniteAjaxScroll.prototype.bind = function bind () {
+  if (this.binded) {
+    return;
+  }
+
   scrollListener = throttle(scrollHandler, 200).bind(this);
   resizeListener = throttle(resizeHandler, 200).bind(this);
 
@@ -142,12 +170,41 @@ InfiniteAjaxScroll.prototype.bind = function bind () {
 };
 
 InfiniteAjaxScroll.prototype.unbind = function unbind () {
+  if (!this.binded) {
+    return;
+  }
+
   this.scrollContainer.removeEventListener('resize', resizeListener);
   this.scrollContainer.removeEventListener('scroll', scrollListener);
 
   this.binded = false;
 
   this.emitter.emit('unbinded');
+};
+
+InfiniteAjaxScroll.prototype.next = function next () {
+    var this$1 = this;
+
+  this.pause();
+
+  var event = {
+    pageIndex: this.pageIndex,
+  };
+
+  this.emitter.emit('next', event);
+
+  Promise.resolve(this.nextHandler(event.pageIndex))
+      .then(function (result) {
+        if (!result) {
+          this$1.emitter.emit('noneLeft');
+
+          return;
+        }
+
+        this$1.pageIndex++;
+        this$1.resume();
+      })
+  ;
 };
 
 InfiniteAjaxScroll.prototype.load = function load (url) {
@@ -203,6 +260,28 @@ InfiniteAjaxScroll.prototype.sentinel = function sentinel () {
   }
 
   return items[items.length-1];
+};
+
+InfiniteAjaxScroll.prototype.pause = function pause () {
+  this.paused = true;
+};
+
+InfiniteAjaxScroll.prototype.resume = function resume () {
+  this.paused = false;
+
+  this.measure();
+};
+
+InfiniteAjaxScroll.prototype.measure = function measure () {
+  if (this.paused) {
+    return;
+  }
+
+  var distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
+
+  if (distance <= 0) {
+    this.emitter.emit('hit', {distance: distance});
+  }
 };
 
 InfiniteAjaxScroll.prototype.on = function on (event, callback) {
