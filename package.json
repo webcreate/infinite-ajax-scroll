@@ -14,7 +14,7 @@
     "watch": "rollup -c --watch",
     "cypress": "cypress open -d",
     "start": "http-server -p 8080 ./ --silent -c-1 &",
-    "test": "cypress run --browser chrome",
+    "test": "cypress run",
     "lint": "eslint src test"
   },
   "repository": {
