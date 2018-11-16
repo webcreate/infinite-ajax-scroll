@@ -17,7 +17,7 @@ install:
   - npm build
 
 before_script:
-  - npm run start
+  - ./node_modules/.bin/http-server -p 8080 ./ --silent &
 
 script:
   - npm run lint
