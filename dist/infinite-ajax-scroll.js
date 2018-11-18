@@ -675,9 +675,9 @@
 	var lodash_throttle = throttle;
 
 	var defaults = {
-	  item: '',
+	  item: undefined,
+	  next: undefined,
 	  pagination: {},
-	  next: '',
 	  responseType: 'document',
 	  bind: true,
 	  scrollContainer: window,
@@ -854,6 +854,54 @@
 	      });
 	}
 
+	var defaults$1 = {
+	  element: undefined,
+	  hide: false
+	};
+
+	function expand(options) {
+	  if (typeof options === 'string') {
+	    options = {
+	      element: options,
+	      hide: true,
+	    };
+	  } else if (typeof options === 'boolean') {
+	    options = {
+	      element: undefined,
+	      hide: options,
+	    };
+	  }
+
+	  return options;
+	}
+
+	var Pagination = function Pagination(ias, options) {
+	  this.options = extend({}, defaults$1, expand(options));
+
+	  if (!this.options.hide) {
+	    return;
+	  }
+
+	  Assert.singleElement(this.options.element, 'pagination.element');
+
+	  ias.on('binded', this.hide.bind(this));
+	  ias.on('unbinded', this.restore.bind(this));
+	};
+
+	Pagination.prototype.hide = function hide () {
+	  var el = tealight(this.options.element)[0];
+
+	  this.originalDisplayStyle = window.getComputedStyle(el).display;
+
+	  el.style.display = 'none';
+	};
+
+	Pagination.prototype.restore = function restore () {
+	  var el = tealight(this.options.element)[0];
+
+	  el.style.display = this.originalDisplayStyle;
+	};
+
 	var scrollListener;
 	var resizeListener;
 
@@ -881,6 +929,8 @@
 	  this.binded = false;
 	  this.paused = false;
 	  this.pageIndex = 0;
+
+	  this.pagination = new Pagination(this, this.options.pagination);
 
 	  this.on('hit', this.next);
 
