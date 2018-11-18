@@ -6,7 +6,7 @@ import Emitter from 'tiny-emitter';
 var defaults = {
   item: undefined,
   next: undefined,
-  pagination: {},
+  pagination: undefined,
   responseType: 'document',
   bind: true,
   scrollContainer: window,
@@ -165,6 +165,85 @@ Pagination.prototype.restore = function restore () {
   el.style.display = this.originalDisplayStyle;
 };
 
+var defaults$2 = {
+  element: undefined,
+  delay: 600,
+  show: function (element) {
+    element.style.opacity = '1';
+  },
+  hide: function (element) {
+    element.style.opacity = '0';
+  }
+};
+
+function expand$1(options) {
+  if (typeof options === 'string') {
+    options = {
+      element: options,
+    };
+  }
+
+  return options;
+}
+
+var Spinner = function Spinner(ias, options) {
+  // no spinner wanted
+  if (options === false) {
+    return;
+  }
+
+  this.ias = ias;
+  this.options = extend({}, defaults$2, expand$1(options));
+
+  Assert.singleElement(this.options.element, 'spinner.element');
+
+  this.element = $(this.options.element)[0]; // @todo should we really cache this?
+  this.hideFn = this.options.hide;
+  this.showFn = this.options.show;
+
+  ias.on('binded', this.bind.bind(this));
+  ias.on('binded', this.hide.bind(this));
+};
+
+Spinner.prototype.bind = function bind () {
+  var startTime, endTime, diff, delay, self = this, ias = this.ias;
+
+  ias.on('next', function () {
+    startTime = +new Date();
+
+    self.show();
+  });
+
+  // setup delay
+  ias.on('append', function (event) {
+    endTime = +new Date();
+    diff = endTime - startTime;
+
+    delay = Math.max(0, self.options.delay - diff);
+
+    // original executor
+    var executor = event.executor;
+
+    // wrap executor with delay
+    event.executor = function (resolve) {
+      setTimeout(function () {
+        // turn hide function into promise
+        Promise.resolve(self.hide()).then(function () {
+          executor(resolve);
+        });
+      }, delay);
+    };
+  });
+};
+
+Spinner.prototype.show = function show () {
+  return Promise.resolve(this.showFn(this.element));
+};
+
+Spinner.prototype.hide = function hide () {
+  return Promise.resolve(this.hideFn(this.element));
+};
+
 var scrollListener;
 var resizeListener;
 
@@ -193,9 +272,10 @@ var InfiniteAjaxScroll = function InfiniteAjaxScroll(container, options) {
   this.paused = false;
   this.pageIndex = 0;
 
-  this.pagination = new Pagination(this, this.options.pagination);
-
   this.on('hit', this.next);
+
+  this.pagination = new Pagination(this, this.options.pagination);
+  this.spinner = new Spinner(this, this.options.spinner);
 
   if (this.options.bind) {
     // @todo on document.ready?

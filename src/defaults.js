@@ -1,7 +1,7 @@
 export default {
   item: undefined,
   next: undefined,
-  pagination: {},
+  pagination: undefined,
   responseType: 'document',
   bind: true,
   scrollContainer: window,

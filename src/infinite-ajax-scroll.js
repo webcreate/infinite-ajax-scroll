@@ -8,6 +8,7 @@ import Emitter from "tiny-emitter";
 import {getDistanceToFold} from "./dimensions";
 import {nextHandler} from './next-handler';
 import Pagination from './pagination';
+import Spinner from './spinner';
 
 let scrollListener;
 let resizeListener;
@@ -36,9 +37,10 @@ export default class InfiniteAjaxScroll {
     this.paused = false;
     this.pageIndex = 0;
 
-    this.pagination = new Pagination(this, this.options.pagination);
-
     this.on('hit', this.next);
+
+    this.pagination = new Pagination(this, this.options.pagination);
+    this.spinner = new Spinner(this, this.options.spinner);
 
     if (this.options.bind) {
       // @todo on document.ready?
