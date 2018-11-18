@@ -41,7 +41,7 @@ describe('Spinner', () => {
   it('should throw when element not found', () => {
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       const subject = {
-        ias: function() {
+        ias: () => {
           new InfiniteAjaxScroll('.blocks', {
             item: '.blocks__block',
             next: '.pager__next',
@@ -55,6 +55,7 @@ describe('Spinner', () => {
       try {
         subject.ias();
       } catch (e) {
+        // noop
       }
 
       expect(spy).to.have.thrown('Error');
