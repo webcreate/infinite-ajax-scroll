@@ -55,7 +55,7 @@ describe('Load', () => {
 
     ias.load(url);
 
-    cy.wait(5000).then(() => {
+    cy.wait(8000).then(() => {
       // test that the items property contains the json object
       expect(spy.loaded).to.have.been.calledWith(
           Cypress.sinon.match.has("items", Cypress.sinon.match.has("blocks", Cypress.sinon.match.array))
