@@ -89,7 +89,7 @@ export default class InfiniteAjaxScroll {
     Promise.resolve(this.nextHandler(event.pageIndex))
         .then((result) => {
           if (!result) {
-            this.emitter.emit('noneLeft');
+            this.emitter.emit('last');
 
             return;
           }
@@ -118,8 +118,6 @@ export default class InfiniteAjaxScroll {
             items = $(ias.options.item, xhr.response);
           }
 
-          // @todo define event variable and pass that around so it can be manipulated
-
           ias.emitter.emit('loaded', {items, url, xhr});
 
           resolve({items, url, xhr});
@@ -138,6 +136,8 @@ export default class InfiniteAjaxScroll {
       xhr.open('GET', url, true);
       xhr.responseType = ias.options.responseType;
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+
+      // @todo define event variable and pass that around so it can be manipulated
 
       ias.emitter.emit('load', {url, xhr});
 
@@ -161,18 +161,15 @@ export default class InfiniteAjaxScroll {
     });
 
     let executor = (resolve) => {
+      let last = ias.sentinel();
+      let sibling = last ? last.nextSibling : null;
+
+      parent.insertBefore(insert, sibling);
+
       window.requestAnimationFrame(() => {
-        let last = ias.sentinel();
-        let sibling = last ? last.nextSibling : null;
+        resolve({items, parent});
 
-        parent.insertBefore(insert, sibling);
-
-        window.requestAnimationFrame(() => {
-          // @todo define event variable and pass that around so it can be manipulated
-          resolve({items, parent});
-
-          ias.emitter.emit('appended', {items, parent});
-        });
+        ias.emitter.emit('appended', {items, parent});
       });
     };
 

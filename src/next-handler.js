@@ -19,9 +19,6 @@ export function nextHandler(pageIndex) {
         lastResponse = data.xhr.response;
 
         let nextEl = $(ias.options.next, lastResponse)[0];
-        if (!nextEl) {
-          // @todo noneLeft!!! ????
-        }
 
         return ias.append(data.items)
             .then(() => {
