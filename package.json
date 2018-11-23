@@ -1,34 +1,12 @@
 {
   "name": "@webcreate/infinite-ajax-scroll",
-  "version": "3.0.0-alpha2",
+  "version": "3.0.0-alpha.2",
   "title": "Infinite Ajax Scroll",
   "description": "Turn your existing pagination into infinite scrolling pages with ease",
+  "license": "ISC",
   "homepage": "https://infiniteajaxscroll.com",
-  "main": "dist/infinite-ajax-scroll.js",
-  "module": "dist/infinite-ajax-scroll.es.js",
-  "files": [
-    "dist"
-  ],
-  "scripts": {
-    "build": "rollup -c",
-    "watch": "rollup -c --watch",
-    "cypress": "cypress open -d",
-    "start": "http-server -p 8080 ./ --silent -c-1 &",
-    "test": "cypress run",
-    "lint": "eslint src test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/webcreate/infinite-ajax-scroll"
-  },
-  "bugs": {
-    "url": "https://github.com/webcreate/infinite-ajax-scroll/issues"
-  },
-  "author": {
-    "company": "Webcreate",
-    "name": "Jeroen Fiege",
-    "web": "https://webcreate.nl"
-  },
+  "repository": "github:webcreate/infinite-ajax-scroll",
+  "bugs": "https://github.com/webcreate/infinite-ajax-scroll/issues",
   "keywords": [
     "scroll",
     "scrolling",
@@ -39,7 +17,26 @@
     "ias",
     "infinite"
   ],
-  "license": "ISC",
+  "author": {
+    "company": "Webcreate",
+    "name": "Jeroen Fiege",
+    "web": "https://webcreate.nl"
+  },
+  "main": "dist/infinite-ajax-scroll.js",
+  "unpkg": "dist/infinite-ajax-scroll.js",
+  "module": "dist/infinite-ajax-scroll.es.js",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c --watch",
+    "cypress": "cypress open -d",
+    "start": "http-server -p 8080 ./ --silent -c-1 &",
+    "test": "cypress run",
+    "lint": "eslint src test"
+  },
   "dependencies": {
     "extend": "^3.0.2",
     "lodash.throttle": "^4.1.1",
@@ -54,6 +51,7 @@
     "rollup": "^0.66.6",
     "rollup-plugin-buble": "^0.19.4",
     "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^3.4.0"
+    "rollup-plugin-node-resolve": "^3.4.0",
+    "rollup-plugin-terser": "^3.0.0"
   }
 }
