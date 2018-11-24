@@ -12,7 +12,7 @@ cache:
 
 install:
   - npm ci
-  - npm build
+  - npm run build
 
 before_script:
   - ./node_modules/.bin/http-server -p 8080 ./ --silent &
