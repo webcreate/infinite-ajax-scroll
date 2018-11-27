@@ -1,0 +1,14 @@
+{
+  "name": "articles",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "parcel build *.html --public-url ./"
+  },
+  "dependencies": {
+    "@webcreate/infinite-ajax-scroll": "^3.0.0-alpha"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.10.3"
+  }
+}
