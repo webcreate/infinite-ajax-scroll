@@ -18,7 +18,7 @@ release: TEST_DIR=$(BUILD_DIR)
 release: guard-SEMVER clean build test
 	cd $(BUILD_DIR); \
 		npm --no-git-tag-version version $(SEMVER); \
-		npm publish --dry-run
+		npm publish
 .PHONY: release
 
 clean:
