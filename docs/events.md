@@ -94,3 +94,7 @@ argument  | type           | description
 --------- | -------------- | -------------
 items     | array<Element> | Array of items that have been appended
 parent    | Element        | The element to which the items have been appended
+
+### last
+
+Triggered when the last page is appended. 
