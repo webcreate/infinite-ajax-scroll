@@ -1,5 +1,4 @@
-Installation
-============
+# Installation
 
 ## Use Infinite Ajax Scroll via CDN
 

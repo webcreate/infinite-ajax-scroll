@@ -1,5 +1,4 @@
-Getting started
-===============
+# Getting started
 
 First make sure that Infinite Ajax Scroll is [installed](00_installation.md) and included on every page where you need infinite scrolling functionality.
 

@@ -1,5 +1,4 @@
-Events
-======
+# Events
 
 Infinite Ajax Scroll provides a wide range of events which we can use to hook into its functionality and customize where needed.
 
