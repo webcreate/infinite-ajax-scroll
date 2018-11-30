@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "parcel build *.html --public-url ./"
+    "build": "parcel build *.html --public-url ./",
+    "watch": "parcel watch * --public-url ./",
+    "link": "npm link ../../"
   },
   "dependencies": {
     "@webcreate/infinite-ajax-scroll": "^3.0.0-alpha.1"
