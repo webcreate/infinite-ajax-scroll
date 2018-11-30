@@ -42,22 +42,22 @@ describe('Logger', () => {
   });
 
   it('should use a custom logger', () => {
-    const logger = {
+    const customLogger = {
       binded: () => {
         console.log('My custom logger for the binded event');
       }
     };
 
-    cy.spy(logger, 'binded');
+    cy.spy(customLogger, 'binded');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       new InfiniteAjaxScroll('.blocks', {
         item: '.blocks__block',
         next: '.pager__next',
-        logger: logger
+        logger: customLogger
       });
 
-      expect(logger.binded).to.have.been.calledOnce;
+      expect(customLogger.binded).to.have.been.calledOnce;
     });
   });
 
