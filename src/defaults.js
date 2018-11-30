@@ -5,5 +5,6 @@ export default {
   responseType: 'document',
   bind: true,
   scrollContainer: window,
-  spinner: false
+  spinner: false,
+  logger: true
 };

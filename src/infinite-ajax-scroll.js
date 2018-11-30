@@ -9,6 +9,7 @@ import {getDistanceToFold} from "./dimensions";
 import {nextHandler} from './next-handler';
 import Pagination from './pagination';
 import Spinner from './spinner';
+import Logger from './logger';
 
 let scrollListener;
 let resizeListener;
@@ -41,6 +42,7 @@ export default class InfiniteAjaxScroll {
 
     this.pagination = new Pagination(this, this.options.pagination);
     this.spinner = new Spinner(this, this.options.spinner);
+    this.logger = new Logger(this, this.options.logger);
 
     if (this.options.bind) {
       // @todo on document.ready?
