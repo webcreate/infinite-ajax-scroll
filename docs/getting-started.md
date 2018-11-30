@@ -1,6 +1,6 @@
 # Getting started
 
-First make sure that Infinite Ajax Scroll is [installed](00_installation.md) and included on every page where you need infinite scrolling functionality.
+First make sure that Infinite Ajax Scroll is [installed](installation.md) and included on every page where you need infinite scrolling functionality.
 
 ### Definitions/concepts
 
@@ -48,12 +48,12 @@ let ias = new InfiniteAjaxScroll('.container', {
   pagination: '.pagination'
 });
 ```
-
+s
 This will enable infinite scroll in it's most basic form. When you scroll down, the next page is loaded through an ajax request and new items are appended to the container.
 
 Next:
 
-- [Add a spinner/loader](00_installation.md)
-- [Add last page notice](00_installation.md)
-- [Infinite scroll inside overflow div](00_installation.md)
-- [Custom next function](00_installation.md)
+- [Add a spinner/loader](installation.md)
+- [Add last page notice](installation.md)
+- [Infinite scroll inside overflow div](installation.md)
+- [Custom next function](installation.md)
