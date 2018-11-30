@@ -26,10 +26,10 @@ const defaultLogger = {
     console.log(`Finished loading`);
   },
   append: () => {
-    console.log(`Start appending new items`);
+    console.log(`Start appending items`);
   },
   appended: (event) => {
-    console.log(`Finished appending new ${event.items.length} item(s)`);
+    console.log(`Finished appending ${event.items.length} item(s)`);
   },
   last: () => {
     console.log(`No more pages left to load`);
