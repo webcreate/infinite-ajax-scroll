@@ -72,7 +72,7 @@ describe('Load', () => {
 
     ias.on('loaded', spy.loaded);
 
-    ias.load('http://localhost:8080/test/fixtures/default/page3.html');
+    ias.load('http://localhost:8080/test/fixtures/default/page404.html');
 
     cy.wait(5000).then(() => {
       expect(spy.loaded).to.not.have.been.called;
