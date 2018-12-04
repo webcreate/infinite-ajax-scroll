@@ -8,7 +8,7 @@ Infinite Ajax Scroll works with a few concepts:
 
 **Container**: This is an element in which child elements (items) will be appended. This is usually a `div`, `ul` or `table` tag, but can be anything. 
 
-**Item**: This are elements that live inside the container. This can be `div`'s, `li`'s, `article`, table rows (`tr`) and anything else. Important is that the element is a direct child of the container. Items for the next page will be inserted after the last item inside the container.
+**Items**: These are elements that live inside the container. This can be `div`'s, `li`'s, `article`, table rows (`tr`) or anything else. Important is that the elements are a direct child of the container. Items for the next page will be inserted after the last item inside the container.
 
 **Pagination**: This is the element that contains your pagination links, like next and previous page. Infinite Ajax Scroll will automatically hide this element.
 

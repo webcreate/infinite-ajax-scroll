@@ -2,7 +2,7 @@
 
 ## logger
 
-Configure an event loggers. 
+Configure an event logger. 
 
 On default events are logged to console (see [src/logger.js](../src/logger.js)):
 

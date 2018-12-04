@@ -18,8 +18,7 @@ ias.off('appended', handler);
 ias.once('appended', handler);
 ```
 
-Reference
-=========
+## Reference
 
 ### binded
 
@@ -113,7 +112,7 @@ Triggered when the user scrolls past a page break. The event provides informatio
 
 property  | type   | description 
 --------- | ------ | -------------
-pageIndex | int    | The page index of the current page (not the page that is about to be loaded)
+pageIndex | int    | The page index of the current page
 top       | int    | ScrollTop
 url       | string | Url of the page
 title     | string | Title of the page
