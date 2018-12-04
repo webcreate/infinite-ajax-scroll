@@ -10,6 +10,7 @@ import {nextHandler} from './next-handler';
 import Pagination from './pagination';
 import Spinner from './spinner';
 import Logger from './logger';
+import Paging from './paging';
 
 let scrollListener;
 let resizeListener;
@@ -43,6 +44,7 @@ export default class InfiniteAjaxScroll {
     this.pagination = new Pagination(this, this.options.pagination);
     this.spinner = new Spinner(this, this.options.spinner);
     this.logger = new Logger(this, this.options.logger);
+    this.paging = new Paging(this);
 
     if (this.options.bind) {
       // @todo on document.ready?
@@ -83,7 +85,7 @@ export default class InfiniteAjaxScroll {
     this.pause();
 
     let event = {
-      pageIndex: this.pageIndex,
+      pageIndex: this.pageIndex + 1,
     };
 
     this.emitter.emit('next', event);
@@ -96,7 +98,7 @@ export default class InfiniteAjaxScroll {
             return;
           }
 
-          this.pageIndex++;
+          this.pageIndex = event.pageIndex;
           this.resume();
         })
     ;
@@ -118,13 +120,14 @@ export default class InfiniteAjaxScroll {
 
           if (ias.options.responseType === 'document') {
             items = $(ias.options.item, xhr.response);
+            // @todo assert there actually are items in the response
           }
 
           ias.emitter.emit('loaded', {items, url, xhr});
 
           resolve({items, url, xhr});
         } else {
-          // @todo this console.error the best approach?
+          // @todo is console.error the best approach?
           console.error('Request failed');
 
           reject(xhr);
@@ -133,9 +136,9 @@ export default class InfiniteAjaxScroll {
 
       // FIXME: make no-caching configurable
       // @see https://developer.mozilla.org/nl/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
-      url = url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
+      let nocacheUrl = url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
 
-      xhr.open('GET', url, true);
+      xhr.open('GET', nocacheUrl, true);
       xhr.responseType = ias.options.responseType;
       xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 

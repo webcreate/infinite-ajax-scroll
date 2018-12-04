@@ -1,11 +1,17 @@
+import {getScrollPosition} from './dimensions';
+
 export function scrollHandler() {
-  this.emitter.emit('scrolled');
+  let scroll = getScrollPosition(this.scrollContainer);
+
+  this.emitter.emit('scrolled', {scroll});
 
   this.measure();
 }
 
 export function resizeHandler() {
-  this.emitter.emit('resized');
+  let scroll = getScrollPosition(this.scrollContainer);
+
+  this.emitter.emit('resized', {scroll});
 
   this.measure();
 }

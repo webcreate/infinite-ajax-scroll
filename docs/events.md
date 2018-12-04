@@ -33,17 +33,25 @@ Infinite Ajax Scroll will only unbind when we call the `unbind` method.
 
 ### scrolled
 
-Triggered when the user scrolls inside the scroll container.  
+Triggered when the user scrolls inside the scroll container.
+
+property  | type   | description 
+--------- | ------ | -------------
+scroll    | object | Object with x y coord of the current scroll position
 
 ### resized
 
 Triggered when the user resizes the scroll container.  
 
+property  | type   | description 
+--------- | ------ | -------------
+scroll    | object | Object with x y coord of the current scroll position
+
 ### hit
 
 Triggered when the user has hit the scroll threshold for the next page due to scrolling or resizing.  
 
-argument  | type  | description 
+property  | type  | description 
 --------- | ----- | -------------
 distance  | int   | The distance to the scroll threshold in pixels
 
@@ -51,9 +59,9 @@ distance  | int   | The distance to the scroll threshold in pixels
 
 Triggered right after the `hit` event. Indicating that the next page will be loaded.    
 
-argument  | type  | description 
+property  | type  | description 
 --------- | ----- | -------------
-pageIndex | int  | The page index of the current page (not the page that is about to be loaded)
+pageIndex | int   | The page index of the next page (the page that is about to be loaded)
 
 > pageIndex is zero indexed. This means the index starts at 0 on the first page.
 
@@ -61,7 +69,7 @@ pageIndex | int  | The page index of the current page (not the page that is abou
 
 This event is triggered before the next page is requested from the server.    
 
-argument  | type           | description 
+property  | type           | description 
 --------- | -------------- | -------------
 url       | string         | The url that is about to be requested
 xhr       | XMLHttpRequest | The configured XMLHttpRequest that is going to be used
@@ -70,7 +78,7 @@ xhr       | XMLHttpRequest | The configured XMLHttpRequest that is going to be u
 
 This event is triggered when the next page is requested from the server, right before the items will be appended.    
 
-argument  | type           | description 
+property  | type           | description 
 --------- | -------------- | -------------
 items     | array<Element> | Array of items that have loaded and will be appended. These items match the selector given in the `next` option
 url       | string         | The url that is about to be requested
@@ -80,7 +88,7 @@ xhr       | XMLHttpRequest | The configured XMLHttpRequest that is going to be u
 
 This event is triggered before the items are about to be appended.    
 
-argument  | type           | description 
+property  | type           | description 
 --------- | -------------- | -------------
 items     | array<Element> | Array of items that will be appended
 parent    | Element        | The element to which the items will be appended
@@ -90,7 +98,7 @@ executor  | function       | TBD
 
 This event is triggered before the items are about to be appended.    
 
-argument  | type           | description 
+property  | type           | description 
 --------- | -------------- | -------------
 items     | array<Element> | Array of items that have been appended
 parent    | Element        | The element to which the items have been appended
@@ -98,3 +106,16 @@ parent    | Element        | The element to which the items have been appended
 ### last
 
 Triggered when the last page is appended. 
+
+### page
+
+Triggered when the user scrolls past a page break. The event provides information about the page in view.
+
+property  | type   | description 
+--------- | ------ | -------------
+pageIndex | int    | The page index of the current page (not the page that is about to be loaded)
+top       | int    | ScrollTop
+url       | string | Url of the page
+title     | string | Title of the page
+
+> pageIndex is zero indexed. This means the index starts at 0 on the first page.

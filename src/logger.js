@@ -33,6 +33,9 @@ const defaultLogger = {
   },
   last: () => {
     console.log(`No more pages left to load`);
+  },
+  page: (event) => {
+    console.log(`Page changed [pageIndex=${event.pageIndex}]`);
   }
 };
 

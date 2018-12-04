@@ -33,7 +33,7 @@ describe('Next', () => {
         // expect(spy.next).to.have.been.calledAfter(spy.hit);
 
         expect(spy.next).to.have.been.calledWith(
-            Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(0))
+            Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
         );
       });
     });
@@ -58,7 +58,7 @@ describe('Next', () => {
 
       expect(spy.next).to.have.been.calledOnce;
       expect(spy.next).to.have.been.calledWith(
-          Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(0))
+          Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
       );
     });
   });
@@ -80,7 +80,7 @@ describe('Next', () => {
 
       expect(spy.nextHandler).to.have.been.calledOnce;
       expect(spy.nextHandler).to.have.been.calledWith(
-          Cypress.sinon.match(0)
+          Cypress.sinon.match(1)
       );
     });
   });

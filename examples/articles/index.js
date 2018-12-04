@@ -12,3 +12,12 @@ ias.on('last', function() {
 
   el.style.opacity = '1';
 });
+
+// FIXME this logic should be provided by default
+ias.on('page', (e) => {
+  document.title = e.title;
+
+  let state = history.state;
+
+  history.replaceState(state, e.title, e.url);
+});
