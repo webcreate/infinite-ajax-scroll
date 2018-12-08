@@ -11,7 +11,7 @@
   "supportFile": "test/support/commands.js",
   "pluginsFile": false,
   "video": false,
-
   "viewportWidth": 640,
-  "viewportHeight": 400
+  "viewportHeight": 400,
+  "projectId": "u49y9h"
 }
