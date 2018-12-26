@@ -32,7 +32,9 @@ export default class Paging {
 
   next(nextEvent) {
     this.ias.once('loaded', (event) => {
-      // @todo event.xhr.response.title only works in case of responseType = "document"s
+      // @todo event.xhr.response.title only works in case of responseType = "document"
+
+      // FIXME this will go wrong when next is called manually (we can't rely on currentScrollTop)
       this.pageBreaks.push({
         pageIndex: nextEvent.pageIndex,
         top: this.currentScrollTop,
