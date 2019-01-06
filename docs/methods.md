@@ -1,32 +1,33 @@
 # Methods
 
-### bind
+## bind
 
 This will bind Infinite Ajax Scroll to the scroll and resize events of the scroll container.
 
-### unbind
+## unbind
 
 This will unbind Infinite Ajax Scroll from the scroll and resize events of the scroll container.
 
-### next
+## next
 
 This will load the next page manually.
 
-### load
+## load
 
 This wil load an url and returns a promise.
 
-argument  | type           | description 
---------- | -------------- | -------------
-url       | string         | Url to load
+| argument | type | description |
+| :--- | :--- | :--- |
+| url | string | Url to load |
 
-### append
+## append
 
 Use this method to append an array of items to the container.
 
 It will return a promise.
 
-argument  | type           | description 
---------- | -------------- | -------------
-items     | array<Element> | Array of element to append to the container
-parent    | Element\|null  | Container to append to. When none given it falls back to the configured container
+| argument | type | description |
+| :--- | :--- | :--- |
+| items | array | Array of element to append to the container |
+| parent | Element\|null | Container to append to. When none given it falls back to the configured container |
+
