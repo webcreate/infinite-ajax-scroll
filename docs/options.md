@@ -6,7 +6,19 @@
 **Default:** `undefined`   
 **Required:** yes
 
-Selector of the item elements that should be appended. These elements should live inside the container element.
+Selector of the item elements that should be appended to the container. These elements should live inside the container element.
+
+```html
+<div class="container">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+    ...
+</div>
+```
+
+```javascript
+item: '.item'
+```
 
 ## next
 
@@ -16,6 +28,14 @@ Selector of the item elements that should be appended. These elements should liv
 
 Selector of the next link. The `href` attribute will be used for the url of the next page. Only a single element should match this selector.
 
+```html
+<a href="/page/2" class="pager__next">Next</a>
+```
+
+```javascript
+next: '.pager__next'
+```
+
 ## pagination
 
 **Type:** `string|Element`   
@@ -24,6 +44,19 @@ Selector of the next link. The `href` attribute will be used for the url of the 
 
 Selector of the element that contains the pagination. This element will be hidden when Infinite Ajax Scroll binds.
 
+```html
+<div class="pager">
+    <span class="pager__current">1</span>
+    <a href="/page/2" class="pager__page">2</a>
+    <a href="/page/3" class="pager__page">3</a>
+    <a href="/page/2" class="pager__next">Next</a>
+</div>
+```
+
+```javascript
+pagination: '.pager'
+```
+
 ## responseType
 
 **Type:** `string`   
@@ -31,6 +64,12 @@ Selector of the element that contains the pagination. This element will be hidde
 **Required:** no   
 
 Type of response. Can be set to "json".
+
+```javascript
+responseType: 'json'
+```
+
+See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) for available values.
 
 ## bind
 
@@ -46,7 +85,20 @@ Normally Infinite Ajax Scroll binds to the scroll and resize events on document 
 **Default:** `window`    
 **Required:** no   
 
-Set a selector of the element you want to use as a scroll container. Use this if you want infinite scroll inside an overflow element.
+Set a selector of the element you want to use as a scroll container. Use this if you want infinite scroll inside an overflow element. 
+
+Note: Only a single element should match the selector.
+
+```html
+<div id="scroller">
+    <div class="item">Item 1</div>
+    <div class="item">Item 2</div>
+</div>
+```
+
+```javascript
+scrollContainer: '#scroller'
+```
 
 ## spinner
 
@@ -57,6 +109,25 @@ Set a selector of the element you want to use as a scroll container. Use this if
 Configures a spinner/loader. By default no spinner is configured.
 
 You can set a selector to an element you want to display when Infinite Ajax Scroll is loading the next page.
+
+```html
+<div class="spinner">Loading...</div>
+```
+
+```js
+spinner: '.spinner'
+```
+
+You can also set advanced spinner options.
+
+```javascript
+spinner: {
+  element: '.spinner', // element
+  delay: 600, // delay in milliseconds
+  show: function(element) {},
+  hide: function(element) {}
+}
+```
 
 ## logger
 
