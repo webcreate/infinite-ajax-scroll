@@ -60,7 +60,7 @@ Triggered right after the `hit` event. Indicating that the next page will be loa
 
 | property | type | description |
 | :--- | :--- | :--- |
-| pageIndex | int | The page index of the next page \(the page that is about to be loaded\) |
+| pageIndex | int | The page index of the next page (the page that is about to be loaded) |
 
 > pageIndex is zero indexed. This means the index starts at 0 on the first page.
 

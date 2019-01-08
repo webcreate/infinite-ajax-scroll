@@ -17,12 +17,3 @@ Are you using NPM in your projects? You can install and update our package easil
 ```bash
 $ npm install --save @webcreate/infinite-ajax-scroll
 ```
-
-> **Extra steps during private beta**
->
-> Create a `.npmrc` file in the root of your project \(or where you have your `package.json` file\):
->
-> ```text
-> //registry.npmjs.org/:_authToken=<YOUR_TOKEN_HERE>
-> ```
-
