@@ -169,9 +169,9 @@ export default class InfiniteAjaxScroll {
       let last = ias.sentinel();
       let sibling = last ? last.nextSibling : null;
 
-      parent.insertBefore(insert, sibling);
-
       window.requestAnimationFrame(() => {
+        parent.insertBefore(insert, sibling);
+
         resolve({items, parent});
 
         ias.emitter.emit('appended', {items, parent});
