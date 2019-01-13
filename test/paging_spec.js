@@ -24,7 +24,7 @@ describe('Paging', () => {
 
     cy.scrollTo('bottom', {duration: 300});
 
-    cy.wait(600).then(() => {
+    cy.wait(5000).then(() => {
       expect(spy.page).to.have.been.calledOnce;
       expect(spy.page).to.have.been.calledWith(
           Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
@@ -40,7 +40,7 @@ describe('Paging', () => {
 
     cy.scrollTo('bottom', {duration: 300});
 
-    cy.wait(600).then(() => {
+    cy.wait(5000).then(() => {
       expect(spy.page).to.have.been.calledTwice;
       expect(spy.page).to.have.been.calledWith(
           Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(2))
