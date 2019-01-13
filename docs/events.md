@@ -113,9 +113,9 @@ Triggered when the user scrolls past a page break. The event provides informatio
 | property | type | description |
 | :--- | :--- | :--- |
 | pageIndex | int | The page index of the current page |
-| top | int | ScrollTop |
 | url | string | Url of the page |
 | title | string | Title of the page |
+| sentinel | Element | Sentinel element. Element used to determine on which page the user is |
 
 > pageIndex is zero indexed. This means the index starts at 0 on the first page.
 

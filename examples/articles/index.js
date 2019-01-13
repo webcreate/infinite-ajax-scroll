@@ -1,6 +1,6 @@
 import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 
-let ias = new InfiniteAjaxScroll('.surface-container', {
+window.ias = new InfiniteAjaxScroll('.surface-container', {
   item: '.article',
   next: '.pager__next',
   pagination: '.pager',

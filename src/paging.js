@@ -1,12 +1,20 @@
+import {getRootRect} from "./dimensions";
 
-function getPageBreak(pageBreaks, scrollTop) {
+function getPageBreak(pageBreaks, scrollTop, scrollContainer) {
+  let rootRect = getRootRect(scrollContainer);
+  let scrollBottom = scrollTop + rootRect.height;
+
   for (let b = pageBreaks.length - 1; b >= 0; b--) {
-    if  (scrollTop >= pageBreaks[b].top) {
-      return pageBreaks[b];
+    let bottom = pageBreaks[b].sentinel.getBoundingClientRect().bottom + scrollTop;
+
+    if (scrollBottom > bottom) {
+      let x = Math.min(b + 1, pageBreaks.length - 1);
+
+      return pageBreaks[x];
     }
   }
 
-  return null;
+  return pageBreaks[0];
 }
 
 export default class Paging {
@@ -16,17 +24,17 @@ export default class Paging {
     this.currentPageIndex = ias.pageIndex;
     this.currentScrollTop = 0;
 
-    ias.on('binded', this.bind.bind(this));
+    ias.on('binded', this.binded.bind(this));
     ias.on('next', this.next.bind(this));
     ias.on('scrolled', this.scrolled.bind(this));
   }
 
-  bind() {
+  binded() {
     this.pageBreaks.push({
       pageIndex: this.currentPageIndex,
-      top: 0,
       url: document.location.toString(),
-      title: document.title
+      title: document.title,
+      sentinel: this.ias.sentinel()
     });
   }
 
@@ -34,20 +42,27 @@ export default class Paging {
     this.ias.once('loaded', (event) => {
       // @todo event.xhr.response.title only works in case of responseType = "document"
 
-      // FIXME this will go wrong when next is called manually (we can't rely on currentScrollTop)
-      this.pageBreaks.push({
-        pageIndex: nextEvent.pageIndex,
-        top: this.currentScrollTop,
-        url: event.url,
-        title: event.xhr.response.title
-      });
+      this.ias.once('appended', () => {
+        this.pageBreaks.push({
+          pageIndex: nextEvent.pageIndex,
+          url: event.url,
+          title: event.xhr.response.title,
+          sentinel: this.ias.sentinel()
+        });
+
+        this.update();
+      })
     });
   }
 
   scrolled(event) {
-    this.currentScrollTop = event.scroll.y;
+    this.update(event.scroll.y);
+  }
 
-    let pageBreak = getPageBreak(this.pageBreaks, this.currentScrollTop);
+  update(scrollTop) {
+    this.currentScrollTop = scrollTop || this.currentScrollTop;
+
+    let pageBreak = getPageBreak(this.pageBreaks, this.currentScrollTop, this.ias.scrollContainer);
 
     if (pageBreak && pageBreak.pageIndex !== this.currentPageIndex) {
       this.ias.emitter.emit('page', pageBreak);
