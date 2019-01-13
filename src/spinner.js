@@ -52,6 +52,10 @@ export default class Spinner {
       self.show();
     });
 
+    ias.on('last', () => {
+      self.hide();
+    });
+
     // setup delay
     ias.on('append', (event) => {
       endTime = +new Date();

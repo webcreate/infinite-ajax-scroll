@@ -38,6 +38,22 @@ describe('Spinner', () => {
     });
   });
 
+  it('should hide spinner on last', () => {
+    cy.visit('http://localhost:8080/test/fixtures/default/page3.html');
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      let ias = new InfiniteAjaxScroll('.blocks', {
+        item: '.blocks__block',
+        next: '.pager__next',
+        spinner: '.spinner',
+      });
+
+      ias.next();
+
+      cy.get('.spinner').should('have.css', 'opacity', '0');
+    });
+  });
+
   it('should throw when element not found', () => {
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       const subject = {
