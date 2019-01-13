@@ -54,7 +54,7 @@ describe('Append', () => {
 
       cy.scrollTo('bottom', {duration: 300});
 
-      cy.wait(5000).then(() => {
+      cy.wait(6000).then(() => {
         expect(spy.appended).to.have.been.calledOnce;
 
         expect(spy.appended).to.have.been.calledWith(
