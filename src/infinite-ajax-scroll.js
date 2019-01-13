@@ -193,7 +193,7 @@ export default class InfiniteAjaxScroll {
     const items = $(this.options.item, this.container);
 
     if (!items.length) {
-      throw new Error(`Item "${this.options.item}" not found`);
+      throw new Error(`Item "${this.options.item}" not found for "options.item"`);
     }
 
     return items[items.length-1];

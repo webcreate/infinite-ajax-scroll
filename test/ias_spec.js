@@ -3,10 +3,10 @@ import InfiniteAjaxScroll from '../src/infinite-ajax-scroll';
 describe('Constructor', () => {
   it('should return a new instance with selector', () => {
     document.body.innerHTML = `
-        <div class="container"></div>
+        <div class="container"><div class="item">1</div></div>
     `;
 
-    const ias = new InfiniteAjaxScroll('.container');
+    const ias = new InfiniteAjaxScroll('.container', {item: '.item'});
 
     expect(ias).to.exist;
 
@@ -15,8 +15,9 @@ describe('Constructor', () => {
 
   it('should return a new instance with HTMLElement', () => {
     const div = document.createElement('div');
+    div.innerHTML = `<div class="item">1</div>`;
 
-    const ias = new InfiniteAjaxScroll(div);
+    const ias = new InfiniteAjaxScroll(div, {item: '.item'});
 
     expect(ias).to.exist;
 
@@ -31,13 +32,13 @@ describe('Constructor', () => {
 
     expect(() => {
       new InfiniteAjaxScroll('.container');
-    }).to.throw();
+    }).to.throw('Expected single element for "container"');
   });
 
   it('should throw error when container selector is not found', () => {
     expect(() => {
       new InfiniteAjaxScroll('.non_existing_class')
-    }).to.throw();
+    }).to.throw('Element ".non_existing_class" not found for "container"');
   });
 
   it('should throw error when scrollContainer selector is not found', () => {
@@ -45,7 +46,7 @@ describe('Constructor', () => {
       const container = document.createElement('div');
 
       new InfiniteAjaxScroll(container, {'scrollContainer': '.scroller'});
-    }).to.throw();
+    }).to.throw('Element ".scroller" not found for "options.scrollContainer"');
   });
 
   it('should throw error when scrollContainer selector is ambiguous', () => {
@@ -58,6 +59,6 @@ describe('Constructor', () => {
 
     expect(() => {
       new InfiniteAjaxScroll(container, {'scrollContainer': '.scroller'});
-    }).to.throw();
+    }).to.throw('Expected single element for "options.scrollContainer"');
   });
 });

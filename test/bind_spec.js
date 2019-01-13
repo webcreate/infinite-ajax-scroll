@@ -3,8 +3,9 @@ import InfiniteAjaxScroll from '../src/infinite-ajax-scroll';
 describe('Bind', () => {
   it('should bind on instantiation by default', () => {
     const container = document.createElement('div');
+    container.innerHTML = `<div class="item">1</div>`;
 
-    const ias = new InfiniteAjaxScroll(container);
+    const ias = new InfiniteAjaxScroll(container, {item: '.item'});
 
     const spy = {
       onBind() {}
@@ -35,8 +36,9 @@ describe('Bind', () => {
 
   it('should bind manually', () => {
     const container = document.createElement('div');
+    container.innerHTML = `<div class="item">1</div>`;
 
-    const ias = new InfiniteAjaxScroll(container, {bind: false});
+    const ias = new InfiniteAjaxScroll(container, {bind: false, item: '.item'});
 
     const spy = {
       onBind() {}
@@ -53,8 +55,9 @@ describe('Bind', () => {
 
   it('should not bind twice', () => {
     const container = document.createElement('div');
+    container.innerHTML = `<div class="item">1</div>`;
 
-    const ias = new InfiniteAjaxScroll(container, {bind: false});
+    const ias = new InfiniteAjaxScroll(container, {bind: false, item: '.item'});
 
     const spy = {
       onBind() {}
@@ -72,8 +75,9 @@ describe('Bind', () => {
 
   it('should unbind', () => {
     const container = document.createElement('div');
+    container.innerHTML = `<div class="item">1</div>`;
 
-    const ias = new InfiniteAjaxScroll(container);
+    const ias = new InfiniteAjaxScroll(container, {item: '.item'});
 
     const spy = {
       onUnbind() {}
