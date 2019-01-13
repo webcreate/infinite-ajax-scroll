@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://infiniteajaxscroll.com" target="_blank">
-    <img alt="Infinite Ajax Scroll" title="Infinite Ajax Scroll" src="https://infiniteajaxscroll.com/img/infinite-ajax-scroll-mark.svg" width="256">
+    <img alt="Infinite Ajax Scroll" title="Infinite Ajax Scroll" src="https://infiniteajaxscroll.com/img/infinite-ajax-scroll-mark.svg" width="200">
   </a>
 </p>
 
@@ -10,24 +10,63 @@ Turn your existing pagination into infinite scrolling pages with ease.
 
 * SEO friendly 🥇
 * Doesn't break browsers back button 💯
-* Highly customizable through extensions ✨
+* Highly customizable ✨
 
-More features, documentation and examples available at: https://infiniteajaxscroll.com/
+More features, documentation and examples available at: https://docs.v3.infiniteajaxscroll.com/
 
-[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.png?branch=3.x)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
+[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.svg?branch=3.x)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
 
 ## Installation
 
-TDB
+### Use Infinite Ajax Scroll via CDN
+
+Get up and running in no time by linking directly to Infinite Ajax Scroll on [unpkg](https://unpkg.com).
+
+```markup
+<script src="https://unpkg.com/@webcreate/infinite-ajax-scroll@3/dist/infinite-ajax-scroll.min.js"></script>
+```
+
+Place this code right before the `</body>` tag on each template or page that you want to use infinite scroll on.
+
+### Manage as a package
+
+Are you using NPM in your projects? You can install and update our package easily.
+
+```bash
+$ npm install --save @webcreate/infinite-ajax-scroll
+```
 
 ## Usage
 
-TDB
+Infinite Ajax Scroll works on a container with item elements which get appended. A next link is used to determine the next url.
+
+```html
+<div class="container">
+    <div class="item">...</div>
+    <div class="item">...</div>
+    <div class="item">...</div>
+    ...
+</div>
+
+<div class="pagination">
+    <a href="page2.html" class="next">Next</a>
+</div>
+```
+
+Now you can configure Infinite Ajax Scroll:
+
+```javascript
+let ias = new InfiniteAjaxScroll('.container', {
+  item: '.item',
+  next: '.next',
+  pagination: '.pagination'
+});
+```
+
+Full documentation can be found at https://docs.v3.infiniteajaxscroll.com
 
 ## Licensing
 
 Infinite Ajax Scroll may be used in commercial projects and applications with the one-time purchase of a commercial license.
 
 https://infiniteajaxscroll.com/docs/license.html
-
-For non-commercial, personal, or open source projects and applications, you may use Infinite Ajax Scroll under the terms of the MIT License. You may use Infinite AJAX Scroll for free.
