@@ -4,6 +4,17 @@ import commonjs from 'rollup-plugin-commonjs'
 import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
+const banner = `/**
+ * Infinite Ajax Scroll v${pkg.version}
+ * Turn your existing pagination into infinite scrolling pages with ease
+ *
+ * Commercial use requires one-time purchase of a commercial license
+ * https://infiniteajaxscroll.com/docs/license.html
+ *
+ * Copyright 2014-2019 Webcreate (Jeroen Fiege)
+ * https://infiniteajaxscroll.com
+ */`;
+
 const base = {
   input: './src/infinite-ajax-scroll.js',
   plugins: [
@@ -19,6 +30,7 @@ const base = {
 const es = Object.assign({}, base, {
   external: [...Object.keys(pkg.dependencies || {})],
   output: {
+    banner,
     format: 'es',
     file: pkg.module
   }
@@ -26,6 +38,7 @@ const es = Object.assign({}, base, {
 
 const umd = Object.assign({}, base, {
   output: {
+    banner,
     format: 'umd',
     file: pkg.main,
     name: 'InfiniteAjaxScroll'
@@ -34,6 +47,7 @@ const umd = Object.assign({}, base, {
 
 const min = Object.assign({}, base, {
   output: {
+    banner,
     format: 'umd',
     file: 'dist/infinite-ajax-scroll.min.js',
     name: 'InfiniteAjaxScroll'
