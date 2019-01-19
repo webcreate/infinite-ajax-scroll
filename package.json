@@ -8,14 +8,16 @@
   "repository": "github:webcreate/infinite-ajax-scroll",
   "bugs": "https://github.com/webcreate/infinite-ajax-scroll/issues",
   "keywords": [
+    "infinite-ajax-scroll",
+    "infinite-scroll",
+    "infinite",
+    "endless",
     "scroll",
     "scrolling",
     "ajax",
     "pagination",
-    "jquery",
-    "jquery-plugin",
     "ias",
-    "infinite"
+    "jquery-ias"
   ],
   "author": {
     "company": "Webcreate",
