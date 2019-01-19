@@ -22,6 +22,9 @@ Key features:
 **This version is incompatible with previous versions.**
 Read [UPGRADE.md](UPGRADE.md) for upgrade instructions.
 
+**This version changes the license from MIT to GNU Affero General Public License v3.0.**
+See [LICENSE](LICENSE) for more details.
+
 ## [2.3.1]
 
 * Fix: noneLeft event not being triggered when there was only one page

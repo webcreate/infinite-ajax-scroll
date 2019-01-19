@@ -67,6 +67,11 @@ Full documentation can be found at https://docs.v3.infiniteajaxscroll.com
 
 ## Licensing
 
-Infinite Ajax Scroll may be used in commercial projects and applications with the one-time purchase of a commercial license.
+Infinite Ajax Scroll is dual licensed:
 
-https://infiniteajaxscroll.com/docs/license.html
+1. Under the Free Software Foundation’s GNU AGPL v.3.0; or
+2. Under an Infinite Ajax Scroll Commercial License available at https://infiniteajaxscroll.com/licenses/
+
+Buying a commercial license is mandatory as soon as you develop commercial activities distributing the Infinite Ajax Scroll software inside your product or deploying it on a network without disclosing the source code of your own applications under the AGPL license.
+
+See https://infiniteajaxscroll.com/licenses/ for more details.

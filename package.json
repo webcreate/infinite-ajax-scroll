@@ -3,7 +3,7 @@
   "version": "3.0.0-alpha.1",
   "title": "Infinite Ajax Scroll",
   "description": "Turn your existing pagination into infinite scrolling pages with ease",
-  "license": "ISC",
+  "license": "AGPL-3.0-only",
   "homepage": "https://infiniteajaxscroll.com",
   "repository": "github:webcreate/infinite-ajax-scroll",
   "bugs": "https://github.com/webcreate/infinite-ajax-scroll/issues",
