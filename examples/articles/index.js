@@ -13,7 +13,7 @@ ias.on('last', function() {
   el.style.opacity = '1';
 });
 
-// FIXME this logic should be provided by default
+// update title and url then scrolling through pages
 ias.on('page', (e) => {
   document.title = e.title;
 
