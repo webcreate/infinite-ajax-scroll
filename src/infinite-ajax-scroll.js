@@ -37,7 +37,7 @@ export default class InfiniteAjaxScroll {
 
     this.binded = false;
     this.paused = false;
-    this.pageIndex = 0;
+    this.pageIndex = this.sentinel() ? 0 : -1;
 
     this.on('hit', this.next);
 
@@ -45,6 +45,9 @@ export default class InfiniteAjaxScroll {
     this.spinner = new Spinner(this, this.options.spinner);
     this.logger = new Logger(this, this.options.logger);
     this.paging = new Paging(this);
+
+    // @todo review this logic when prefill support is added
+    this.on('binded', this.measure);
 
     if (this.options.bind) {
       // @todo on document.ready?
@@ -193,7 +196,7 @@ export default class InfiniteAjaxScroll {
     const items = $(this.options.item, this.container);
 
     if (!items.length) {
-      throw new Error(`Item "${this.options.item}" not found for "options.item"`);
+      return null;
     }
 
     return items[items.length-1];
@@ -214,7 +217,13 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    const distance = getDistanceToFold(this.sentinel(), this.scrollContainer);
+    let distance = 0;
+    const sentinel = this.sentinel();
+
+    // @todo review this logic when prefill support is added
+    if (sentinel) {
+      distance = getDistanceToFold(sentinel, this.scrollContainer);
+    }
 
     if (distance <= 0) {
       this.emitter.emit('hit', {distance});

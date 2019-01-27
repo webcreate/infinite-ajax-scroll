@@ -27,9 +27,15 @@ export default class Paging {
     ias.on('binded', this.binded.bind(this));
     ias.on('next', this.next.bind(this));
     ias.on('scrolled', this.scrolled.bind(this));
+    ias.on('resized', this.scrolled.bind(this));
   }
 
   binded() {
+    let sentinel = this.ias.sentinel();
+    if (!sentinel) {
+      return;
+    }
+
     this.pageBreaks.push({
       pageIndex: this.currentPageIndex,
       url: document.location.toString(),
@@ -39,19 +45,30 @@ export default class Paging {
   }
 
   next(nextEvent) {
-    this.ias.once('loaded', (event) => {
+    let url;
+    let title;
+
+    // @todo can be moved inside appended when eventStack is implemented
+    let loaded = (event) => {
       // @todo event.xhr.response.title only works in case of responseType = "document"
+      url = event.url;
+      title = event.xhr.response.title
+    };
 
-      this.ias.once('appended', () => {
-        this.pageBreaks.push({
-          pageIndex: nextEvent.pageIndex,
-          url: event.url,
-          title: event.xhr.response.title,
-          sentinel: this.ias.sentinel()
-        });
+    this.ias.once('loaded', loaded);
 
-        this.update();
-      })
+    this.ias.once('appended', () => {
+      this.pageBreaks.push({
+        pageIndex: nextEvent.pageIndex,
+        url: url,
+        title: title,
+        sentinel: this.ias.sentinel()
+      });
+
+      this.update();
+
+      // @todo can be removed when eventStack is implemented
+      this.ias.off('loaded', loaded);
     });
   }
 
