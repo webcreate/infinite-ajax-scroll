@@ -36,7 +36,12 @@ Triggered when the user scrolls inside the scroll container.
 
 | property | type | description |
 | :--- | :--- | :--- |
-| scroll | object | Object with x y coord of the current scroll position |
+| scroll.y | integer | Current vertical scroll position from the top of the page (can be negative) |
+| scroll.x | integer | Current horizontal scroll position from the left of the page (can be negative) |
+| scroll.deltaY | integer | Delta between current vertical scroll position and previous position |
+| scroll.deltaX | integer | Delta between current horizontal scroll position and previous position |
+
+The delta values can be used to determine the scroll direction. A positive value means scrolling down (deltaY) or to the right (deltaX). A negative value means the opposite direction.
 
 ### resized
 
