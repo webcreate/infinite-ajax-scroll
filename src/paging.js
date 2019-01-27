@@ -60,8 +60,8 @@ export default class Paging {
     this.ias.once('appended', () => {
       this.pageBreaks.push({
         pageIndex: nextEvent.pageIndex,
-        url: url,
-        title: title,
+        url,
+        title,
         sentinel: this.ias.sentinel()
       });
 
