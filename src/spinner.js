@@ -63,17 +63,21 @@ export default class Spinner {
 
       delay = Math.max(0, self.options.delay - diff);
 
-      // original executor
-      let executor = event.executor;
+      // copy original append function
+      let appendFn = event.appendFn;
 
-      // wrap executor with delay
-      event.executor = (resolve) => {
-        setTimeout(() => {
-          // turn hide function into promise
-          Promise.resolve(self.hide()).then(() => {
-            executor(resolve);
-          });
-        }, delay);
+      // wrap append function with delay
+      event.appendFn = (items, parent, last) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            // turn hide function into promise
+            Promise.resolve(self.hide()).then(() => {
+              appendFn(items, parent, last);
+
+              resolve();
+            });
+          }, delay);
+        });
       };
     });
   }

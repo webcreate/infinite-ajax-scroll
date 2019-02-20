@@ -96,11 +96,13 @@ This event is triggered before the items are about to be appended.
 | :--- | :--- | :--- |
 | items | array | Array of items that will be appended |
 | parent | Element | The element to which the items will be appended |
-| executor | function | TBD |
+| appendFn | function | Function used to append items to the container |
+
+See [src/append.js](../src/append.js) for the default append function.
 
 ### appended
 
-This event is triggered before the items are about to be appended.
+This event is triggered after the items have been appended.
 
 | property | type | description |
 | :--- | :--- | :--- |

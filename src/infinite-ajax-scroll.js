@@ -11,6 +11,7 @@ import Pagination from './pagination';
 import Spinner from './spinner';
 import Logger from './logger';
 import Paging from './paging';
+import {appendFn} from './append';
 
 let scrollListener;
 let resizeListener;
@@ -161,35 +162,25 @@ export default class InfiniteAjaxScroll {
     let ias = this;
     parent = parent || ias.container;
 
-    // @todo move fragment creation into executor?
-    let insert = document.createDocumentFragment();
-
-    items.forEach((item) => {
-      insert.appendChild(item);
-    });
-
-    let executor = (resolve) => {
-      let last = ias.sentinel();
-      let sibling = last ? last.nextSibling : null;
-
-      window.requestAnimationFrame(() => {
-        parent.insertBefore(insert, sibling);
-
-        resolve({items, parent});
-
-        ias.emitter.emit('appended', {items, parent});
-      });
-    };
-
     let event = {
       items,
       parent,
-      executor,
+      appendFn
     };
 
     ias.emitter.emit('append', event);
 
-    return new Promise(event.executor);
+    let executor = (resolve) => {
+      window.requestAnimationFrame(() => {
+        Promise.resolve(event.appendFn(event.items, event.parent, ias.sentinel())).then(() => {
+          resolve({items, parent});
+        });
+      });
+    };
+
+    return (new Promise(executor)).then((event) => {
+      ias.emitter.emit('appended', event);
+    });
   }
 
   sentinel() {

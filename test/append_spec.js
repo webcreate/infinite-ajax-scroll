@@ -31,7 +31,7 @@ describe('Append', () => {
             Cypress.sinon.match.has("parent", Cypress.sinon.match.any) // @todo test for Element
         );
         expect(spy.append).to.have.been.calledWith(
-            Cypress.sinon.match.has("executor", Cypress.sinon.match.func)
+            Cypress.sinon.match.has("appendFn", Cypress.sinon.match.func)
         );
       });
     });
