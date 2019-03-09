@@ -13,7 +13,9 @@ let nextHandler = function(pageIndex) {
     block.innerHTML = i + 1;
   }
 
-  return this.append(Array.from(frag.childNodes));
+  return this.append(Array.from(frag.childNodes))
+      // indicate that there is a next page to load
+      .then(() => true);
 };
 
 window.ias = new InfiniteAjaxScroll('.blocks', {
