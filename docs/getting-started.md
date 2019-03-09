@@ -37,6 +37,9 @@ Given the above definitions, our minimal markup would be similar to this:
 Given the above markup, we need to instruct Infinite Ajax Scroll which element is what.
 
 ```javascript
+// import if you use the NPM package
+import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
+
 let ias = new InfiniteAjaxScroll('.container', {
   item: '.item',
   next: '.next',

@@ -56,6 +56,9 @@ Infinite Ajax Scroll works on a container with item elements which get appended.
 Now you can configure Infinite Ajax Scroll:
 
 ```javascript
+// import if you use the NPM package
+import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
+
 let ias = new InfiniteAjaxScroll('.container', {
   item: '.item',
   next: '.next',
