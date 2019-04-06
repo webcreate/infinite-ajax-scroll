@@ -162,3 +162,15 @@ logger: {
 }
 ```
 
+## loadOnScroll
+
+**Type:** `boolean`    
+**Default:** `true`    
+**Required:** no 
+
+Configures if the next/previous page should automatically be loaded when the users scrolls to the bottom or the top of the page.
+
+When `loadOnScroll` is disabled the [`hit`](events.md#hit) event is still emitted, allowing you to manually trigger the next/prev page (for example by calling [`next`](methods.md#next)).
+
+Use can use [`enableLoadOnScroll`](methods.md#enableLoadOnScroll) and [`disableLoadOnScroll`](methods.md#disableLoadOnScroll) to configure this setting on runtime. 
+

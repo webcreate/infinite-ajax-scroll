@@ -31,3 +31,10 @@ It will return a promise.
 | items | array | Array of element to append to the container |
 | parent | Element\|null | Container to append to. When none given it falls back to the configured container |
 
+## enableLoadOnScroll
+
+Enables the [`loadOnScroll`](options.md#loadOnScroll) setting on runtime.
+
+## disableLoadOnScroll
+
+Disables the [`loadOnScroll`](options.md#loadOnScroll) setting on runtime.

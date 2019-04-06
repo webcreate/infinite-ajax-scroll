@@ -6,5 +6,6 @@ export default {
   bind: true,
   scrollContainer: window,
   spinner: false,
-  logger: true
+  logger: true,
+  loadOnScroll: true
 };

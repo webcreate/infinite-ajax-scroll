@@ -38,10 +38,19 @@ export default class InfiniteAjaxScroll {
 
     this.binded = false;
     this.paused = false;
+    this.loadOnScroll = this.options.loadOnScroll;
     this.pageIndex = this.sentinel() ? 0 : -1;
+    this.lastDistance = null;
 
-    this.on('hit', this.next);
+    this.on('hit', () => {
+      if (!this.loadOnScroll) {
+        return;
+      }
 
+      this.next();
+    });
+
+    // initialize extensions
     this.pagination = new Pagination(this, this.options.pagination);
     this.spinner = new Spinner(this, this.options.spinner);
     this.logger = new Logger(this, this.options.logger);
@@ -51,7 +60,7 @@ export default class InfiniteAjaxScroll {
     this.on('binded', this.measure);
 
     if (this.options.bind) {
-      // @todo on document.ready?
+      // @todo on document.ready? (window.addEventListener('DOMContentLoaded'))
       this.bind();
     }
   }
@@ -96,13 +105,14 @@ export default class InfiniteAjaxScroll {
 
     Promise.resolve(this.nextHandler(event.pageIndex))
         .then((result) => {
+          this.pageIndex = event.pageIndex;
+
           if (!result) {
             this.emitter.emit('last');
 
             return;
           }
 
-          this.pageIndex = event.pageIndex;
           this.resume();
         })
     ;
@@ -203,6 +213,14 @@ export default class InfiniteAjaxScroll {
     this.measure();
   }
 
+  enableLoadOnScroll() {
+    this.loadOnScroll = true;
+  }
+
+  disableLoadOnScroll() {
+    this.loadOnScroll = false;
+  }
+
   measure() {
     if (this.paused) {
       return;
@@ -216,9 +234,11 @@ export default class InfiniteAjaxScroll {
       distance = getDistanceToFold(sentinel, this.scrollContainer);
     }
 
-    if (distance <= 0) {
+    if (distance <= 0 && (this.lastDistance === null || this.lastDistance > 0)) {
       this.emitter.emit('hit', {distance});
     }
+
+    this.lastDistance = distance;
   }
 
   on(event, callback) {

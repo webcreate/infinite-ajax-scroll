@@ -33,7 +33,9 @@ export default class Spinner {
     this.ias = ias;
     this.options = extend({}, defaults, expand(options));
 
-    Assert.singleElement(this.options.element, 'spinner.element');
+    if (this.options.element !== undefined) {
+      Assert.singleElement(this.options.element, 'spinner.element');
+    }
 
     this.element = $(this.options.element)[0]; // @todo should we really cache this?
     this.hideFn = this.options.hide;

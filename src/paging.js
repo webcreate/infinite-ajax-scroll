@@ -50,9 +50,11 @@ export default class Paging {
 
     // @todo can be moved inside appended when eventStack is implemented
     let loaded = (event) => {
-      // @todo event.xhr.response.title only works in case of responseType = "document"
       url = event.url;
-      title = event.xhr.response.title
+
+      if (event.xhr.response) {
+        title = event.xhr.response.title
+      }
     };
 
     this.ias.once('loaded', loaded);
