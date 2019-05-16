@@ -52,9 +52,12 @@ describe("IAS", function () {
 
     jQuery.ias().extension(new anExtension());
 
-    expect(spy1).toHaveBeenCalledOnce();
+    // wait some for ias to be fully initialized
+    wait(100).then(function() {
+      expect(spy1).toHaveBeenCalledOnce();
 
-    deferred.resolve();
+      deferred.resolve();
+    });
 
     return deferred.promise;
   });
@@ -62,7 +65,7 @@ describe("IAS", function () {
   it("extension can add listeners", function() {
     var anExtension = function() {
       this.listeners = {
-        test: new IASCallbacks()
+        test: new IASCallbacks(jQuery)
       };
     };
 

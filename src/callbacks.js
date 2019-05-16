@@ -1,17 +1,18 @@
 /**
- * IASCallbacks
- * http://infiniteajaxscroll.com
+ * IASCallbacks v2.3.1
+ * https://infiniteajaxscroll.com
  *
  * This file is part of the Infinite AJAX Scroll package
  *
- * Copyright 2014 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2018 Webcreate (Jeroen Fiege)
  */
 
-var IASCallbacks = function () {
+var IASCallbacks = function (aJquery) {
   this.list = [];
   this.fireStack = [];
   this.isFiring = false;
   this.isDisabled = false;
+  this.Deferred = aJquery.Deferred;
 
   /**
    * Calls all added callbacks
@@ -126,7 +127,7 @@ IASCallbacks.prototype = {
    * @returns {object|void}
    */
   fireWith: function (context, args) {
-    var deferred = jQuery.Deferred();
+    var deferred = this.Deferred();
 
     if (this.isDisabled) {
       return deferred.reject();

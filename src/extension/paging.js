@@ -1,11 +1,11 @@
 /**
  * IAS Paging Extension
  * An IAS extension providing additional events
- * http://infiniteajaxscroll.com
+ * https://infiniteajaxscroll.com
  *
  * This file is part of the Infinite AJAX Scroll package
  *
- * Copyright 2014 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2018 Webcreate (Jeroen Fiege)
  */
 
 var IASPagingExtension = function() {
@@ -14,7 +14,7 @@ var IASPagingExtension = function() {
   this.lastPageNum = 1;
   this.enabled = true;
   this.listeners = {
-    pageChange: new IASCallbacks()
+    pageChange: new IASCallbacks(jQuery)
   };
 
   /**

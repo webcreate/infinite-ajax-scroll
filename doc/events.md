@@ -8,7 +8,7 @@ Events
 | scrollOffset    | integer | current number of pixels scrolled from the top                                   |
 | scrollThreshold | integer | threshold which marks the line from where IAS should start loading the next page |
 
-Triggered when the visitors scrolls.
+Triggered when a visitor scrolls.
 
 ### load
 
@@ -20,17 +20,34 @@ Triggered when a new page is about to be loaded from the server.
 
 The load event object contains the following properties.
 
-| property  | type          | description             |
-|-----------|---------------|-------------------------|
-| event.url | string        | url that will be loaded |
+| property          | type   | description                                                                    |
+|-------------------|--------|--------------------------------------------------------------------------------|
+| event.url         | string | url that will be loaded                                                        |
+| event.ajaxOptions | object | options that are passed to [$.ajax method](https://api.jquery.com/jquery.ajax/) |
 
-Using this event it is possible to change the requested url. This can be useful to append an arbitrary parameter to the requested url so the server can handle the request differently. For example to optimize the returned url by stripping everything outside the container element (header, footer, etc.).
+Using this event it is possible to change the requested url. This can be useful to append an arbitrary parameter to the requested url so the server can handle the request differently. For example to optimize the returned html by stripping everything outside the container element (header, footer, etc.).
 
 ```javascript
 ias.on('load', function(event) {
     event.url = event.url + "?ajax=1";
+
+    // alternatively...
+    event.ajaxOptions.data = { ajax: 1 };
 })
 ```
+
+The ajaxOptions property can also be used for more exotic configurations.
+
+```javascript
+ias.on('load', function(event) {
+    // A more exotic example, timeout and HTTP auth
+    event.timeout = 7000; //ms
+    event.username = 'shirley';
+    event.password = 'temple';
+})
+```
+
+See https://api.jquery.com/jquery.ajax/ for a complete list of options.
 
 ### loaded
 
@@ -115,7 +132,7 @@ Triggered when the next page should be loaded. Happens before loading of the nex
 
 With this event it is possible to cancel the loading of the next page. You can do this by returning `false` from your callback.
 
-Say you want to stop loading more pages if you hit a certain url:
+Say for example you want to stop loading more pages if you hit a certain url:
 
 ```javascript
 ias.on('next', function(url) {

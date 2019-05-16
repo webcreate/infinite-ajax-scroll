@@ -1,6 +1,31 @@
 Changelog
 =========
 
+## 2.3.1
+
+* Fix: noneLeft event not being triggered when there was only one page
+
+## 2.3.0
+
+* Added new option: `initialize`
+* Fix: `ready` event to fire when ready (see commit f6b44a7)
+* Added `ajaxOptions` to `load` event (PR by campadrenalin)
+
+## 2.2.3
+
+* Improved documentation
+* Fix: Cannot read property 'Deferred' of undefined (in jQuery noConflict mode) (fixes #188, #271, #291)
+
+## 2.2.2
+
+* Fix: render callback is not executed when using a custom render function (fixes #198)
+* Fix: unpredictable behaviour when multiple instances used the same selectors for sub-elements (fixes #93)
+* Stop ajax responder if instance was destroyed or reinitialized
+
+## 2.2.1
+
+* Fix: prevent multiple initialisations causing duplicate items (fixes #175, #183)
+
 ## 2.2.0
 
 * Improved documentation on delay and negativeMargin options

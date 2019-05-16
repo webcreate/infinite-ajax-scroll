@@ -2,11 +2,11 @@
   "name": "ias",
   "title": "Infinite Ajax Scroll",
   "description": "jQuery plugin that progressively enhances your server-side pagination",
-  "version": "2.2.0",
-  "homepage": "http://infiniteajaxscroll.com",
-  "download": "http://infiniteajaxscroll.com/download.html",
-  "docs": "http://infiniteajaxscroll.com/docs/getting-started.html",
-  "demo": "http://infiniteajaxscroll.com/examples/basic/page1.html",
+  "version": "2.3.1",
+  "homepage": "https://infiniteajaxscroll.com",
+  "download": "https://infiniteajaxscroll.com/download.html",
+  "docs": "https://infiniteajaxscroll.com/docs/getting-started.html",
+  "demo": "https://infiniteajaxscroll.com/examples/basic/page1.html",
   "main": "src/jquery-ias.js",
   "author": {
     "name": "Jeroen Fiege",
@@ -25,7 +25,7 @@
   "licenses": [
     {
       "type": "Dual-license",
-      "url": "http://infiniteajaxscroll.com/docs/license.html"
+      "url": "https://infiniteajaxscroll.com/docs/license.html"
     }
   ],
   "dependencies": {

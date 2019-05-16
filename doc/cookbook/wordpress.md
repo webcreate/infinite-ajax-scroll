@@ -3,7 +3,7 @@ Integrate Infinite AJAX Scroll with Wordpress
 
 In this cookbook we install Infinite AJAX Scroll into the default Twenty Twelve theme.
 
-1) Download [jquery-ias.min.js](../download.html).
+1) Download [jquery-ias.min.js](https://infiniteajaxscroll.com/download.html).
 
 2) Copy `jquery-ias.min.js` into the folder `wp-content/themes/twentytwelve/js`
 
@@ -11,7 +11,7 @@ In this cookbook we install Infinite AJAX Scroll into the default Twenty Twelve 
 
 4) Add jQuery to the theme. To do so, paste the following code before the line with "`</head>`":
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 
 5) Paste the following code before the line with "`</head>`":
 

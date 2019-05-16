@@ -83,3 +83,17 @@ For example:
 Setting a `negativeMargin` of 250 means that IAS will start loading 250 pixel before the last item has scrolled into view.
 
 Note: user experience can degrade if new pages are loaded too quickly without visual feedback (also see [delay](options.html#delay)). Use with caution.
+
+### initialize
+
+<dl>
+    <dt>Type</dt>
+    <dd>boolean</dd>
+
+    <dt>Default</dt>
+    <dd>true</dd>
+</dl>
+
+By default IAS initializes when the document is ready. During initialisation IAS binds to the scroll event and prefills the container when the content is shorter then the page fold.
+
+If you want to control when IAS initializes yourself, you can set this value to false. Then initialize IAS yourself with the [initialize](methods.html#initialize) method.

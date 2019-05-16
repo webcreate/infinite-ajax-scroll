@@ -1,14 +1,16 @@
 /**
- * Infinite Ajax Scroll v2.1.2
+
+ * Infinite Ajax Scroll v2.3.1
+
  * A jQuery plugin for infinite scrolling
- * http://infiniteajaxscroll.com
+ * https://infiniteajaxscroll.com
  *
  * Commercial use requires one-time purchase of a commercial license
- * http://infiniteajaxscroll.com/docs/license.html
+ * https://infiniteajaxscroll.com/docs/license.html
  *
  * Non-commercial use is licensed under the MIT License
  *
- * Copyright 2014 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2018 Webcreate (Jeroen Fiege)
  */
 
 (function($) {
@@ -29,15 +31,20 @@
     this.negativeMargin = options.negativeMargin;
     this.nextUrl = null;
     this.isBound = false;
+
+    this.isPaused = false;
+    this.isInitialized = false;
+    this.jsXhr = false;
+
     this.listeners = {
-      next:     new IASCallbacks(),
-      load:     new IASCallbacks(),
-      loaded:   new IASCallbacks(),
-      render:   new IASCallbacks(),
-      rendered: new IASCallbacks(),
-      scroll:   new IASCallbacks(),
-      noneLeft: new IASCallbacks(),
-      ready:    new IASCallbacks()
+      next:     new IASCallbacks($),
+      load:     new IASCallbacks($),
+      loaded:   new IASCallbacks($),
+      render:   new IASCallbacks($),
+      rendered: new IASCallbacks($),
+      scroll:   new IASCallbacks($),
+      noneLeft: new IASCallbacks($),
+      ready:    new IASCallbacks($)
     };
     this.extensions = [];
 
@@ -71,6 +78,18 @@
     };
 
     /**
+
+     * Returns the items container currently in the DOM
+     *
+     * @private
+     * @returns {object}
+     */
+    this.getItemsContainer = function() {
+      return $(this.itemsContainerSelector, this.$container);
+    };
+
+    /**
+
      * Returns the last item currently in the DOM
      *
      * @private
@@ -181,12 +200,15 @@
       delay = delay || this.defaultDelay;
 
       var loadEvent = {
-        url: url
+        url: url,
+        ajaxOptions: {
+          dataType: 'html'
+        }
       };
 
       self.fire('load', [loadEvent]);
 
-      return $.get(loadEvent.url, null, $.proxy(function(data) {
+      function xhrDoneCallback(data) {
         $itemContainer = $(this.itemsContainerSelector, data).eq(0);
         if (0 === $itemContainer.length) {
           $itemContainer = $(data).filter(this.itemsContainerSelector).eq(0);
@@ -210,7 +232,12 @@
             callback.call(self, data, items);
           }
         }
-      }, self), 'html');
+      }
+
+      this.jsXhr = $.ajax(loadEvent.url, loadEvent.ajaxOptions)
+        .done($.proxy(xhrDoneCallback, self));
+
+      return this.jsXhr;
     };
 
     /**
@@ -244,6 +271,12 @@
             callback();
           }
         });
+      });
+
+      promise.fail(function() {
+        if (callback) {
+          callback();
+        }
       });
     };
 
@@ -333,23 +366,40 @@
    * @public
    */
   IAS.prototype.initialize = function() {
-    var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
+
+    if (this.isInitialized) {
+      return false;
+    }
+
+    var supportsOnScroll = (!!('onscroll' in this.$scrollContainer.get(0))),
+        currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
+
         scrollThreshold = this.getScrollThreshold();
 
     this.hidePagination();
     this.bind();
 
-    for (var i = 0, l = this.extensions.length; i < l; i++) {
-      this.extensions[i].bind(this);
-    }
-
-    this.fire('ready');
 
     this.nextUrl = this.getNextUrl();
 
+    if (!this.nextUrl) {
+      this.fire('noneLeft', [this.getLastItem()]);
+    }
+
     // start loading next page if content is shorter than page fold
-    if (currentScrollOffset >= scrollThreshold) {
+    if (this.nextUrl && currentScrollOffset >= scrollThreshold) {
       this.next();
+
+      // flag as initialized when rendering is completed
+      this.one('rendered', function() {
+        this.isInitialized = true;
+
+        this.fire('ready');
+      });
+    } else {
+      this.isInitialized = true;
+
+      this.fire('ready');
     }
 
     return this;
@@ -361,14 +411,14 @@
    *
    * @public
    */
-  IAS.prototype.initialize2 = function() {
-    var currentScrollOffset = this.getCurrentScrollOffset(this.$scrollContainer),
-        scrollThreshold = this.getScrollThreshold();
 
-    this.hidePagination();
-    
+  IAS.prototype.reinitialize = function () {
+    this.isInitialized = false;
 
-    this.nextUrl = this.getNextUrl();
+    this.unbind();
+    this.initialize();
+  };
+
 
     // start loading next page if content is shorter than page fold
     if (currentScrollOffset >= scrollThreshold) {
@@ -413,6 +463,10 @@
    * @public
    */
   IAS.prototype.destroy = function() {
+    try {
+      this.jsXhr.abort();
+    } catch (e) {}
+
     this.unbind();
   };
 
@@ -432,6 +486,18 @@
     priority = priority || 0;
 
     this.listeners[event].add($.proxy(callback, this), priority);
+
+    // ready is already fired, before on() could even be called, so
+    // let's call the callback right away
+    if (this.isInitialized) {
+      if (event === 'ready') {
+        $.proxy(callback, this)();
+      }
+      // same applies to noneLeft
+      else if (event === 'noneLeft' && !this.nextUrl) {
+        $.proxy(callback, this)();
+      }
+    }
 
     return this;
   };
@@ -486,16 +552,13 @@
     var url = this.nextUrl,
         self = this;
 
-    this.unbind();
 
     if (!url) {
-      this.fire('noneLeft', [this.getLastItem()]);
-      this.listeners['noneLeft'].disable(); // disable it so it only fires once
-
-      self.bind();
 
       return false;
     }
+
+    this.pause();
 
     var promise = this.fire('next', [url]);
 
@@ -504,8 +567,14 @@
         self.render(items, function() {
           // window._bd_share_main.init();
           self.nextUrl = self.getNextUrl(data);
-          self.setNextUrl(self.nextUrl);
-          self.bind();
+
+
+          if (!self.nextUrl) {
+            self.fire('noneLeft', [self.getLastItem()]);
+          }
+
+          self.resume();
+
         });
       });
     });
@@ -533,8 +602,11 @@
 
     this.extensions.push(extension);
 
-    return this;
-  };
+
+    if (this.isBound) {
+      this.reinitialize();
+    }
+
 
   IAS.prototype.setOptions = function($element,options) {
     this.itemsContainerSelector = options.container;
@@ -581,7 +653,11 @@
       if (!data) {
         $this.data('ias', (data = new IAS($this, options)));
 
-        $(document).ready($.proxy(data.initialize, data));
+
+        if (options.initialize) {
+          $(document).ready($.proxy(instance.initialize, instance));
+        }
+
       }
 
       // when the plugin is called with a method
@@ -616,6 +692,7 @@
     next: '.next',
     pagination: false,
     delay: 600,
-    negativeMargin: 10
+    negativeMargin: 10,
+    initialize: true
   };
 })(jQuery);

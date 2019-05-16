@@ -1,11 +1,11 @@
 /**
  * IAS Trigger Extension
  * An IAS extension to show a trigger link to load the next page
- * http://infiniteajaxscroll.com
+ * https://infiniteajaxscroll.com
  *
  * This file is part of the Infinite AJAX Scroll package
  *
- * Copyright 2014 Webcreate (Jeroen Fiege)
+ * Copyright 2014-2018 Webcreate (Jeroen Fiege)
  */
 
 var IASTriggerExtension = function(options) {
@@ -92,6 +92,20 @@ IASTriggerExtension.prototype.bind = function(ias) {
   try {
     ias.on('prev', jQuery.proxy(this.showTriggerPrev, this), this.priority);
   } catch (exception) {}
+
+};
+
+/**
+ * @public
+ * @param {object} ias
+ */
+IASTriggerExtension.prototype.unbind = function(ias) {
+  this.$triggerNext = null;
+  this.$triggerPrev = null;
+  this.count = 0;
+  ias.off('next', this.showTriggerNext);
+  ias.off('rendered', this.onRendered);
+
 
   ias.on('next', jQuery.proxy(this.showTriggerNext, this), this.priority);
   ias.on('rendered', function () { self.enabled = true; }, this.priority);

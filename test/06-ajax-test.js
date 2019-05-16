@@ -15,10 +15,12 @@ describe("IAS", function () {
 
     ias.extension(new IASSpinnerExtension());
     ias.extension(new IASNoneLeftExtension());
+
+    ias.initialize();
   });
 
   after(function() {
-    ias.destroy();
+    jQuery.ias('destroy');
   });
 
   it("should keep working when items container gets updated", function() {
