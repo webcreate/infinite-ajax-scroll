@@ -5,14 +5,14 @@ import { terser } from 'rollup-plugin-terser'
 import pkg from './package.json'
 
 const banner = `/**
- * Infinite Ajax Scroll v${pkg.version}
- * Turn your existing pagination into infinite scrolling pages with ease
+ * ${pkg.title} v${pkg.version}
+ * ${pkg.description}
  *
  * Commercial use requires one-time purchase of a commercial license
  * https://infiniteajaxscroll.com/docs/license.html
  *
- * Copyright 2014-2019 Webcreate (Jeroen Fiege)
- * https://infiniteajaxscroll.com
+ * Copyright 2014-${(new Date).getFullYear()} ${pkg.author.company} (${pkg.author.name})
+ * ${pkg.homepage}
  */`;
 
 const base = {
