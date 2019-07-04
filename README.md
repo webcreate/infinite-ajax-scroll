@@ -6,6 +6,8 @@
 
 <h1 align="center">Infinite Ajax Scroll</h1>
 
+**Note: You're viewing the 3.x branch which is in development. See the [2.x](https://github.com/webcreate/infinite-ajax-scroll/tree/2.x) branch for the latest stable version.** 
+
 Turn your existing pagination into infinite scrolling pages with ease. 
 
 * SEO friendly 🥇
