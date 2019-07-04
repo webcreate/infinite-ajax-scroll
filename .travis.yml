@@ -5,9 +5,14 @@ language: node_js
 node_js:
   - 10
 
+addons:
+  apt:
+    packages:
+      - libgconf-2-4    # required for cypress
+
 cache:
+  npm: true
   directories:
-    - "$HOME/.npm"
     - "$HOME/.cache"
 
 install:
