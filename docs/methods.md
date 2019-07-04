@@ -33,8 +33,8 @@ It will return a promise.
 
 ## enableLoadOnScroll
 
-Enables the [`loadOnScroll`](options.md#loadOnScroll) setting on runtime.
+Enables the [`loadOnScroll`](options.md#loadonscroll) setting on runtime.
 
 ## disableLoadOnScroll
 
-Disables the [`loadOnScroll`](options.md#loadOnScroll) setting on runtime.
+Disables the [`loadOnScroll`](options.md#loadonscroll) setting on runtime.
