@@ -94,7 +94,7 @@ See [LICENSE](LICENSE) for more details.
 * Extensible through events
 * Added an extensive test suite
 
-[Unreleased]: https://github.com/webcreate/infinite-ajax-scroll/compare/v2.3.1...3.x
+[Unreleased]: https://github.com/webcreate/infinite-ajax-scroll/compare/v2.3.1...master
 [2.3.1]: https://github.com/webcreate/infinite-ajax-scroll/compare/v2.3.0...v2.3.1
 [2.3.0]: https://github.com/webcreate/infinite-ajax-scroll/compare/v2.2.3...v2.3.0
 [2.2.3]: https://github.com/webcreate/infinite-ajax-scroll/compare/v2.2.2...v2.2.3
