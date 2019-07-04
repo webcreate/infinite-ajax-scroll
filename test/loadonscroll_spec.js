@@ -41,9 +41,12 @@ describe('Load on scroll', () => {
 
       ias.on('next', spy.next);
 
-      cy.scrollTo('bottom', {duration: 300}).then(function() {
-        expect(spy.next).to.have.been.called;
-      });
+      cy.scrollTo('bottom', {duration: 300});
+
+      cy.wait(200)
+        .then(function() {
+          expect(spy.next).to.have.been.called;
+        });
     });
   });
 
