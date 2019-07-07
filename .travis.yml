@@ -24,4 +24,5 @@ before_script:
 
 script:
   - npm run lint
-  - cypress run --record --key $CYPRESS_KEY
+  - if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then cypress run --record --key $CYPRESS_KEY; fi
+  - if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then cypress run; fi
