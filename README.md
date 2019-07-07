@@ -1,81 +1,82 @@
 <p align="center">
   <a href="https://infiniteajaxscroll.com" target="_blank">
-    <img alt="Infinite Ajax Scroll" title="Infinite Ajax Scroll" src="https://infiniteajaxscroll.com/img/infinite-ajax-scroll-mark.svg" width="256">
+    <img alt="Infinite Ajax Scroll" title="Infinite Ajax Scroll" src="https://infiniteajaxscroll.com/img/infinite-ajax-scroll-mark.svg" width="200">
   </a>
 </p>
 
 <h1 align="center">Infinite Ajax Scroll</h1>
 
+**Note: You're viewing the 3.x branch which is in development. See the [2.x](https://github.com/webcreate/infinite-ajax-scroll/tree/2.x) branch for the latest stable version.** 
+
 Turn your existing pagination into infinite scrolling pages with ease. 
 
 * SEO friendly 🥇
 * Doesn't break browsers back button 💯
-* Highly customizable through extensions ✨
+* Highly customizable ✨
 
-More features, docs and demos available at: https://infiniteajaxscroll.com/
+More features, documentation and examples available at: https://docs.v3.infiniteajaxscroll.com/
 
-[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.png?branch=master)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
+[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.svg?branch=3.x)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
 
 ## Installation
 
-Download [jquery-ias.min.js](https://infiniteajaxscroll.com/download.html) (latest).
+### Use Infinite Ajax Scroll via CDN
 
-Include Infinite Ajax Scroll into your html pages.
+Get up and running in no time by linking directly to Infinite Ajax Scroll on [unpkg](https://unpkg.com).
 
-```html
-<script src="jquery-ias.min.js"></script>
+```markup
+<script src="https://unpkg.com/@webcreate/infinite-ajax-scroll@3/dist/infinite-ajax-scroll.min.js"></script>
 ```
 
-Include jQuery if you haven't already.
+Place this code right before the `</body>` tag on each template or page that you want to use infinite scroll on.
 
-```html
-<script   
-    src="https://code.jquery.com/jquery-3.2.1.min.js"   
-    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="   
-    crossorigin="anonymous"></script>
+### Manage as a package
+
+Are you using NPM in your projects? You can install and update our package easily.
+
+```bash
+$ npm install --save @webcreate/infinite-ajax-scroll
 ```
 
 ## Usage
 
-Infinite Ajax Scroll requires markup similar to this:
+Infinite Ajax Scroll works on a container with item elements which get appended. A next link is used to determine the next url.
 
 ```html
-<div id="container">
-  <div class="post">...</div>
-  <div class="post">...</div>
+<div class="container">
+    <div class="item">...</div>
+    <div class="item">...</div>
+    <div class="item">...</div>
+    ...
 </div>
 
-<div id="pagination">
-  <a href="/page1/" class="prev">prev</a>
-  <a href="/page3/" class="next">next</a>
+<div class="pagination">
+    <a href="page2.html" class="next">Next</a>
 </div>
 ```
 
-Then configure Infinite Ajax Scroll:
+Now you can configure Infinite Ajax Scroll:
 
-```html
-<script type="text/javascript">
-  var ias = jQuery.ias({
-    container:  '#container',
-    item:       '.post',
-    pagination: '#pagination',
-    next:       '#pagination a.next'
-  });
+```javascript
+// import if you use the NPM package
+import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 
-  ias.extension(new IASSpinnerExtension());
-  ias.extension(new IASTriggerExtension({offset: 2}));
-  ias.extension(new IASNoneLeftExtension({text: "You reached the end"}));
-  ias.extension(new IASPagingExtension());
-  ias.extension(new IASHistoryExtension({prev: '#pagination a.prev'}));
-</script>
+let ias = new InfiniteAjaxScroll('.container', {
+  item: '.item',
+  next: '.next',
+  pagination: '.pagination'
+});
 ```
 
-For complete documentation about options and extensions visit https://infiniteajaxscroll.com/docs/.
+Full documentation can be found at https://docs.v3.infiniteajaxscroll.com
 
 ## Licensing
 
-Infinite Ajax Scroll may be used in commercial projects and applications with the one-time purchase of a commercial license.
+Infinite Ajax Scroll is dual licensed:
 
-https://infiniteajaxscroll.com/docs/license.html
+1. Under the Free Software Foundation’s [GNU AGPL v.3.0](LICENSE); or
+2. Under an [Infinite Ajax Scroll Commercial License](https://infiniteajaxscroll.com/licenses/)
 
-For non-commercial, personal, or open source projects and applications, you may use Infinite Ajax Scroll under the terms of the MIT License. You may use Infinite AJAX Scroll for free.
+Buying a commercial license is mandatory as soon as you develop commercial activities distributing the Infinite Ajax Scroll software inside your product or deploying it on a network without disclosing the source code of your own applications under the AGPL license.
+
+See https://infiniteajaxscroll.com/licenses/ for more details.

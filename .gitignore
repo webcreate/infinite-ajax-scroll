@@ -1,7 +1,5 @@
-node_modules/
-bower_components/
-dist/
-conveyor.yml
-/vendor/
-composer.lock
-package-lock.json
+dist
+node_modules
+test/screenshots
+test/videos
+.build

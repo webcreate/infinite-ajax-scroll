@@ -1,0 +1,32 @@
+@import "https://fonts.googleapis.com/css?family=Source+Serif+Pro";
+
+body {
+  margin: 0;
+  padding: 80px 0;
+}
+
+#container {
+  max-width: 1128px;
+  padding: 0 24px;
+  margin: 0 auto;
+}
+
+.demo {
+  display: inline-block;
+  max-width: 200px;
+  margin-bottom: 24px;
+  border-radius: 4px;
+  border: 1px solid #eee;
+  visibility: hidden;
+}
+
+.demo.demo--loaded {
+  visibility: visible;
+}
+
+.demo-image {
+  width: 100%;
+  display: block;
+  height: auto;
+  min-height: 80px;
+}

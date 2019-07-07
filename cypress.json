@@ -1,0 +1,17 @@
+{
+  "ignoreTestFiles": [
+    "**/screenshots/**",
+    "**/videos/**",
+    "**/fixtures/**"
+  ],
+  "integrationFolder": "test",
+  "fixturesFolder": "test/fixtures",
+  "screenshotsFolder": "test/screenshots",
+  "videosFolder": "test/videos",
+  "supportFile": "test/support/commands.js",
+  "pluginsFile": false,
+  "video": false,
+  "viewportWidth": 640,
+  "viewportHeight": 400,
+  "projectId": "u49y9h"
+}

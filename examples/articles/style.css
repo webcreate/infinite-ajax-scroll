@@ -1,0 +1,158 @@
+@import "https://fonts.googleapis.com/css?family=Source+Serif+Pro";
+
+body {
+  margin: 0;
+  padding: 80px 0;
+}
+
+.article {
+  margin: 80px auto 0;
+  padding: 0 20px;
+  max-width: 740px;
+}
+
+.article h1 {
+  font-size: 38px;
+  color: rgba(0, 0, 0, .84);
+
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+}
+
+.article .article__p--first {
+  margin-top: 10px;
+}
+
+.article p {
+  margin: 29px 0 0 0;
+
+  font-family: 'Source Serif Pro', Georgia, Cambria, "Times New Roman", Times, serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 21px;
+  line-height: 1.58;
+  letter-spacing: -.003em;
+
+  color: rgba(0, 0, 0, .84);
+  color: #333;
+
+  -webkit-font-smoothing: antialiased;
+}
+
+.article figure {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  text-align: center;
+
+  overflow: hidden;
+  margin-top: 29px;
+}
+
+.article figure img {
+  height: 600px;
+  background-color: #efefef;
+}
+
+@media (max-width: 1400px) {
+  .article figure img {
+    display: block;
+    width: 100%;
+    max-width: 1400px;
+    object-fit: cover;
+  }
+}
+
+.article figure figcaption {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+  color: #999;
+  font-size: 13px;
+  font-weight: normal;
+  line-height: 2em;
+}
+
+.pager {
+  margin: 29px 0 0;
+  text-align: center;
+
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 2em;
+}
+
+.pager a,
+.pager a:link,
+.pager a:visited {
+  color: #999;
+  text-decoration: none;
+}
+
+.pager a:hover,
+.pager a:active {
+  color: #999;
+  text-decoration: underline;
+}
+
+.status {
+  text-align: center;
+  margin-top: 29px;
+  min-height: 40px;
+}
+
+.loader {
+  height: 40px;
+  margin-top: 0;
+  text-align: center;
+  background: transparent url('loader.svg') no-repeat center center;
+  background-size: 40px 19px;
+  opacity: 0;
+  animation: flipAnimation 1s infinite;
+  transition: opacity 300ms;
+}
+
+/* @see https://medium.com/designer-recipes/understanding-card-flip-animation-using-css-391c40ed3136 */
+@keyframes flipAnimation {
+  0%   {
+    -ms-transform: rotateY(-180deg); /* IE 9 */
+    -webkit-transform: rotateY(-180deg); /* Safari Chrome */
+    transform: rotateY(-180deg);
+  }
+  50%  {
+    -ms-transform: rotateY(0deg); /* IE 9 */
+    -webkit-transform: rotateY(0deg); /* Safari Chrome */
+    transform: rotateY(0deg);
+  }
+  100% {
+    -ms-transform: rotateY(-180deg); /* IE 9 */
+    -webkit-transform: rotateY(-180deg); /* Safari Chrome */
+    transform: rotateY(-180deg);
+  }
+}
+
+.no-more {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+
+  color: #999;
+  display: inline-block;
+  vertical-align: middle;
+
+  height: 32px;
+  line-height: 30px;
+  padding: 0 16px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+
+  text-decoration: none;
+
+  opacity: 0;
+  transition: opacity 400ms;
+}

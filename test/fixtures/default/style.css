@@ -1,0 +1,56 @@
+body {
+  font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: normal;
+  line-height: 2em;
+}
+
+.blocks {
+  margin: 0 auto 0;
+  padding: 0 20px;
+  max-width: 790px;
+}
+
+.blocks:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.blocks__block {
+  display: block;
+  float: left;
+  width: 75px;
+  height: 75px;
+  margin: 0 4px 4px 0;
+
+  background-color: lavender;
+
+  line-height: 75px;
+  text-align: center;
+  color: mediumpurple;
+}
+
+.pager {
+  margin: 29px 0 0;
+  text-align: center;
+}
+
+.pager a,
+.pager a:link,
+.pager a:visited {
+  color: #999;
+  text-decoration: none;
+}
+
+.pager a:hover,
+.pager a:active {
+  color: #999;
+  text-decoration: underline;
+}
+
+.spinner {
+  margin: 29px 0;
+  text-align: center;
+  color: #999;
+}
