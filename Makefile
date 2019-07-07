@@ -15,11 +15,14 @@ up:
 	open http://localhost:8080
 .PHONY: up
 
+bump:
+	npm --no-git-tag-version version $(SEMVER);
+.PHONY: bump
+
 build: guard-SEMVER
 	mkdir $(BUILD_DIR)
 	git archive HEAD | tar -x -C $(BUILD_DIR)
 	cd $(BUILD_DIR); \
-		npm --no-git-tag-version version $(SEMVER); \
 		npm install; \
 		npm run build --production;
 .PHONY: build
