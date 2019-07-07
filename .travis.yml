@@ -30,5 +30,4 @@ before_script:
 
 script:
   - npm run lint
-  - if [ "$CYPRESS_KEY" = ""  ]; then cypress run; fi
-  - if [ "$CYPRESS_KEY" != "" ]; then cypress run --record --key $CYPRESS_KEY; fi
+  - then cypress run
