@@ -30,4 +30,4 @@ before_script:
 
 script:
   - npm run lint
-  - then cypress run
+  - cypress run
