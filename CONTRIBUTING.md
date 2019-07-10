@@ -56,6 +56,8 @@ for more information.
 We use [ESLint](https://eslint.org/) to catch most coding style issues. You can check the status of
 you code styling by running `npm run lint`.
 
+We also provide a [`.editorconfig`](https://editorconfig.org/) which your IDE can use.
+
 ## Setting up your development environment
 
 Follow these steps to start working on a new feature or bugfix.
