@@ -16,7 +16,7 @@ function loadScript(url) {
 }
 
 Cypress.Commands.add('InfiniteAjaxScroll', () => {
-  return loadScript('http://localhost:8080/dist/infinite-ajax-scroll.js').then((win) => {
+  return loadScript('http://localhost:8080/dist/infinite-ajax-scroll.min.js').then((win) => {
     return new Cypress.Promise((resolve) => {
       resolve(win.InfiniteAjaxScroll);
     });

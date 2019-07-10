@@ -21,18 +21,21 @@ describe('Scroll', () => {
 
     ias.on('scrolled', spy.scrolled);
 
-    cy.scrollTo('bottom', {duration: 300}).then(function() {
-      expect(spy.scrolled).to.have.been.calledWith(
-          Cypress.sinon.match(function(event) {
-            expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
-            expect(event.scroll.x).to.be.equal(0, 'scroll.x');
-            expect(event.scroll.deltaY).to.be.greaterThan(0, 'scroll.deltaY');
-            expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
+    cy
+      .scrollTo('bottom', {duration: 300})
+      .wait(200)
+      .then(() => {
+        expect(spy.scrolled).to.have.been.calledWith(
+            Cypress.sinon.match(function(event) {
+              expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
+              expect(event.scroll.x).to.be.equal(0, 'scroll.x');
+              expect(event.scroll.deltaY).to.be.greaterThan(0, 'scroll.deltaY');
+              expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
 
-            return true;
-          })
-      );
-    });
+              return true;
+            })
+        );
+      });
   });
 
   it('should emit a scrolled event when scrolled up', () => {
@@ -41,24 +44,30 @@ describe('Scroll', () => {
     };
 
     // first scroll down
-    cy.scrollTo('bottom', {duration: 300}).then(function() {
-      cy.spy(spy, 'scrolled');
+    cy
+      .scrollTo('bottom')
+      .wait(300)
+      .then(() => {
+        cy.spy(spy, 'scrolled');
 
-      ias.on('scrolled', spy.scrolled);
+        ias.on('scrolled', spy.scrolled);
 
-      cy.scrollTo('top', {duration: 300}).then(function() {
-        expect(spy.scrolled).to.have.been.calledWith(
-            Cypress.sinon.match(function(event) {
-              expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
-              expect(event.scroll.x).to.be.equal(0, 'scroll.x');
-              expect(event.scroll.deltaY).to.be.lessThan(0, 'scroll.deltaY');
-              expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
+        cy
+          .scrollTo(0, 100)
+          .wait(200)
+          .then(() => {
+            expect(spy.scrolled).to.have.been.calledWith(
+              Cypress.sinon.match((event) => {
+                expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
+                expect(event.scroll.x).to.be.equal(0, 'scroll.x');
+                expect(event.scroll.deltaY).to.be.lessThan(0, 'scroll.deltaY'); // should be negative
+                expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
 
-              return true;
-            })
-        );
+                return true;
+              })
+            );
+          });
       });
-    });
   });
 
   it('should emit a hit event when scrolled to bottom', () => {
@@ -70,11 +79,12 @@ describe('Scroll', () => {
 
     ias.on('hit', spy.hit);
 
-    cy.scrollTo('bottom', {duration: 300});
-
-    cy.wait(200).then(() => {
-      expect(spy.hit).to.have.been.called;
-    });
+    cy
+      .scrollTo('bottom', {duration: 300})
+      .wait(200)
+      .then(() => {
+        expect(spy.hit).to.have.been.called;
+      });
   });
 
   it('should not emit a hit event when unbinded', () => {
@@ -88,10 +98,11 @@ describe('Scroll', () => {
 
     ias.unbind();
 
-    cy.scrollTo('bottom', {duration: 300});
-
-    cy.wait(200).then(() => {
-      expect(spy.hit).to.not.have.been.called;
-    });
+    cy
+      .scrollTo('bottom', {duration: 300})
+      .wait(200)
+      .then(() => {
+        expect(spy.hit).to.not.have.been.called;
+      });
   });
 });
