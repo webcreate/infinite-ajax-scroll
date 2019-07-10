@@ -24,7 +24,7 @@ describe('Paging', () => {
 
     cy
       .scrollTo('bottom', {duration: 300})
-      .wait(200)
+      .wait(5000) // wait for the page to load
       .then(() => {
         expect(spy.page).to.have.been.calledOnce;
         expect(spy.page).to.have.been.calledWith(
@@ -41,7 +41,7 @@ describe('Paging', () => {
 
     cy
       .scrollTo('bottom', {duration: 300})
-      .wait(200)
+      .wait(5000) // wait for the page to load
       .then(() => {
         expect(spy.page).to.have.been.calledTwice;
         expect(spy.page).to.have.been.calledWith(
