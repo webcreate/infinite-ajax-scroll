@@ -44,6 +44,7 @@ describe('Logger', () => {
   it('should use a custom logger', () => {
     const customLogger = {
       binded: () => {
+        /* eslint no-console: "off" */
         console.log('My custom logger for the binded event');
       }
     };
