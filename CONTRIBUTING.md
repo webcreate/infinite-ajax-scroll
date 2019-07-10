@@ -29,6 +29,11 @@ Every significant change is documented in the [changelog file](CHANGELOG.md).
 
 ## Bugs
 
+### Issue Tracker
+
+We are using [Github Issues](https://github.com/webcreate/infinite-ajax-scroll/issues) for issue tracking.
+Before filing a new issue, try to make sure your problem does not already exist.
+
 ### Reporting New Issues
 
 The best way to get your bug fixed is to provide a reduced test case or a live url. This
