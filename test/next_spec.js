@@ -24,18 +24,19 @@ describe('Next', () => {
       ias.on('hit', spy.hit);
       ias.on('next', spy.next);
 
-      cy.scrollTo('bottom', {duration: 300});
+      cy
+        .scrollTo('bottom', {duration: 300})
+        .wait(200)
+        .then(() => {
+          expect(spy.next).to.have.been.calledOnce;
+          // @todo would expect to have `next` called after `hit`,
+          //       but this is not supported by tiny-emitter
+          // expect(spy.next).to.have.been.calledAfter(spy.hit);
 
-      cy.wait(200).then(() => {
-        expect(spy.next).to.have.been.calledOnce;
-        // @todo would expect to have `next` called after `hit`,
-        //       but this is not supported by tiny-emitter
-        // expect(spy.next).to.have.been.calledAfter(spy.hit);
-
-        expect(spy.next).to.have.been.calledWith(
-            Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
-        );
-      });
+          expect(spy.next).to.have.been.calledWith(
+              Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
+          );
+        });
     });
   });
 
