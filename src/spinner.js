@@ -1,6 +1,7 @@
 import $ from 'tealight';
 import extend from 'extend';
 import Assert from "./assert";
+import * as Events from './events';
 
 const defaults = {
   element: undefined,
@@ -41,25 +42,25 @@ export default class Spinner {
     this.hideFn = this.options.hide;
     this.showFn = this.options.show;
 
-    ias.on('binded', this.bind.bind(this));
-    ias.on('binded', this.hide.bind(this));
+    ias.on(Events.BINDED, this.bind.bind(this));
+    ias.on(Events.BINDED, this.hide.bind(this));
   }
 
   bind() {
     let startTime, endTime, diff, delay, self = this, ias = this.ias;
 
-    ias.on('next', () => {
+    ias.on(Events.NEXT, () => {
       startTime = +new Date();
 
       self.show();
     });
 
-    ias.on('last', () => {
+    ias.on(Events.LAST, () => {
       self.hide();
     });
 
     // setup delay
-    ias.on('append', (event) => {
+    ias.on(Events.APPEND, (event) => {
       endTime = +new Date();
       diff = endTime - startTime;
 

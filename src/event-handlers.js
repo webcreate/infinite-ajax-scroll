@@ -1,4 +1,5 @@
 import {getScrollPosition} from './dimensions';
+import * as Events from './events'
 
 // @todo 1) verify that this is NOT shared among multiple instances
 // @todo 2) fill in these values on bind instead of zeroing them all
@@ -23,7 +24,7 @@ function calculateScroll(scrollContainer) {
 export function scrollHandler() {
   const scroll = calculateScroll(this.scrollContainer);
 
-  this.emitter.emit('scrolled', {scroll});
+  this.emitter.emit(Events.SCROLLED, {scroll});
 
   this.measure();
 }
@@ -31,7 +32,7 @@ export function scrollHandler() {
 export function resizeHandler() {
   const scroll = calculateScroll(this.scrollContainer);
 
-  this.emitter.emit('resized', {scroll});
+  this.emitter.emit(Events.RESIZED, {scroll});
 
   this.measure();
 }

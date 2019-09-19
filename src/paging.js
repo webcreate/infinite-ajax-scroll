@@ -1,4 +1,5 @@
 import {getRootRect} from "./dimensions";
+import * as Events from './events';
 
 function getPageBreak(pageBreaks, scrollTop, scrollContainer) {
   let rootRect = getRootRect(scrollContainer);
@@ -24,10 +25,10 @@ export default class Paging {
     this.currentPageIndex = ias.pageIndex;
     this.currentScrollTop = 0;
 
-    ias.on('binded', this.binded.bind(this));
-    ias.on('next', this.next.bind(this));
-    ias.on('scrolled', this.scrolled.bind(this));
-    ias.on('resized', this.scrolled.bind(this));
+    ias.on(Events.BINDED, this.binded.bind(this));
+    ias.on(Events.NEXT, this.next.bind(this));
+    ias.on(Events.SCROLLED, this.scrolled.bind(this));
+    ias.on(Events.RESIZED, this.scrolled.bind(this));
   }
 
   binded() {
@@ -57,9 +58,9 @@ export default class Paging {
       }
     };
 
-    this.ias.once('loaded', loaded);
+    this.ias.once(Events.LOADED, loaded);
 
-    this.ias.once('appended', () => {
+    this.ias.once(Events.APPENDED, () => {
       this.pageBreaks.push({
         pageIndex: nextEvent.pageIndex,
         url,
@@ -70,7 +71,7 @@ export default class Paging {
       this.update();
 
       // @todo can be removed when eventStack is implemented
-      this.ias.off('loaded', loaded);
+      this.ias.off(Events.LOADED, loaded);
     });
   }
 
@@ -84,7 +85,7 @@ export default class Paging {
     let pageBreak = getPageBreak(this.pageBreaks, this.currentScrollTop, this.ias.scrollContainer);
 
     if (pageBreak && pageBreak.pageIndex !== this.currentPageIndex) {
-      this.ias.emitter.emit('page', pageBreak);
+      this.ias.emitter.emit(Events.PAGE, pageBreak);
 
       this.currentPageIndex = pageBreak.pageIndex;
     }
