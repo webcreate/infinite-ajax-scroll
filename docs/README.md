@@ -1,9 +1,10 @@
 # Table of contents
 
 * [Overview](overview.md)
-* [License](license.md)
 * [Installation](installation.md)
 * [Getting started](getting-started.md)
+* [License](license.md)
+* [Support](support.md)
 
 ## Reference
 
