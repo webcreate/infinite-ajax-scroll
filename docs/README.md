@@ -15,3 +15,5 @@
 
 * [Triggers](advanced/triggers.md)
 * [Last page message](advanced/last-page-message.md)
+* [History](advanced/history.md)
+* [Overflow](advanced/overflow.md)

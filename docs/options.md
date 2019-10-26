@@ -198,7 +198,7 @@ Configures if the next/previous page should automatically be loaded when the use
 
 When `loadOnScroll` is disabled the [`hit`](events.md#hit) event is still emitted, allowing you to manually trigger the next/prev page (for example by calling [`next`](methods.md#next)).
 
-Use can use [`enableLoadOnScroll`](methods.md#enableLoadOnScroll) and [`disableLoadOnScroll`](methods.md#disableLoadOnScroll) to configure this setting on runtime. 
+Use can use [`enableLoadOnScroll`](methods.md#enableloadonscroll) and [`disableLoadOnScroll`](methods.md#disableloadonscroll) to configure this setting on runtime. 
 
 ```javascript
 let ias = new InfiniteAjaxScroll(/*..*/, { 
