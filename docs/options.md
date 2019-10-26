@@ -6,7 +6,11 @@
 **Default:** `undefined`   
 **Required:** yes
 
-Selector of the item elements that should be appended to the container. These elements should live inside the container element.
+Selector of the item elements that should be appended to the container.
+
+{% hint style='info' %}
+The item elements should live **inside** the container element.
+{% endhint %}
 
 ```html
 <div class="container">
@@ -17,7 +21,9 @@ Selector of the item elements that should be appended to the container. These el
 ```
 
 ```javascript
-item: '.item'
+let ias = new InfiniteAjaxScroll('.container', {
+  item: '.item'
+})
 ```
 
 ## next
@@ -33,7 +39,9 @@ Selector of the next link. The `href` attribute will be used for the url of the 
 ```
 
 ```javascript
-next: '.pager__next'
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  next: '.pager__next'
+})
 ```
 
 ## pagination
@@ -54,7 +62,9 @@ Selector of the element that contains the pagination. This element will be hidde
 ```
 
 ```javascript
-pagination: '.pager'
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  pagination: '.pager'
+})
 ```
 
 ## responseType
@@ -66,7 +76,9 @@ pagination: '.pager'
 Type of response. Can be set to "json".
 
 ```javascript
-responseType: 'json'
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  responseType: 'json'
+})
 ```
 
 See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/responseType) for available values.
@@ -97,8 +109,12 @@ Note: Only a single element should match the selector.
 ```
 
 ```javascript
-scrollContainer: '#scroller'
+let ias = new InfiniteAjaxScroll('#scroller', {
+  scrollContainer: '#scroller'
+})
 ```
+
+[Read more about scrolling inside an element](advanced/overflow.md)
 
 ## spinner
 
@@ -115,18 +131,22 @@ You can set a selector to an element you want to display when Infinite Ajax Scro
 ```
 
 ```js
-spinner: '.spinner'
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  spinner: '.spinner'
+})
 ```
 
 You can also set advanced spinner options.
 
 ```javascript
-spinner: {
-  element: '.spinner', // element
-  delay: 600, // delay in milliseconds
-  show: function(element) {},
-  hide: function(element) {}
-}
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  spinner: {
+    element: '.spinner', // element
+    delay: 600, // delay in milliseconds
+    show: function(element) {},
+    hide: function(element) {}
+  }
+})
 ```
 
 ## logger
@@ -140,26 +160,32 @@ Configure an event logger.
 On default events are logged to console (see [src/logger.js](../src/logger.js)):
 
 ```javascript
-logger: true
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  logger: true
+})
 ```
 
 To disable the logger you can pass `false`:
 
 ```javascript
-logger: false
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  logger: false
+})
 ```
 
 To create your own logger, pass an object:
 
 ```javascript
-logger: {
-  next: (event) => {
-    doSomething(event.pageIndex);
-  },
-  loaded: (event) => {
-    doSomethingElse(event.url);
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  logger: {
+    next: (event) => {
+      doSomething(event.pageIndex);
+    },
+    loaded: (event) => {
+      doSomethingElse(event.url);
+    }
   }
-}
+})
 ```
 
 ## loadOnScroll
@@ -174,3 +200,13 @@ When `loadOnScroll` is disabled the [`hit`](events.md#hit) event is still emitte
 
 Use can use [`enableLoadOnScroll`](methods.md#enableLoadOnScroll) and [`disableLoadOnScroll`](methods.md#disableLoadOnScroll) to configure this setting on runtime. 
 
+```javascript
+let ias = new InfiniteAjaxScroll(/*..*/, { 
+  loadOnScroll: false
+})
+
+// the hit event is still emitted, allowing to manually load the next page
+ias.on('hit', (event) => {
+  ias.next();
+})
+```
