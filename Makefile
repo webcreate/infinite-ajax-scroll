@@ -10,6 +10,12 @@ install:
 	cd examples/masonry && npm install && npm link && npm run build;
 .PHONY: install
 
+update:
+	cd examples/articles && npm update;
+	cd examples/blocks && npm update;
+	cd examples/masonry && npm update;
+.PHONY: update
+
 up:
 	npm run start
 	open http://localhost:8080
