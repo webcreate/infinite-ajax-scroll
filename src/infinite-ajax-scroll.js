@@ -13,9 +13,6 @@ import Logger from './logger';
 import Paging from './paging';
 import {appendFn} from './append';
 
-let scrollListener;
-let resizeListener;
-
 export default class InfiniteAjaxScroll {
   constructor(container, options = {}) {
     Assert.singleElement(container, 'container');
@@ -70,11 +67,11 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    scrollListener = throttle(scrollHandler, 200).bind(this);
-    resizeListener = throttle(resizeHandler, 200).bind(this);
+    this._scrollListener = throttle(scrollHandler, 200).bind(this);
+    this._resizeListener = throttle(resizeHandler, 200).bind(this);
 
-    this.scrollContainer.addEventListener('scroll', scrollListener);
-    this.scrollContainer.addEventListener('resize', resizeListener);
+    this.scrollContainer.addEventListener('scroll', this._scrollListener);
+    this.scrollContainer.addEventListener('resize', this._resizeListener);
 
     this.binded = true;
 
@@ -86,8 +83,8 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    this.scrollContainer.removeEventListener('resize', resizeListener);
-    this.scrollContainer.removeEventListener('scroll', scrollListener);
+    this.scrollContainer.removeEventListener('resize', this._resizeListener);
+    this.scrollContainer.removeEventListener('scroll', this._scrollListener);
 
     this.binded = false;
 
