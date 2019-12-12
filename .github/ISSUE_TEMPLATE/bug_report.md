@@ -25,6 +25,7 @@ Please consider the following:
 
 1. Can you make a simplified version that reproduces the issue? For example, can you reproduce using one of the available Codesandboxes (see https://codesandbox.io/s/github/webcreate/infinite-ajax-scroll/tree/master/examples/articles)?
 2. If that's not possible, can you provide a live version of your work so we can have a look and inspect your code and configuration?
+3. Can you provide code examples, preferably your html and javascript code.
 -->
 
 **Expected behavior**
@@ -34,5 +35,5 @@ Please consider the following:
 <!-- Please describe your environment -->
 
 - Infinite Ajax Scroll version:
-- Browser version:
+- Browser + version:
 - Operating System:

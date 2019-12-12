@@ -1,5 +1,10 @@
 root: ./docs/
 
 structure:
-  readme: README.md
+  readme: overview.md
   summary: README.md
+
+redirects:
+  options: ./options.md
+  methods: ./methods.md
+  events: ./events.md
