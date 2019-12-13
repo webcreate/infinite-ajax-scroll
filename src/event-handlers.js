@@ -1,27 +1,26 @@
 import {getScrollPosition} from './dimensions';
 
-// @todo 1) verify that this is NOT shared among multiple instances
-// @todo 2) fill in these values on bind instead of zeroing them all
-let lastScroll = {
+const defaultLastScroll = {
   y: 0,
   x: 0,
   deltaY: 0,
   deltaX: 0
 };
 
-function calculateScroll(scrollContainer) {
+function calculateScroll(scrollContainer, lastScroll) {
   let scroll = getScrollPosition(scrollContainer);
 
   scroll.deltaY = scroll.y - (lastScroll ? lastScroll.y : scroll.y);
   scroll.deltaX = scroll.x - (lastScroll ? lastScroll.x : scroll.x);
 
-  lastScroll = scroll;
-
   return scroll;
 }
 
 export function scrollHandler() {
-  const scroll = calculateScroll(this.scrollContainer);
+  let ias = this;
+  let lastScroll = ias._lastScroll || defaultLastScroll;
+
+  const scroll = ias._lastScroll = calculateScroll(ias.scrollContainer, lastScroll);
 
   this.emitter.emit('scrolled', {scroll});
 
@@ -29,7 +28,10 @@ export function scrollHandler() {
 }
 
 export function resizeHandler() {
-  const scroll = calculateScroll(this.scrollContainer);
+  let ias = this;
+  let lastScroll = ias._lastScroll || defaultLastScroll;
+
+  const scroll = ias._lastScroll = calculateScroll(ias.scrollContainer, lastScroll);
 
   this.emitter.emit('resized', {scroll});
 

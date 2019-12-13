@@ -10,10 +10,10 @@ const defaultLogger = {
   unbinded: () => {
     console.log(`Unbinded event handlers`);
   },
-  // scrolled: () => {
+  // scrolled: (event) => {
   //   console.log('Scrolled');
   // },
-  // resized: () => {
+  // resized: (event) => {
   //   console.log('Resized');
   // },
   next: (event) => {

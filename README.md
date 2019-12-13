@@ -6,15 +6,15 @@
 
 <h1 align="center">Infinite Ajax Scroll</h1>
 
-**Note: You're viewing the 3.x branch which is in development. See the [2.x](https://github.com/webcreate/infinite-ajax-scroll/tree/2.x) branch for the latest stable version.** 
+**Note: You're viewing the 3.x branch which is in development. See the [2.x](https://github.com/webcreate/infinite-ajax-scroll/tree/2.x) branch for the latest stable version.**
 
-Turn your existing pagination into infinite scrolling pages with ease. 
+Turn your existing pagination into infinite scrolling pages with ease.
 
 * SEO friendly 🥇
 * Doesn't break browsers back button 💯
 * Highly customizable ✨
 
-More features, documentation and examples available at: https://docs.v3.infiniteajaxscroll.com/
+More features, documentation and examples available at: https://docs.infiniteajaxscroll.com/
 
 [![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.svg?branch=3.x)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
 
@@ -68,7 +68,7 @@ let ias = new InfiniteAjaxScroll('.container', {
 });
 ```
 
-Full documentation can be found at https://docs.v3.infiniteajaxscroll.com
+Full documentation can be found at https://docs.infiniteajaxscroll.com
 
 ## Licensing
 
