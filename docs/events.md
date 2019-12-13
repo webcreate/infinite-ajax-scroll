@@ -147,4 +147,4 @@ ias.on('page', (event) => {
 })
 ```
 
-[View this behaviour in a live demo](https://v3.infiniteajaxscroll.com/examples/articles/)
+[View this behaviour in a live demo](https://infiniteajaxscroll.com/examples/articles/)
