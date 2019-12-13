@@ -1,9 +1,5 @@
 # Overflow
 
-{% hint style='working' %}
-This feature is still work in progress
-{% endhint %}
-
 It is possible to have infinite scrolling pages inside an overflow element.
 
 First define a container element.
@@ -32,3 +28,5 @@ let ias = new InfiniteAjaxScroll('#scroller', {
   scrollContainer: '#scroller'
 });
 ```
+
+[View this behaviour in a live demo](https://infiniteajaxscroll.com/examples/overflow/)
