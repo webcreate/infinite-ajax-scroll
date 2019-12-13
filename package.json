@@ -24,6 +24,10 @@
     "name": "Jeroen Fiege",
     "web": "https://webcreate.nl"
   },
+  "funding": {
+    "type": "individual",
+    "url": "https://infiniteajaxscroll.com/pricing"
+  },
   "main": "dist/infinite-ajax-scroll.js",
   "unpkg": "dist/infinite-ajax-scroll.js",
   "module": "dist/infinite-ajax-scroll.es.js",
