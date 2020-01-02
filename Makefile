@@ -19,15 +19,15 @@ up:
 	open http://localhost:8080
 .PHONY: up
 
-bump:
+bump: guard-SEMVER
 	npm --no-git-tag-version version $(SEMVER);
 .PHONY: bump
 
-build: guard-SEMVER
+build:
 	mkdir $(BUILD_DIR)
 	git archive HEAD | tar -x -C $(BUILD_DIR)
 	cd $(BUILD_DIR); \
-		npm install; \
+		npm ci; \
 		npm run build --production;
 .PHONY: build
 
@@ -41,6 +41,8 @@ release: TEST_DIR=$(BUILD_DIR)
 release: clean build test
 	cd $(BUILD_DIR); \
 		npm publish
+	npm pack @webcreate/infinite-ajax-scroll
+	make clean
 .PHONY: release
 
 clean:
