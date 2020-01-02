@@ -12,6 +12,7 @@ import Spinner from './spinner';
 import Logger from './logger';
 import Paging from './paging';
 import {appendFn} from './append';
+import * as Events from './events';
 
 export default class InfiniteAjaxScroll {
   constructor(container, options = {}) {
@@ -39,7 +40,7 @@ export default class InfiniteAjaxScroll {
     this.pageIndex = this.sentinel() ? 0 : -1;
     this.lastDistance = null;
 
-    this.on('hit', () => {
+    this.on(Events.HIT, () => {
       if (!this.loadOnScroll) {
         return;
       }
@@ -54,7 +55,7 @@ export default class InfiniteAjaxScroll {
     this.paging = new Paging(this);
 
     // @todo review this logic when prefill support is added
-    this.on('binded', this.measure);
+    this.on(Events.BIND, this.measure);
 
     if (this.options.bind) {
       // @todo on document.ready? (window.addEventListener('DOMContentLoaded'))
@@ -75,7 +76,7 @@ export default class InfiniteAjaxScroll {
 
     this.binded = true;
 
-    this.emitter.emit('binded');
+    this.emitter.emit(Events.BINDED);
   }
 
   unbind() {
@@ -88,7 +89,7 @@ export default class InfiniteAjaxScroll {
 
     this.binded = false;
 
-    this.emitter.emit('unbinded');
+    this.emitter.emit(Events.UNBINDED);
   }
 
   next() {
@@ -98,14 +99,14 @@ export default class InfiniteAjaxScroll {
       pageIndex: this.pageIndex + 1,
     };
 
-    this.emitter.emit('next', event);
+    this.emitter.emit(Events.NEXT, event);
 
     Promise.resolve(this.nextHandler(event.pageIndex))
         .then((result) => {
           this.pageIndex = event.pageIndex;
 
           if (!result) {
-            this.emitter.emit('last');
+            this.emitter.emit(Events.LAST);
 
             return;
           }
@@ -134,7 +135,7 @@ export default class InfiniteAjaxScroll {
             // @todo assert there actually are items in the response
           }
 
-          ias.emitter.emit('loaded', {items, url, xhr});
+          ias.emitter.emit(Events.LOADED, {items, url, xhr});
 
           resolve({items, url, xhr});
         } else {
@@ -155,7 +156,7 @@ export default class InfiniteAjaxScroll {
 
       // @todo define event variable and pass that around so it can be manipulated
 
-      ias.emitter.emit('load', {url, xhr});
+      ias.emitter.emit(Events.LOAD, {url, xhr});
 
       xhr.send();
     });
@@ -175,7 +176,7 @@ export default class InfiniteAjaxScroll {
       appendFn
     };
 
-    ias.emitter.emit('append', event);
+    ias.emitter.emit(Events.APPEND, event);
 
     let executor = (resolve) => {
       window.requestAnimationFrame(() => {
@@ -186,7 +187,7 @@ export default class InfiniteAjaxScroll {
     };
 
     return (new Promise(executor)).then((event) => {
-      ias.emitter.emit('appended', event);
+      ias.emitter.emit(Events.APPENDED, event);
     });
   }
 
@@ -232,7 +233,7 @@ export default class InfiniteAjaxScroll {
     }
 
     if (distance <= 0 && (this.lastDistance === null || this.lastDistance > 0)) {
-      this.emitter.emit('hit', {distance});
+      this.emitter.emit(Events.HIT, {distance});
     }
 
     this.lastDistance = distance;
@@ -241,7 +242,7 @@ export default class InfiniteAjaxScroll {
   on(event, callback) {
     this.emitter.on(event, callback, this);
 
-    if (event === 'binded' && this.binded) {
+    if (event === Events.BINDED && this.binded) {
       callback.bind(this)();
     }
   }
@@ -253,7 +254,7 @@ export default class InfiniteAjaxScroll {
   once(event, callback) {
     this.emitter.once(event, callback, this);
 
-    if (event === 'binded' && this.binded) {
+    if (event === Events.BINDED && this.binded) {
       callback.bind(this)();
     }
   }
