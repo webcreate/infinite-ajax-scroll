@@ -1,6 +1,6 @@
 {
-  "name": "infinite-ajax-scroll-blog",
-  "description": "An example of an infinite scrolling blog with Infinite Ajax Scroll where next articles are automatically appended",
+  "name": "infinite-ajax-scroll-overflow",
+  "description": "An example of infinite scroll with overflow",
   "version": "1.0.0",
   "homepage": "https://infiniteajaxscroll.com",
   "repository": "github:webcreate/infinite-ajax-scroll",
@@ -29,7 +29,7 @@
     "jquery-ias"
   ],
   "dependencies": {
-    "@webcreate/infinite-ajax-scroll": "^3.0.0-beta.4"
+    "@webcreate/infinite-ajax-scroll": "^3.0.0-beta.5"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4"

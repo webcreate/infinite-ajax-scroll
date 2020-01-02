@@ -113,6 +113,14 @@ This event is triggered after the items have been appended.
 
 Triggered when the last page is appended.
 
+```javascript
+ias.on('last', () => {
+  console.log('Users has reached the last page');
+})
+```
+
+[Read more on how we can inform the user about reaching the last page](advanced/last-page-message.md)
+
 ### page
 
 Triggered when the user scrolls past a page break. The event provides information about the page in view.
@@ -124,5 +132,19 @@ Triggered when the user scrolls past a page break. The event provides informatio
 | title | string | Title of the page |
 | sentinel | Element | Sentinel element. Element used to determine on which page the user is |
 
-> pageIndex is zero indexed. This means the index starts at 0 on the first page.
+> pageIndex is zero-based. This means the index starts at 0 on the first page.
 
+One use case for this event is to update the browser url and title:
+
+```javascript
+ias.on('page', (event) => {
+  // update the title
+  document.title = event.title;
+
+  // update the url
+  let state = history.state;
+  history.replaceState(state, event.title, event.url);
+})
+```
+
+[View this behaviour in a live demo](https://infiniteajaxscroll.com/examples/articles/)

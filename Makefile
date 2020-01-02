@@ -2,13 +2,17 @@ BUILD_DIR = .build
 TEST_DIR = .
 SEMVER=prerelease --preid=beta
 
+EXAMPLES=$(dir $(wildcard examples/*/package.json))
+
 install:
 	npm install
 	npm run build
-	cd examples/articles && npm install && npm link && npm run build;
-	cd examples/blocks && npm install && npm link && npm run build;
-	cd examples/masonry && npm install && npm link && npm run build;
+	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm install && npm run link && npm run build) || exit $$?;)
 .PHONY: install
+
+update:
+	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm update) || exit $$?;)
+.PHONY: update
 
 up:
 	npm run start

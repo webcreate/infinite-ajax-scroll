@@ -1,10 +1,8 @@
 import $ from 'tealight';
 
-let lastResponse = document;
-let nextUrl;
-
 export function nextHandler(pageIndex) {
   let ias = this;
+  let lastResponse = ias._lastResponse || document;
 
   let nextEl = $(ias.options.next, lastResponse)[0];
 
@@ -12,17 +10,17 @@ export function nextHandler(pageIndex) {
     return;
   }
 
-  nextUrl = nextEl.href;
+  let nextUrl = nextEl.href;
 
   return ias.load(nextUrl)
-      .then((data) => {
-        lastResponse = data.xhr.response;
+    .then((data) => {
+      lastResponse = ias._lastResponse = data.xhr.response;
 
-        let nextEl = $(ias.options.next, lastResponse)[0];
+      let nextEl = $(ias.options.next, lastResponse)[0];
 
-        return ias.append(data.items)
-            .then(() => {
-              return !!nextEl;
-            });
-      });
+      return ias.append(data.items)
+        .then(() => {
+          return !!nextEl;
+        });
+    });
 }

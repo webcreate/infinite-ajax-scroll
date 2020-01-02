@@ -1,0 +1,39 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.surface-container {
+  max-width: 1128px;
+  padding: 0 24px;
+  margin: 80px auto 0;
+}
+
+.overflow-container {
+  height: 60vh;
+  width: 100%;
+  overflow: auto;
+  border: solid 1px #dee2e6;
+  border-top: 0;
+}
+
+.item {
+  height: 80px;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #9370db;
+  color: #fff;
+}
+
+.pager {
+  text-align: center;
+}
+
+#overflow1 .item {
+  background-color: #9370db;
+}
+
+#overflow2 .item {
+  background-color: cornflowerblue;
+}
