@@ -1,4 +1,5 @@
 import {getScrollPosition} from './dimensions';
+import * as Events from './events'
 
 const defaultLastScroll = {
   y: 0,
@@ -22,7 +23,7 @@ export function scrollHandler() {
 
   const scroll = ias._lastScroll = calculateScroll(ias.scrollContainer, lastScroll);
 
-  this.emitter.emit('scrolled', {scroll});
+  this.emitter.emit(Events.SCROLLED, {scroll});
 
   this.measure();
 }
@@ -33,7 +34,7 @@ export function resizeHandler() {
 
   const scroll = ias._lastScroll = calculateScroll(ias.scrollContainer, lastScroll);
 
-  this.emitter.emit('resized', {scroll});
+  this.emitter.emit(Events.RESIZED, {scroll});
 
   this.measure();
 }

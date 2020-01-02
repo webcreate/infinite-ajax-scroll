@@ -1,6 +1,7 @@
 import $ from 'tealight';
 import extend from 'extend';
 import Assert from "./assert";
+import * as Events from './events';
 
 const defaults = {
   element: undefined,
@@ -33,8 +34,8 @@ export default class Pagination {
 
     Assert.singleElement(this.options.element, 'pagination.element');
 
-    ias.on('binded', this.hide.bind(this));
-    ias.on('unbinded', this.restore.bind(this));
+    ias.on(Events.BINDED, this.hide.bind(this));
+    ias.on(Events.UNBINDED, this.restore.bind(this));
   }
 
   hide() {
