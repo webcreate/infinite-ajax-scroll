@@ -2,8 +2,8 @@
 
 ## item
 
-**Type:** `string|Element`   
-**Default:** `undefined`   
+**Type:** `string|Element`
+**Default:** `undefined`
 **Required:** yes
 
 Selector of the item elements that should be appended to the container.
@@ -28,9 +28,9 @@ let ias = new InfiniteAjaxScroll('.container', {
 
 ## next
 
-**Type:** `string`   
-**Default:** `undefined`   
-**Required:** yes   
+**Type:** `string`
+**Default:** `undefined`
+**Required:** yes
 
 Selector of the next link. The `href` attribute will be used for the url of the next page. Only a single element should match this selector.
 
@@ -46,14 +46,14 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## pagination
 
-**Type:** `string|Element`   
-**Default:** `undefined`    
-**Required:** no   
+**Type:** `boolean|string|Element`
+**Default:** `false`
+**Required:** no
 
-Selector of the element that contains the pagination. This element will be hidden when Infinite Ajax Scroll binds.
+Selector of the elements that contain the pagination. The elements that match the selector will be hidden when Infinite Ajax Scroll binds.
 
 ```html
-<div class="pager">
+<div class="pager" id="pager1">
     <span class="pager__current">1</span>
     <a href="/page/2" class="pager__page">2</a>
     <a href="/page/3" class="pager__page">3</a>
@@ -63,15 +63,22 @@ Selector of the element that contains the pagination. This element will be hidde
 
 ```javascript
 let ias = new InfiniteAjaxScroll(/*..*/, {
-  pagination: '.pager'
+  // pass pagination as selector:
+  pagination: '.pager',
+
+  // or pass pagination as Element:
+  pagination: document.getElementById('pager1'),
+
+  // or pass false explicitly to disable automatic hiding:
+  pagination: false,
 })
 ```
 
 ## responseType
 
-**Type:** `string`   
-**Default:** `"document"`   
-**Required:** no   
+**Type:** `string`
+**Default:** `"document"`
+**Required:** no
 
 Type of response. Can be set to "json".
 
@@ -85,19 +92,19 @@ See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttp
 
 ## bind
 
-**Type:** `boolean`   
-**Default:** `false`   
-**Required:** no   
+**Type:** `boolean`
+**Default:** `false`
+**Required:** no
 
 Normally Infinite Ajax Scroll binds to the scroll and resize events on document ready. If you want manual control over this behaviour you can set this option to `false`. To bind call the [`bind`](methods.md#bind) method.
 
 ## scrollContainer
 
-**Type:** `string|Element|window`    
-**Default:** `window`    
-**Required:** no   
+**Type:** `string|Element|window`
+**Default:** `window`
+**Required:** no
 
-Set a selector of the element you want to use as a scroll container. Use this if you want infinite scroll inside an overflow element. 
+Set a selector of the element you want to use as a scroll container. Use this if you want infinite scroll inside an overflow element.
 
 Note: Only a single element should match the selector.
 
@@ -118,9 +125,9 @@ let ias = new InfiniteAjaxScroll('#scroller', {
 
 ## spinner
 
-**Type:** `string|Object|boolean`    
-**Default:** `false`    
-**Required:** no   
+**Type:** `string|Object|boolean`
+**Default:** `false`
+**Required:** no
 
 Configures a spinner/loader. By default no spinner is configured.
 
@@ -151,9 +158,9 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## logger
 
-**Type:** `Object|boolean`    
-**Default:** `Object` (see [src/logger.js](../src/logger.js))    
-**Required:** no   
+**Type:** `Object|boolean`
+**Default:** `Object` (see [src/logger.js](../src/logger.js))
+**Required:** no
 
 Configure an event logger.
 
@@ -190,18 +197,18 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## loadOnScroll
 
-**Type:** `boolean`    
-**Default:** `true`    
-**Required:** no 
+**Type:** `boolean`
+**Default:** `true`
+**Required:** no
 
 Configures if the next/previous page should automatically be loaded when the users scrolls to the bottom or the top of the page.
 
 When `loadOnScroll` is disabled the [`hit`](events.md#hit) event is still emitted, allowing you to manually trigger the next/prev page (for example by calling [`next`](methods.md#next)).
 
-Use can use [`enableLoadOnScroll`](methods.md#enableloadonscroll) and [`disableLoadOnScroll`](methods.md#disableloadonscroll) to configure this setting on runtime. 
+Use can use [`enableLoadOnScroll`](methods.md#enableloadonscroll) and [`disableLoadOnScroll`](methods.md#disableloadonscroll) to configure this setting on runtime.
 
 ```javascript
-let ias = new InfiniteAjaxScroll(/*..*/, { 
+let ias = new InfiniteAjaxScroll(/*..*/, {
   loadOnScroll: false
 })
 
