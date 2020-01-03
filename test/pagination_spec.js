@@ -60,6 +60,28 @@ describe('Pagination', () => {
     });
   });
 
+  it('should accept an Element', () => {
+      cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+        cy.document().then((doc) => {
+          let el = doc.querySelector('.pager');
+
+          let ias = new InfiniteAjaxScroll('.blocks', {
+            item: '.blocks__block',
+            next: '.pager__next',
+            pagination: el,
+            bind: false
+          });
+
+          cy.get('.pager').should('be.visible')
+            .then(() => {
+              ias.bind();
+
+              cy.get('.pager').should('not.be.visible');
+            });
+        });
+      });
+  });
+
   it('should throw when element not found', () => {
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       const subject = {
@@ -84,4 +106,5 @@ describe('Pagination', () => {
       expect(spy).to.have.thrown('Error');
     });
   });
+
 });
