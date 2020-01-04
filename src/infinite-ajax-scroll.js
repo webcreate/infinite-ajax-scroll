@@ -22,6 +22,7 @@ export default class InfiniteAjaxScroll {
     this.options = extend({}, defaults, options);
     this.emitter = new Emitter();
     this.scrollContainer = this.options.scrollContainer;
+    this.negativeMargin = Math.abs(this.options.negativeMargin);
 
     if (this.options.scrollContainer !== window) {
       Assert.singleElement(this.options.scrollContainer, 'options.scrollContainer');
@@ -38,7 +39,6 @@ export default class InfiniteAjaxScroll {
     this.paused = false;
     this.loadOnScroll = this.options.loadOnScroll;
     this.pageIndex = this.sentinel() ? 0 : -1;
-    this.lastDistance = null;
 
     this.on(Events.HIT, () => {
       if (!this.loadOnScroll) {
@@ -235,11 +235,12 @@ export default class InfiniteAjaxScroll {
       distance = getDistanceToFold(sentinel, this.scrollContainer);
     }
 
-    if (distance <= 0 && (this.lastDistance === null || this.lastDistance > 0)) {
+    // apply negative margin
+    distance -= this.negativeMargin;
+
+    if (distance <= 0) {
       this.emitter.emit(Events.HIT, {distance});
     }
-
-    this.lastDistance = distance;
   }
 
   on(event, callback) {

@@ -7,5 +7,6 @@ export default {
   scrollContainer: window,
   spinner: false,
   logger: true,
-  loadOnScroll: true
+  loadOnScroll: true,
+  negativeMargin: 0
 };
