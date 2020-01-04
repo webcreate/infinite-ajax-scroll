@@ -47,5 +47,5 @@ export function getDistanceToFold(el, scrollContainer) {
   let scrollYBottom = scroll.y + rootRect.height;
   let bottom = scroll.y + boundingRect.bottom - rootRect.top;
 
-  return bottom - scrollYBottom;
+  return Math.trunc(bottom - scrollYBottom);
 }
