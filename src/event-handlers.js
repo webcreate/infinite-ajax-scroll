@@ -24,8 +24,6 @@ export function scrollHandler() {
   const scroll = ias._lastScroll = calculateScroll(ias.scrollContainer, lastScroll);
 
   this.emitter.emit(Events.SCROLLED, {scroll});
-
-  this.measure();
 }
 
 export function resizeHandler() {
@@ -35,6 +33,4 @@ export function resizeHandler() {
   const scroll = ias._lastScroll = calculateScroll(ias.scrollContainer, lastScroll);
 
   this.emitter.emit(Events.RESIZED, {scroll});
-
-  this.measure();
 }

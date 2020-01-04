@@ -48,6 +48,9 @@ export default class InfiniteAjaxScroll {
       this.next();
     });
 
+    this.on(Events.SCROLLED, this.measure.bind(this));
+    this.on(Events.RESIZED, this.measure.bind(this));
+
     // initialize extensions
     this.pagination = new Pagination(this, this.options.pagination);
     this.spinner = new Spinner(this, this.options.spinner);
