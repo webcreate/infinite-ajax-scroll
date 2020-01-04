@@ -123,6 +123,29 @@ let ias = new InfiniteAjaxScroll('#scroller', {
 
 [Read more about scrolling inside an element](advanced/overflow.md)
 
+## negativeMargin
+
+**Type:** `int` (pixels)<br>
+**Default:** `0`<br>
+**Required:** no
+
+By default Infinite Ajax Scroll starts loading new items when the user scrolls to the bottom of the last item. The negativeMargin (in pixels) will be subtracted from the items' offset, allowing you to load new pages sooner.
+
+{% hint style='info' %}
+This value is always transformed to a positive integer (a value of `-100` will behave the same as `100`)
+{% endhint %}
+
+{% hint style='warning' %}
+User experience can degrade when new pages are loaded too quickly without visual feedback. Use with caution.
+{% endhint %}
+
+```javascript
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  // start loading the next page when the user scrolls to (or passed) 400px before the end of the last item
+  negativeMargin: 400
+})
+```
+
 ## spinner
 
 **Type:** `string|Object|boolean`<br>
