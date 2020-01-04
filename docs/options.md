@@ -2,8 +2,8 @@
 
 ## item
 
-**Type:** `string|Element`
-**Default:** `undefined`
+**Type:** `string|Element`<br>
+**Default:** `undefined`<br>
 **Required:** yes
 
 Selector of the item elements that should be appended to the container.
@@ -28,8 +28,8 @@ let ias = new InfiniteAjaxScroll('.container', {
 
 ## next
 
-**Type:** `string`
-**Default:** `undefined`
+**Type:** `string`<br>
+**Default:** `undefined`<br>
 **Required:** yes
 
 Selector of the next link. The `href` attribute will be used for the url of the next page. Only a single element should match this selector.
@@ -46,8 +46,8 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## pagination
 
-**Type:** `boolean|string|Element`
-**Default:** `false`
+**Type:** `boolean|string|Element`<br>
+**Default:** `false`<br>
 **Required:** no
 
 Selector of the elements that contain the pagination. The elements that match the selector will be hidden when Infinite Ajax Scroll binds.
@@ -76,8 +76,8 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## responseType
 
-**Type:** `string`
-**Default:** `"document"`
+**Type:** `string`<br>
+**Default:** `"document"`<br>
 **Required:** no
 
 Type of response. Can be set to "json".
@@ -92,16 +92,16 @@ See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttp
 
 ## bind
 
-**Type:** `boolean`
-**Default:** `false`
+**Type:** `boolean`<br>
+**Default:** `false`<br>
 **Required:** no
 
 Normally Infinite Ajax Scroll binds to the scroll and resize events on document ready. If you want manual control over this behaviour you can set this option to `false`. To bind call the [`bind`](methods.md#bind) method.
 
 ## scrollContainer
 
-**Type:** `string|Element|window`
-**Default:** `window`
+**Type:** `string|Element|window`<br>
+**Default:** `window`<br>
 **Required:** no
 
 Set a selector of the element you want to use as a scroll container. Use this if you want infinite scroll inside an overflow element.
@@ -125,8 +125,8 @@ let ias = new InfiniteAjaxScroll('#scroller', {
 
 ## spinner
 
-**Type:** `string|Object|boolean`
-**Default:** `false`
+**Type:** `string|Object|boolean`<br>
+**Default:** `false`<br>
 **Required:** no
 
 Configures a spinner/loader. By default no spinner is configured.
@@ -158,8 +158,8 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## logger
 
-**Type:** `Object|boolean`
-**Default:** `Object` (see [src/logger.js](../src/logger.js))
+**Type:** `Object|boolean`<br>
+**Default:** `Object` (see [src/logger.js](../src/logger.js))<br>
 **Required:** no
 
 Configure an event logger.
@@ -197,8 +197,8 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## loadOnScroll
 
-**Type:** `boolean`
-**Default:** `true`
+**Type:** `boolean`<br>
+**Default:** `true`<br>
 **Required:** no
 
 Configures if the next/previous page should automatically be loaded when the users scrolls to the bottom or the top of the page.
