@@ -58,7 +58,7 @@ export default class InfiniteAjaxScroll {
     this.paging = new Paging(this);
 
     // @todo review this logic when prefill support is added
-    this.on(Events.BIND, this.measure);
+    this.on(Events.BINDED, this.measure);
 
     if (this.options.bind) {
       // @todo on document.ready? (window.addEventListener('DOMContentLoaded'))
