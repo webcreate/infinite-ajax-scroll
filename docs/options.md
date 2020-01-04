@@ -96,7 +96,7 @@ See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttp
 **Default:** `false`<br>
 **Required:** no
 
-Normally Infinite Ajax Scroll binds to the scroll and resize events on document ready. If you want manual control over this behaviour you can set this option to `false`. To bind call the [`bind`](methods.md#bind) method.
+By default Infinite Ajax Scroll binds to the scroll and resize events on document ready. If you want manual control over this behaviour you can set this option to `false`. To bind call the [`bind`](methods.md#bind) method.
 
 ## scrollContainer
 
@@ -110,14 +110,16 @@ Note: Only a single element should match the selector.
 
 ```html
 <div id="scroller">
-    <div class="item">Item 1</div>
-    <div class="item">Item 2</div>
+    <div class="container">
+        <div class="item">Item 1</div>
+        <div class="item">Item 2</div>
+    </div>
 </div>
 ```
 
 ```javascript
 let ias = new InfiniteAjaxScroll('#scroller', {
-  scrollContainer: '#scroller'
+  scrollContainer: '.container'
 })
 ```
 
