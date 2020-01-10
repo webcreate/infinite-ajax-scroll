@@ -1,6 +1,5 @@
 export const APPEND = 'append';
 export const APPENDED = 'appended';
-export const BIND = 'bind';
 export const BINDED = 'binded';
 export const UNBINDED = 'unbinded';
 export const HIT = 'hit';
@@ -15,7 +14,6 @@ export const PAGE = 'page';
 const events = {
   APPEND,
   APPENDED,
-  BIND,
   BINDED,
   UNBINDED,
   HIT,
