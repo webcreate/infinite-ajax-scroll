@@ -11,6 +11,7 @@ import Pagination from './pagination';
 import Spinner from './spinner';
 import Logger from './logger';
 import Paging from './paging';
+import Trigger from './trigger';
 import {appendFn} from './append';
 import * as Events from './events';
 
@@ -21,9 +22,13 @@ export default class InfiniteAjaxScroll {
     this.container = $(container)[0];
     this.options = extend({}, defaults, options);
     this.emitter = new Emitter();
-    this.scrollContainer = this.options.scrollContainer;
+
+    // @todo might need to call enableLoadOnScroll (or disableLoadOnScroll)
+    //       instead of injecting the value right away
+    this.loadOnScroll = this.options.loadOnScroll;
     this.negativeMargin = Math.abs(this.options.negativeMargin);
 
+    this.scrollContainer = this.options.scrollContainer;
     if (this.options.scrollContainer !== window) {
       Assert.singleElement(this.options.scrollContainer, 'options.scrollContainer');
 
@@ -37,7 +42,6 @@ export default class InfiniteAjaxScroll {
 
     this.binded = false;
     this.paused = false;
-    this.loadOnScroll = this.options.loadOnScroll;
     this.pageIndex = this.sentinel() ? 0 : -1;
 
     this.on(Events.HIT, () => {
@@ -48,16 +52,18 @@ export default class InfiniteAjaxScroll {
       this.next();
     });
 
-    this.on(Events.SCROLLED, this.measure.bind(this));
-    this.on(Events.RESIZED, this.measure.bind(this));
+    this.on(Events.SCROLLED, this.measure);
+    this.on(Events.RESIZED, this.measure);
 
     // initialize extensions
     this.pagination = new Pagination(this, this.options.pagination);
     this.spinner = new Spinner(this, this.options.spinner);
     this.logger = new Logger(this, this.options.logger);
     this.paging = new Paging(this);
+    this.trigger = new Trigger(this, this.options.trigger);
 
     // @todo review this logic when prefill support is added
+    // measure after all plugins are done binding
     this.on(Events.BINDED, this.measure);
 
     if (this.options.bind) {
@@ -104,7 +110,7 @@ export default class InfiniteAjaxScroll {
 
     this.emitter.emit(Events.NEXT, event);
 
-    Promise.resolve(this.nextHandler(event.pageIndex))
+    return Promise.resolve(this.nextHandler(event.pageIndex))
         .then((result) => {
           this.pageIndex = event.pageIndex;
 

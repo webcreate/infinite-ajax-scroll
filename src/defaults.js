@@ -8,5 +8,6 @@ export default {
   spinner: false,
   logger: true,
   loadOnScroll: true,
-  negativeMargin: 0
+  negativeMargin: 0,
+  trigger: false,
 };
