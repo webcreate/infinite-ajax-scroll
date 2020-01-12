@@ -29,7 +29,7 @@
     "jquery-ias"
   ],
   "dependencies": {
-    "@webcreate/infinite-ajax-scroll": "^3.0.0-beta.4"
+    "@webcreate/infinite-ajax-scroll": ">3.0.0-beta.5"
   },
   "devDependencies": {
     "parcel-bundler": "^1.12.4"
