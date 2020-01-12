@@ -15,7 +15,7 @@ const defaults = {
 };
 
 function expand(options) {
-  if (typeof options === 'string') {
+  if (typeof options === 'string' || (typeof options === 'object' && options.nodeType === Node.ELEMENT_NODE)) {
     options = {
       element: options,
     }

@@ -30,12 +30,15 @@ body {
 }
 
 .status {
+  position: relative;
   text-align: center;
   margin-top: 29px;
-  min-height: 40px;
+  min-height: 80px;
 }
 
 .loader {
+  position: relative;
+  top: 0;
   height: 40px;
   margin-top: 0;
   text-align: center;
@@ -44,6 +47,28 @@ body {
   opacity: 0;
   animation: flipAnimation 1s infinite;
   transition: opacity 300ms;
+}
+
+.trigger {
+  position: relative;
+  top: -40px;
+  display: inline-block;
+  padding: 0 32px;
+  cursor: pointer;
+  font-family: "Arial", sans-serif;
+  font-size: 15px;
+  text-align: center;
+  border-radius: 3px;
+  transition: box-shadow 0.2s, opacity 0.2s;
+
+  color: #F63840;
+  border: solid 1px #F63840;
+  background-color: #fff;
+  line-height: 38px;
+}
+
+.trigger:hover {
+  box-shadow: 0 0 4px 0 rgba(246,56,64,0.4);
 }
 
 /* @see https://medium.com/designer-recipes/understanding-card-flip-animation-using-css-391c40ed3136 */

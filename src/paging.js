@@ -46,8 +46,8 @@ export default class Paging {
   }
 
   next(nextEvent) {
-    let url;
-    let title;
+    let url = document.location.toString();
+    let title = document.title;
 
     // @todo can be moved inside appended when eventStack is implemented
     let loaded = (event) => {
