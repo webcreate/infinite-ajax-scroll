@@ -150,7 +150,7 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## spinner
 
-**Type:** `string|Object|boolean`<br>
+**Type:** `string|Element|Object|boolean`<br>
 **Default:** `false`<br>
 **Required:** no
 
@@ -159,12 +159,15 @@ Configures a spinner/loader. By default no spinner is configured.
 You can set a selector to an element you want to display when Infinite Ajax Scroll is loading the next page.
 
 ```html
-<div class="spinner">Loading...</div>
+<div id="spinner1" class="spinner">Loading...</div>
 ```
 
 ```js
 let ias = new InfiniteAjaxScroll(/*..*/, {
-  spinner: '.spinner'
+  spinner: '.spinner',
+
+  // alternatively we can pass an Element
+  spinner: document.getElementById('spinner1'),
 })
 ```
 
@@ -173,13 +176,26 @@ You can also set advanced spinner options.
 ```javascript
 let ias = new InfiniteAjaxScroll(/*..*/, {
   spinner: {
-    element: '.spinner', // element
-    delay: 600, // delay in milliseconds
-    show: function(element) {},
-    hide: function(element) {}
+    // element
+    element: '.spinner',
+    // delay in milliseconds
+    // this is the minimal time the loader should be displayed. If loading takes longer, the spinner
+    // will be shown for the duration of the loading. If the loading takes less then this duration,
+    // say 300ms, then the spinner is still shown for 600ms.
+    delay: 600,
+    // this function is called when the button has to be shown
+    show: function(element) {
+      element.style.opacity = '1'; // default behaviour
+    },
+    // this function is called when the button has to be hidden
+    hide: function(element) {
+      element.style.opacity = '0'; // default behaviour
+    }
   }
 })
 ```
+
+[View the use of a spinner in a live demo](https://infiniteajaxscroll.com/examples/articles/)
 
 ## trigger
 
@@ -212,14 +228,16 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
     // element
     element: '.trigger',
     // pass a function which returns true which determines if the load more button should be shown
-    when: function(pageIndex) { return true; },
+    when: function(pageIndex) {
+      return true;  // default behaviour (always show a trigger)
+    },
     // this function is called when the button has to be shown
     show: function(element) {
-      element.style.display = 'block';
+      element.style.opacity = '1'; // default behaviour
     },
     // this function is called when the button has to be hidden
     hide: function(element) {
-      element.style.display = 'none';
+      element.style.opacity = '0'; // default behaviour
     }
   }
 })
