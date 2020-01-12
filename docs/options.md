@@ -181,6 +181,52 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 })
 ```
 
+## trigger
+
+**Type:** `string|Element|Object|boolean`<br>
+**Default:** `false`<br>
+**Required:** no
+
+Configures a trigger. By default no trigger is configured.
+
+You can use the selector of an element you want to use as a trigger.
+
+```html
+<button id="trigger1" class="trigger">Load more</button>
+```
+
+```js
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  trigger: '.trigger',
+
+  // alternatively we can pass an Element
+  trigger: document.getElementById('trigger1'),
+})
+```
+
+We can also set advanced trigger options.
+
+```javascript
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  trigger: {
+    // element
+    element: '.trigger',
+    // pass a function which returns true which determines if the load more button should be shown
+    when: function(pageIndex) { return true; },
+    // this function is called when the button has to be shown
+    show: function(element) {
+      element.style.display = 'block';
+    },
+    // this function is called when the button has to be hidden
+    hide: function(element) {
+      element.style.display = 'none';
+    }
+  }
+})
+```
+
+[View the use of a button in a live demo](https://infiniteajaxscroll.com/examples/button/)
+
 ## logger
 
 **Type:** `Object|boolean`<br>
