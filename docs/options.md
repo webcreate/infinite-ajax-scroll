@@ -176,17 +176,20 @@ You can also set advanced spinner options.
 ```javascript
 let ias = new InfiniteAjaxScroll(/*..*/, {
   spinner: {
-    // element
+    // element to show as spinner
     element: '.spinner',
+
     // delay in milliseconds
     // this is the minimal time the loader should be displayed. If loading takes longer, the spinner
     // will be shown for the duration of the loading. If the loading takes less then this duration,
     // say 300ms, then the spinner is still shown for 600ms.
     delay: 600,
+
     // this function is called when the button has to be shown
     show: function(element) {
       element.style.opacity = '1'; // default behaviour
     },
+
     // this function is called when the button has to be hidden
     hide: function(element) {
       element.style.opacity = '0'; // default behaviour
@@ -217,6 +220,16 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
   // alternatively we can pass an Element
   trigger: document.getElementById('trigger1'),
+
+  // we can also pass a factory function to create an Element
+  trigger: function() {
+    let el = document.createElement('button');
+    el.innerText = 'Load More...';
+    document.querySelector('.some_parent_class').appendChild(el);
+
+    // we have to return the element so IAS can add the necessary event listeners
+    return el;
+  },
 })
 ```
 
@@ -225,16 +238,19 @@ We can also set advanced trigger options.
 ```javascript
 let ias = new InfiniteAjaxScroll(/*..*/, {
   trigger: {
-    // element
+    // element to show as trigger
     element: '.trigger',
+
     // pass a function which returns true which determines if the load more button should be shown
     when: function(pageIndex) {
       return true;  // default behaviour (always show a trigger)
     },
+
     // this function is called when the button has to be shown
     show: function(element) {
       element.style.opacity = '1'; // default behaviour
     },
+
     // this function is called when the button has to be hidden
     hide: function(element) {
       element.style.opacity = '0'; // default behaviour

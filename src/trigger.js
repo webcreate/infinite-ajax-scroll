@@ -15,10 +15,14 @@ const defaults = {
 };
 
 function expand(options) {
-  if (typeof options === 'string' || (typeof options === 'object' && options.nodeType === Node.ELEMENT_NODE)) {
+  if (typeof options === 'string' || typeof options === 'function' || (typeof options === 'object' && options.nodeType === Node.ELEMENT_NODE)) {
     options = {
       element: options,
     }
+  }
+
+  if (typeof options.element === 'function') {
+    options.element = options.element();
   }
 
   // expand array to a function, e.g.:
