@@ -61,7 +61,7 @@ describe('Trigger', () => {
         let ias = new InfiniteAjaxScroll('.blocks', {
           item: '.blocks__block',
           next: '.pager__next',
-          trigger: function() {
+          trigger: () => {
             let el = doc.createElement('a');
             el.id = 'btn1';
             el.innerText = 'Load More Items';
