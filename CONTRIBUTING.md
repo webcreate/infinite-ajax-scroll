@@ -7,7 +7,7 @@ document answers all your questions regarding the process for contributing to In
 
 ## Code Of Conduct
 
-This project adheres to the Infinite Ajax Scroll [code of conduct](CODE_OF_CONDUCT.md). By
+This project adheres to the Infinite Ajax Scroll [Code of Conduct](CODE_OF_CONDUCT.md). By
 participating, you are expected to uphold this code. Please report unacceptable behavior to
 [hello@webcreate.nl](mailto:hello@webcreate.nl).
 
@@ -57,6 +57,31 @@ We use [ESLint](https://eslint.org/) to catch most coding style issues. You can 
 you code styling by running `npm run lint`.
 
 We also provide a [`.editorconfig`](https://editorconfig.org/) which your IDE can use.
+
+## Generating dist files from source
+
+Want to try a new feature that has landed in master? Follow these instruction to generate dist files locally.
+
+1. Clone the repository
+
+   ```
+   git clone git@github.com:webcreate/infinite-ajax-scroll.git
+   ```
+
+2. Install the project dependencies
+
+   ```
+   npm install
+   ```
+
+3. Build dist files
+
+   ```
+   npm run build --production
+   ```
+   
+   You can find the dist files in the /dist folder.
+
 
 ## Setting up your development environment
 
