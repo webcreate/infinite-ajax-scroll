@@ -37,6 +37,19 @@ window.ias = new InfiniteAjaxScroll('.blocks', {
   trigger: {
     element: '.trigger',
 
+    // alternatively we could pass an Element directly
+    // element: document.getElementById('btn1'),
+
+    // alternatively we could pass a factory function
+    // element: function() {
+    //   let el = document.createElement('button');
+    //   el.innerText = 'Load More...';
+    //   document.querySelector('.status').appendChild(el);
+    //
+    //   // we have to return the element so IAS can add the necessary event listeners
+    //   return el;
+    // },
+
     // first page (pageIndex is -1) is generated, after that we show a load more button
     when: (pageIndex) => pageIndex >= 0,
 

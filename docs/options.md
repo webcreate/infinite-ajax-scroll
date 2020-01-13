@@ -217,6 +217,16 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
   // alternatively we can pass an Element
   trigger: document.getElementById('trigger1'),
+
+  // we can also pass a factory function to create an Element
+  trigger: function() {
+    let el = document.createElement('button');
+    el.innerText = 'Load More...';
+    document.querySelector('.some_parent_class').appendChild(el);
+
+    // we have to return the element so IAS can add the necessary event listeners
+    return el;
+  },
 })
 ```
 
