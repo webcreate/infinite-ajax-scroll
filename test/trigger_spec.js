@@ -5,7 +5,7 @@ describe('Trigger', () => {
     cy.visit('http://localhost:8080/test/fixtures/default/page1.html');
   });
 
-  it('accepts a selector', () => {
+  it('should accept a selector', () => {
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
         item: '.blocks__block',
@@ -51,6 +51,28 @@ describe('Trigger', () => {
         });
 
         cy.get('#trigger1').should((el) => expect(el[0]).to.be.eq(ias.trigger.element));
+      });
+    });
+  });
+
+  it('should accept a factory function', () => {
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      cy.document().then((doc) => {
+        let ias = new InfiniteAjaxScroll('.blocks', {
+          item: '.blocks__block',
+          next: '.pager__next',
+          trigger: function() {
+            let el = doc.createElement('a');
+            el.id = 'btn1';
+            el.innerText = 'Load More Items';
+
+            doc.body.appendChild(el);
+
+            return el;
+          },
+        });
+
+        cy.get('#btn1').should((el) => expect(el[0]).to.be.eq(ias.trigger.element));
       });
     });
   });
