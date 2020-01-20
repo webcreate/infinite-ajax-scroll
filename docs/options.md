@@ -118,8 +118,8 @@ Note: Only a single element should match the selector.
 ```
 
 ```javascript
-let ias = new InfiniteAjaxScroll('#scroller', {
-  scrollContainer: '.container'
+let ias = new InfiniteAjaxScroll('.container', {
+  scrollContainer: '#scroller'
 })
 ```
 
