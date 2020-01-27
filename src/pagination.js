@@ -33,7 +33,7 @@ export default class Pagination {
       return;
     }
 
-    Assert.anyElement(this.options.element, 'pagination.element');
+    Assert.warn(Assert.anyElement, this.options.element, 'pagination.element');
 
     ias.on(Events.BINDED, this.hide.bind(this));
     ias.on(Events.UNBINDED, this.restore.bind(this));

@@ -124,28 +124,20 @@ describe('Pagination', () => {
       });
   });
 
-  it('should throw when element not found', () => {
+  it('should warn when element not found', () => {
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
-      const subject = {
-        ias: () => {
-          new InfiniteAjaxScroll('.blocks', {
-            item: '.blocks__block',
-            next: '.pager__next',
-            pagination: '.pager_does_not_exist',
-            bind: false
-          });
-        }
-      };
+      cy.window().then((win) => {
+        const spy = cy.spy(win.console, 'warn');
 
-      const spy = cy.spy(subject, 'ias');
+        let ias = new InfiniteAjaxScroll('.blocks', {
+          item: '.blocks__block',
+          next: '.pager__next',
+          pagination: '.pager_does_not_exist',
+          bind: false
+        });
 
-      try {
-        subject.ias();
-      } catch (e) {
-        // noop
-      }
-
-      expect(spy).to.have.thrown('Error');
+        expect(spy).to.have.been.called;
+      });
     });
   });
 
