@@ -50,7 +50,9 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 **Default:** `false`<br>
 **Required:** no
 
-Selector of the elements that contain the pagination. The elements that match the selector will be hidden when Infinite Ajax Scroll binds.
+Selector of the elements that contain the pagination. The elements that match the selector will be hidden (`element.style.display` -> none) when Infinite Ajax Scroll binds.
+
+The pagination elements will be restored (`element.style.display` -> original value) when [`unbind`](./methods.md#unbind) is called.
 
 ```html
 <div class="pager" id="pager1">

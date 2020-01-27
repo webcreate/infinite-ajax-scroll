@@ -27,6 +27,7 @@ function expand(options) {
 export default class Pagination {
   constructor(ias, options) {
     this.options = extend({}, defaults, expand(options));
+    this.originalDisplayStyles = new WeakMap();
 
     if (!this.options.hide) {
       return;
@@ -39,16 +40,20 @@ export default class Pagination {
   }
 
   hide() {
-    let el = $(this.options.element)[0];
+    let els = $(this.options.element);
 
-    this.originalDisplayStyle = window.getComputedStyle(el).display;
+    els.forEach((el) => {
+      this.originalDisplayStyles.set(el, window.getComputedStyle(el).display);
 
-    el.style.display = 'none';
+      el.style.display = 'none';
+    });
   }
 
   restore() {
-    let el = $(this.options.element)[0];
+    let els = $(this.options.element);
 
-    el.style.display = this.originalDisplayStyle;
+    els.forEach((el) => {
+      el.style.display = this.originalDisplayStyles.get(el) || 'block';
+    });
   }
 }
