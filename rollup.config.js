@@ -62,6 +62,9 @@ const min = Object.assign({}, base, {
         unsafe: true,
         unsafe_comps: true,
         warnings: false
+      },
+      output: {
+        comments: new RegExp(pkg.title)
       }
     })
   ],
