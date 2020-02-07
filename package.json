@@ -50,7 +50,7 @@
     "tiny-emitter": "^2.1.0"
   },
   "devDependencies": {
-    "cypress": "^3.3.2",
+    "cypress": "^4.0.0",
     "eslint": "^6.0.1",
     "eslint-plugin-cypress": "^2.2.1",
     "http-server": "^0.12.0",
