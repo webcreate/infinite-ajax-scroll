@@ -8,7 +8,7 @@ export function nextHandler(pageIndex) {
   let nextEl = $(ias.options.next, lastResponse)[0];
 
   if (!nextEl) {
-    Assert.warn(Assert.singleElement, ias.options.next, 'next');
+    Assert.warn(Assert.singleElement, ias.options.next, 'options.next');
 
     return;
   }
@@ -28,7 +28,7 @@ export function nextHandler(pageIndex) {
         .then((hasNextEl) => {
           // only warn for first page, because at some point it's expected that there is no next element
           if (!hasNextEl && pageIndex <= 1 && console && console.warn) {
-            console.warn(`Element "${ias.options.next}" not found for option "next" on "${data.url}"`)
+            console.warn(`Element "${ias.options.next}" not found for "options.next" on "${data.url}"`)
           }
 
           return hasNextEl;
