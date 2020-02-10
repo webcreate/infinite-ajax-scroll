@@ -14,7 +14,7 @@ Turn your existing pagination into infinite scrolling pages with ease.
 
 More features, documentation and examples available at: https://docs.infiniteajaxscroll.com/
 
-[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.svg?branch=3.x)](https://travis-ci.org/webcreate/infinite-ajax-scroll)
+[![Build Status](https://travis-ci.org/webcreate/infinite-ajax-scroll.svg?branch=3.x)](https://travis-ci.org/webcreate/infinite-ajax-scroll) [![npm](https://img.shields.io/npm/v/@webcreate/infinite-ajax-scroll)](https://www.npmjs.com/package/@webcreate/infinite-ajax-scroll)
 
 ## Installation
 
