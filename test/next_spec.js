@@ -81,8 +81,52 @@ describe('Next', () => {
 
       expect(spy.nextHandler).to.have.been.calledOnce;
       expect(spy.nextHandler).to.have.been.calledWith(
-          Cypress.sinon.match(1)
+          Cypress.sinon.match(1) // assert expected pageIndex
       );
+    });
+  });
+
+  it('should warn when next element not found', () => {
+    cy.visit('http://localhost:8080/test/fixtures/default/page1-no-next-el.html');
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      cy.window().then((win) => {
+        const spy = cy.spy(win.console, 'warn');
+
+        let ias = new InfiniteAjaxScroll('.blocks', {
+          item: '.blocks__block',
+          next: '.pager__next',
+          pagination: '.pager',
+          bind: false
+        });
+
+        ias.next();
+
+        expect(spy).to.have.been.calledOnce;
+      });
+    });
+  });
+
+  it('should warn when next element not found on page2', () => {
+    cy.visit('http://localhost:8080/test/fixtures/default/page1-no-next-el-page2.html');
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      cy.window().then((win) => {
+        const spy = cy.spy(win.console, 'warn');
+
+        let ias = new InfiniteAjaxScroll('.blocks', {
+          item: '.blocks__block',
+          next: '.pager__next',
+          pagination: '.pager',
+          bind: false
+        });
+
+        ias.next().then(() => {
+          ias.next().then(() => {
+            expect(spy).to.have.been.calledOnce;
+          });
+        });
+      });
     });
   });
 });

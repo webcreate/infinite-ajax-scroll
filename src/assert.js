@@ -9,14 +9,14 @@ export default {
     }
 
     if ($element.length === 0) {
-      throw new Error(`Element "${elementOrSelector}" not found for "${property}"`);
+      throw new Error(`Element "${elementOrSelector}" not found for config option "${property}"`);
     }
   },
   anyElement(elementOrSelector, property) {
     const $element = $(elementOrSelector);
 
     if ($element.length === 0) {
-      throw new Error(`Element "${elementOrSelector}" not found for "${property}"`);
+      throw new Error(`Element "${elementOrSelector}" not found for config option "${property}"`);
     }
   },
   warn(fn, ...args) {
