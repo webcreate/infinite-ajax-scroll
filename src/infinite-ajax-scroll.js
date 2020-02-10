@@ -36,7 +36,10 @@ export default class InfiniteAjaxScroll {
     }
 
     this.nextHandler = nextHandler;
-    if (typeof this.options.next === 'function') {
+
+    if (this.options.next === false) {
+      this.nextHandler = function() {}
+    } else if (typeof this.options.next === 'function') {
       this.nextHandler = this.options.next;
     }
 
