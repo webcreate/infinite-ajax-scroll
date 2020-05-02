@@ -1,0 +1,73 @@
+.surface-container {
+  max-width: 900px;
+  margin: 80px auto 0;
+}
+
+.container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  height: auto;
+  margin: 50px 0;
+}
+
+.item {
+  flex-basis: 0;
+  margin-right: 32px;
+  margin-bottom: 70px;
+  position: relative;
+  -webkit-transition: opacity .3s ease;
+  -o-transition: opacity .3s ease;
+  transition: opacity .3s ease;
+}
+
+.item__img__img {
+  border: 0;
+}
+.item__img {
+  border: 0;
+  background: transparent url(https://placehold.co/185x278) no-repeat;
+}
+
+.item__rank {
+  display: none;
+}
+
+.item__rating {
+  background-color: #f0a70d;
+  position: absolute;
+  border-radius: 50%;
+  font-size: 12px;
+  z-index: 1;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  top: 15px;
+  right: -15px;
+  font-weight: bold;
+  -webkit-box-shadow: 0 0 3px 1px rgba(0,0,0,.4);
+  box-shadow: 0 0 3px 1px rgba(0,0,0,.4);
+  color: #000;
+}
+
+.item__title {
+  display: block;
+  font-size: 16px;
+  padding: 0 8px;
+  margin: 4px 0 0;
+  text-decoration: none;
+}
+
+.item__year {
+  display: block;
+  font-size: 14px;
+  color: #777;
+  padding: 0 8px;
+  text-decoration: none;
+}
+
+.item__link:hover {
+  text-decoration: none;
+}
