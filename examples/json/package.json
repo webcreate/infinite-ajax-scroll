@@ -1,0 +1,38 @@
+{
+  "name": "infinite-ajax-scroll-json",
+  "description": "An example of infinite scroll with JSON",
+  "version": "1.0.0",
+  "homepage": "https://infiniteajaxscroll.com",
+  "repository": "github:webcreate/infinite-ajax-scroll",
+  "bugs": "https://github.com/webcreate/infinite-ajax-scroll/issues",
+  "author": {
+    "company": "Webcreate",
+    "name": "Jeroen Fiege",
+    "web": "https://webcreate.nl"
+  },
+  "private": true,
+  "scripts": {
+    "build": "parcel build *.html --public-url ./",
+    "watch": "parcel watch * --public-url ./",
+    "link": "npm link ../../"
+  },
+  "keywords": [
+    "infinite-ajax-scroll",
+    "infinite-scroll",
+    "infinite",
+    "endless",
+    "scroll",
+    "scrolling",
+    "ajax",
+    "pagination",
+    "ias",
+    "jquery-ias"
+  ],
+  "dependencies": {
+    "@webcreate/infinite-ajax-scroll": "^3.0.0-beta.6"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.3.1"
+  }
+}
