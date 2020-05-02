@@ -18,7 +18,7 @@ function createMovieItem(movieData) {
 }
 
 function nextHandler(pageIndex) {
-  return fetch('./movies.json')
+  return fetch('./static/movies.json')
     .then(response => response.json())
     .then((data) => {
       let frag = document.createDocumentFragment();
