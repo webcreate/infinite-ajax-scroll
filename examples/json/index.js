@@ -2,7 +2,7 @@ import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 
 const template = `<div class="item">
     <a href="#" class="item__link" target="_blank">
-      <div class="item__img"><img class="item__img__img" src="https://placehold.co/185x278" width="185" height="278"/></div>
+      <div class="item__img"><img class="item__img__img" onerror="this.src='https://placehold.co/185x278'" width="185" height="278"/></div>
       <h1 class="item__title"></h1>
       <div class="item__year"></div>
       <div class="item__rating" title="IMDB Rating"></div>
