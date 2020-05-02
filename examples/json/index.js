@@ -1,24 +1,18 @@
 import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 
-const template = `<div class="item">
-    <a href="#" class="item__link" target="_blank">
-      <div class="item__img"><img class="item__img__img" onerror="this.src='https://placehold.co/185x278'" width="185" height="278"/></div>
-      <h1 class="item__title"></h1>
-      <div class="item__year"></div>
-      <div class="item__rating" title="IMDB Rating"></div>
+function createMovieItem(movieData) {
+  const template = `<div class="item">
+    <a href="${'https://www.imdb.com/title/' + movieData.imdbID}" class="item__link" target="_blank">
+      <div class="item__img"><img class="item__img__img" src="${movieData.Poster}" onerror="this.src='https://placehold.co/185x278'" width="185" height="278"/></div>
+      <h1 class="item__title">${movieData.Title}</h1>
+      <div class="item__year">${movieData.Year}</div>
+      <div class="item__rating" title="IMDB Rating">${movieData.imdbRating}</div>
     </a>
   </div>
-`;
+  `;
 
-function createMovieItem(movieData) {
   let item = document.createElement('div');
   item.innerHTML = template.trim();
-
-  item.querySelector('.item__title').innerHTML = movieData.Title;
-  item.querySelector('.item__link').href = 'https://www.imdb.com/title/' + movieData.imdbID;
-  item.querySelector('.item__year').innerHTML = movieData.Year;
-  item.querySelector('.item__rating').innerHTML = movieData.imdbRating;
-  item.querySelector('.item__img__img').src = movieData.Poster;
 
   return item.firstChild;
 }
