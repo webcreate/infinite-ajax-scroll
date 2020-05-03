@@ -1,3 +1,4 @@
+/* eslint no-console: "off" */
 import {getRootRect} from "./dimensions";
 import throttle from "lodash.throttle";
 import {resizeHandler} from "./event-handlers";
@@ -73,6 +74,9 @@ export default function ResizeObserverFactory(ias, el) {
     return new NativeWrapperResizeObserver(el, listener);
   }
 
-  console.warn('ResizeObserver not supported. Falling back on polling.')
+  if (console && console.warn) {
+    console.warn('ResizeObserver not supported. Falling back on polling.');
+  }
+
   return new PollingResizeObserver(el, listener);
 }
