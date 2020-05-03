@@ -19,6 +19,10 @@ up:
 	open http://localhost:8080
 .PHONY: up
 
+watch:
+	npm run watch &
+.PHONY: watch
+
 bump: guard-SEMVER
 	npm --no-git-tag-version version $(SEMVER);
 .PHONY: bump
