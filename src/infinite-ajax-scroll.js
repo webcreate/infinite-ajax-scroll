@@ -24,9 +24,7 @@ export default class InfiniteAjaxScroll {
     this.options = extend({}, defaults, options);
     this.emitter = new Emitter();
 
-    // @todo might need to call enableLoadOnScroll (or disableLoadOnScroll)
-    //       instead of injecting the value right away
-    this.loadOnScroll = this.options.loadOnScroll;
+    this.options.loadOnScroll ? this.enableLoadOnScroll() : this.disableLoadOnScroll();
     this.negativeMargin = Math.abs(this.options.negativeMargin);
 
     this.scrollContainer = this.options.scrollContainer;
