@@ -5,7 +5,7 @@ import defaults from './defaults';
 import Assert from './assert';
 import {scrollHandler} from "./event-handlers";
 import Emitter from "tiny-emitter";
-import {getDistanceToFold} from "./dimensions";
+import {getDistanceToFold, getRootRect, getScrollPosition} from "./dimensions";
 import {nextHandler} from './next-handler';
 import Pagination from './pagination';
 import Spinner from './spinner';
@@ -237,13 +237,25 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    let distance = 0;
+    const rootRect = getRootRect(this.scrollContainer);
+
+    // When the scroll container has no height, this could indicate that
+    // the element is not visible (display = none). Without a height
+    // we cannot calculate the distance to fold. On the other hand we don't
+    // have to, because it's not visible anyway. Our resize observer will
+    // monitor the height, once it's greater than 0 everything will resume as normal.
+    if (rootRect.height === 0) {
+      // @todo DX: show warning in console that this is happening
+      return;
+    }
+
     const sentinel = this.sentinel();
 
-    // @todo review this logic when prefill support is added
-    if (sentinel) {
-      distance = getDistanceToFold(sentinel, this.scrollContainer);
-    }
+    // @todo When sentinel is NULL, we should handle prefill logic here
+
+    const scrollPosition = getScrollPosition(this.scrollContainer);
+
+    let distance = getDistanceToFold(sentinel, scrollPosition, rootRect);
 
     // apply negative margin
     distance -= this.negativeMargin;
