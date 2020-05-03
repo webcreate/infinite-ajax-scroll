@@ -1,3 +1,4 @@
+/* eslint no-console: "off" */
 import $ from 'tealight';
 
 export default {

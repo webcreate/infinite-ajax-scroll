@@ -3,9 +3,9 @@ import extend from 'extend';
 import throttle from 'lodash.throttle';
 import defaults from './defaults';
 import Assert from './assert';
-import {scrollHandler, resizeHandler} from "./event-handlers";
+import {scrollHandler} from "./event-handlers";
 import Emitter from "tiny-emitter";
-import {getDistanceToFold} from "./dimensions";
+import {getDistanceToFold, getRootRect, getScrollPosition} from "./dimensions";
 import {nextHandler} from './next-handler';
 import Pagination from './pagination';
 import Spinner from './spinner';
@@ -14,6 +14,7 @@ import Paging from './paging';
 import Trigger from './trigger';
 import {appendFn} from './append';
 import * as Events from './events';
+import ResizeObserverFactory from './resize-observer';
 
 export default class InfiniteAjaxScroll {
   constructor(container, options = {}) {
@@ -23,9 +24,7 @@ export default class InfiniteAjaxScroll {
     this.options = extend({}, defaults, options);
     this.emitter = new Emitter();
 
-    // @todo might need to call enableLoadOnScroll (or disableLoadOnScroll)
-    //       instead of injecting the value right away
-    this.loadOnScroll = this.options.loadOnScroll;
+    this.options.loadOnScroll ? this.enableLoadOnScroll() : this.disableLoadOnScroll();
     this.negativeMargin = Math.abs(this.options.negativeMargin);
 
     this.scrollContainer = this.options.scrollContainer;
@@ -42,6 +41,9 @@ export default class InfiniteAjaxScroll {
     } else if (typeof this.options.next === 'function') {
       this.nextHandler = this.options.next;
     }
+
+    this.resizeObserver = ResizeObserverFactory(this, this.scrollContainer);
+    this._scrollListener = throttle(scrollHandler, 200).bind(this);
 
     this.binded = false;
     this.paused = false;
@@ -80,11 +82,8 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    this._scrollListener = throttle(scrollHandler, 200).bind(this);
-    this._resizeListener = throttle(resizeHandler, 200).bind(this);
-
     this.scrollContainer.addEventListener('scroll', this._scrollListener);
-    this.scrollContainer.addEventListener('resize', this._resizeListener);
+    this.resizeObserver.observe();
 
     this.binded = true;
 
@@ -96,7 +95,7 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    this.scrollContainer.removeEventListener('resize', this._resizeListener);
+    this.resizeObserver.unobserve();
     this.scrollContainer.removeEventListener('scroll', this._scrollListener);
 
     this.binded = false;
@@ -236,13 +235,25 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    let distance = 0;
+    const rootRect = getRootRect(this.scrollContainer);
+
+    // When the scroll container has no height, this could indicate that
+    // the element is not visible (display = none). Without a height
+    // we cannot calculate the distance to fold. On the other hand we don't
+    // have to, because it's not visible anyway. Our resize observer will
+    // monitor the height, once it's greater than 0 everything will resume as normal.
+    if (rootRect.height === 0) {
+      // @todo DX: show warning in console that this is happening
+      return;
+    }
+
     const sentinel = this.sentinel();
 
-    // @todo review this logic when prefill support is added
-    if (sentinel) {
-      distance = getDistanceToFold(sentinel, this.scrollContainer);
-    }
+    // @todo When sentinel is NULL, we should handle prefill logic here
+
+    const scrollPosition = getScrollPosition(this.scrollContainer);
+
+    let distance = getDistanceToFold(sentinel, scrollPosition, rootRect);
 
     // apply negative margin
     distance -= this.negativeMargin;
