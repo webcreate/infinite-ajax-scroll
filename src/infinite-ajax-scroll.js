@@ -3,7 +3,7 @@ import extend from 'extend';
 import throttle from 'lodash.throttle';
 import defaults from './defaults';
 import Assert from './assert';
-import {scrollHandler, resizeHandler} from "./event-handlers";
+import {scrollHandler} from "./event-handlers";
 import Emitter from "tiny-emitter";
 import {getDistanceToFold} from "./dimensions";
 import {nextHandler} from './next-handler';
@@ -14,6 +14,7 @@ import Paging from './paging';
 import Trigger from './trigger';
 import {appendFn} from './append';
 import * as Events from './events';
+import ResizeObserverFactory from './resize-observer';
 
 export default class InfiniteAjaxScroll {
   constructor(container, options = {}) {
@@ -42,6 +43,9 @@ export default class InfiniteAjaxScroll {
     } else if (typeof this.options.next === 'function') {
       this.nextHandler = this.options.next;
     }
+
+    this.resizeObserver = ResizeObserverFactory(this, this.scrollContainer);
+    this._scrollListener = throttle(scrollHandler, 200).bind(this);
 
     this.binded = false;
     this.paused = false;
@@ -80,11 +84,8 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    this._scrollListener = throttle(scrollHandler, 200).bind(this);
-    this._resizeListener = throttle(resizeHandler, 200).bind(this);
-
     this.scrollContainer.addEventListener('scroll', this._scrollListener);
-    this.scrollContainer.addEventListener('resize', this._resizeListener);
+    this.resizeObserver.observe();
 
     this.binded = true;
 
@@ -96,7 +97,7 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    this.scrollContainer.removeEventListener('resize', this._resizeListener);
+    this.resizeObserver.unobserve();
     this.scrollContainer.removeEventListener('scroll', this._scrollListener);
 
     this.binded = false;
