@@ -23,7 +23,7 @@ describe('Resize', () => {
 
     cy.viewport(320, 400);
 
-    cy.wait(200).then(() => {
+    cy.wait(2000).then(() => {
       expect(spy.resized).to.have.been.called;
     });
   });
