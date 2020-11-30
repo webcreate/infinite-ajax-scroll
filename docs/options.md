@@ -312,7 +312,7 @@ Configures if the next/previous page should automatically be loaded when the use
 
 When `loadOnScroll` is disabled the [`hit`](events.md#hit) event is still emitted, allowing you to manually trigger the next/prev page (for example by calling [`next`](methods.md#next)).
 
-Use can use [`enableLoadOnScroll`](methods.md#enableloadonscroll) and [`disableLoadOnScroll`](methods.md#disableloadonscroll) to configure this setting on runtime.
+We can use [`enableLoadOnScroll`](methods.md#enableloadonscroll) and [`disableLoadOnScroll`](methods.md#disableloadonscroll) to configure this setting on runtime.
 
 ```javascript
 let ias = new InfiniteAjaxScroll(/*..*/, {
@@ -324,3 +324,24 @@ ias.on('hit', (event) => {
   ias.next();
 })
 ```
+
+## prefill
+
+**Type:** `boolean`<br>
+**Default:** `true`<br>
+**Required:** no
+
+When enabled, and the content is shorter than the scroll container, Infinite Ajax Scroll will load the next page(s) until the content is taller than the scroll container. When
+disabled the responsibility to load the next page is in the hands of the developer. This can be done by calling [`next`](methods.md#next) manually.
+
+```javascript
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  prefill: false
+})
+
+// load first page
+// notice: even with the first page loaded, the content could still be too short. In that case keep calling `next()` until there is scroll bar.
+ias.next();
+```
+
+We can listen to the [`prefill`](events.md#prefill) and [`prefilled`](events.md#prefilled) events to act on respectively the start and finish of the prefill action.

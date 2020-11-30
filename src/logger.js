@@ -36,7 +36,13 @@ const defaultLogger = {
   },
   page: (event) => {
     console.log(`Page changed [pageIndex=${event.pageIndex}]`);
-  }
+  },
+  prefill: (event) => {
+    console.log(`Start prefilling`);
+  },
+  prefilled: (event) => {
+    console.log(`Finished prefilling`);
+  },
 };
 
 function expand(options) {

@@ -10,4 +10,5 @@ export default {
   loadOnScroll: true,
   negativeMargin: 0,
   trigger: false,
+  prefill: true,
 };

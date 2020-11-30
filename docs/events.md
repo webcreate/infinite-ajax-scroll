@@ -148,3 +148,24 @@ ias.on('page', (event) => {
 ```
 
 [View this behaviour in a live demo](https://infiniteajaxscroll.com/examples/articles/)
+
+### prefill
+
+This event is triggered when Infinite Ajax Scroll starts prefill.
+
+```javascript
+ias.on('prefill', () => {
+  // do something before prefill starts
+})
+```
+
+### prefilled
+
+This event is triggered when prefill is finished.
+
+```javascript
+ias.on('prefilled', () => {
+  // do something when prefill finished
+})
+```
+
