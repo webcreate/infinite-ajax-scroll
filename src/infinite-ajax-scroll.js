@@ -15,6 +15,7 @@ import Trigger from './trigger';
 import {appendFn} from './append';
 import * as Events from './events';
 import ResizeObserverFactory from './resize-observer';
+import Prefill from "./prefill";
 
 export default class InfiniteAjaxScroll {
   constructor(container, options = {}) {
@@ -66,10 +67,10 @@ export default class InfiniteAjaxScroll {
     this.logger = new Logger(this, this.options.logger);
     this.paging = new Paging(this);
     this.trigger = new Trigger(this, this.options.trigger);
+    this.prefill = new Prefill(this, this.options.prefill);
 
-    // @todo review this logic when prefill support is added
-    // measure after all plugins are done binding
-    this.on(Events.BINDED, this.measure);
+    // prefill/measure after all plugins are done binding
+    this.on(Events.BINDED, this.prefill.prefill.bind(this.prefill));
 
     if (this.options.bind) {
       // @todo on document.ready? (window.addEventListener('DOMContentLoaded'))
@@ -113,10 +114,10 @@ export default class InfiniteAjaxScroll {
     this.emitter.emit(Events.NEXT, event);
 
     return Promise.resolve(this.nextHandler(event.pageIndex))
-        .then((result) => {
+        .then((hasNextUrl) => {
           this.pageIndex = event.pageIndex;
 
-          if (!result) {
+          if (!hasNextUrl) {
             this.emitter.emit(Events.LAST);
 
             return;
@@ -218,8 +219,6 @@ export default class InfiniteAjaxScroll {
 
   resume() {
     this.paused = false;
-
-    this.measure();
   }
 
   enableLoadOnScroll() {
@@ -228,6 +227,21 @@ export default class InfiniteAjaxScroll {
 
   disableLoadOnScroll() {
     this.loadOnScroll = false;
+  }
+
+  distance(rootRect, sentinel) {
+    const _rootRect = rootRect || getRootRect(this.scrollContainer);
+
+    const _sentinel = sentinel || this.sentinel();
+
+    const scrollPosition = getScrollPosition(this.scrollContainer);
+
+    let distance = getDistanceToFold(_sentinel, scrollPosition, _rootRect);
+
+    // apply negative margin
+    distance -= this.negativeMargin;
+
+    return distance;
   }
 
   measure() {
@@ -249,14 +263,7 @@ export default class InfiniteAjaxScroll {
 
     const sentinel = this.sentinel();
 
-    // @todo When sentinel is NULL, we should handle prefill logic here
-
-    const scrollPosition = getScrollPosition(this.scrollContainer);
-
-    let distance = getDistanceToFold(sentinel, scrollPosition, rootRect);
-
-    // apply negative margin
-    distance -= this.negativeMargin;
+    let distance = this.distance(rootRect, sentinel);
 
     if (distance <= 0) {
       this.emitter.emit(Events.HIT, {distance});

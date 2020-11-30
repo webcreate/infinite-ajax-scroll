@@ -10,6 +10,8 @@ export const NEXT = 'next';
 export const SCROLLED = 'scrolled';
 export const RESIZED = 'resized';
 export const PAGE = 'page';
+export const PREFILL = 'prefill';
+export const PREFILLED = 'prefilled';
 
 const events = {
   APPEND,
@@ -24,6 +26,8 @@ const events = {
   SCROLLED,
   RESIZED,
   PAGE,
+  PREFILL,
+  PREFILLED,
 };
 
 export default events;
