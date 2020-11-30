@@ -28,7 +28,11 @@ export default class Prefill {
   }
 
   _prefill() {
-    return this.ias.next().then(() => {
+    return this.ias.next().then((hasNextUrl) => {
+      if (!hasNextUrl) {
+        return;
+      }
+
       let distance = this.ias.distance();
 
       if (distance < 0) {
