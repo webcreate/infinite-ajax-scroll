@@ -4,8 +4,19 @@
 
 | argument | type | description |
 | :--- | :--- | :--- |
-| container | string | Selector of the container (see [definitions/concepts](./getting-started#definitions-concepts)) |
+| container | string\|Element | Selector or Element of the container (see [definitions/concepts](./getting-started#definitions-concepts)) |
 | options | object | Configuration for this instance of Infinite Ajax Scroll (see [options](./options.md)) |
+
+```js
+// import if you use the NPM package (not needed if you use CDN)
+import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
+
+let ias = new InfiniteAjaxScroll('.container', {
+  item: '.item',
+  next: '.next',
+  pagination: '.pagination'
+});
+```
 
 ## bind
 
