@@ -1,5 +1,12 @@
 # Methods
 
+## constructor
+
+| argument | type | description |
+| :--- | :--- | :--- |
+| container | string | Selector of the container (see [definitions/concepts](./getting-started#definitions-concepts)) |
+| options | object | Configuration for this instance of Infinite Ajax Scroll (see [options](./options.md)) |
+
 ## bind
 
 This will bind Infinite Ajax Scroll to the scroll and resize events of the scroll container.

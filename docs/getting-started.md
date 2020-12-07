@@ -48,3 +48,5 @@ let ias = new InfiniteAjaxScroll('.container', {
 ```
 
 This will enable infinite scroll in it's most basic form. When you scroll down, the next page is loaded through an ajax request and new items are appended to the container.
+
+Check the reference for all available [options](./options.md), [methods](./methods.md) and [events](./events.md).
