@@ -1,3 +1,5 @@
+import * as Events from "../src/events";
+
 let ias;
 
 describe('Load', () => {
@@ -77,6 +79,60 @@ describe('Load', () => {
     cy.wait(5000).then(() => {
       expect(spy.loaded).to.not.have.been.called;
     });
+  });
+
+  it('should reject the promise when not 200 status code', () => {
+    const spy = {
+      fulfilled() {},
+      rejected() {},
+    };
+
+    cy.spy(spy, 'fulfilled');
+    cy.spy(spy, 'rejected');
+
+    ias.load('http://localhost:8080/test/fixtures/default/page404.html')
+      .then(spy.fulfilled, spy.rejected)
+      .finally(() => {
+        expect(spy.fulfilled).to.not.have.been.called;
+        expect(spy.rejected).to.have.been.calledOnce;
+      })
+    ;
+  });
+
+  it('allows to modify the url', () => {
+    const expectedUrl = 'http://localhost:8080/test/fixtures/default/page2.json';
+
+    const loadFn = function(event) {
+      event.url = expectedUrl;
+      event.responseType = 'json';
+    };
+
+    ias.on(Events.LOAD, loadFn);
+
+    ias.load('http://localhost:8080/test/fixtures/default/page2.html')
+      .then((event) => {
+        expect(event.url).to.have.string(expectedUrl);
+
+        // assert that is handled and parsed the page2.json page correctly
+        expect(event.items).to.have.property("blocks");
+      });
+  });
+
+  it('allows to modify the method', () => {
+    const expectedUrl = 'http://localhost:8080/test/fixtures/default/page2.json';
+
+    const loadFn = function(event) {
+      event.url = expectedUrl;
+      event.method = 'POST';
+    };
+
+    ias.on(Events.LOAD, loadFn);
+
+    ias.load('http://localhost:8080/test/fixtures/default/page2.html')
+      .catch((xhr) => {
+        // assert we did a POST by checking that it returned 405 Method Not Allowed
+        expect(xhr.status).to.eq(405);
+      });
   });
 
   it('should emit a load event when loading', () => {

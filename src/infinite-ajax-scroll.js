@@ -128,11 +128,41 @@ export default class InfiniteAjaxScroll {
     ;
   }
 
+  /**
+   * @param {string} url
+   * @returns {Promise} returns LOADED event on success
+   */
   load(url) {
     let ias = this;
 
     return new Promise((resolve, reject) => {
       let xhr = new XMLHttpRequest();
+
+      let loadEvent = {
+        url,
+        xhr,
+        method: 'GET',
+        body: null,
+        nocache: false,
+        responseType: ias.options.responseType,
+        headers: {
+          'X-Requested-With': 'XMLHttpRequest',
+        },
+      };
+
+      // event properties are mutable
+      ias.emitter.emit(Events.LOAD, loadEvent);
+
+      let finalUrl = loadEvent.url;
+      let method = loadEvent.method;
+      let responseType = loadEvent.responseType;
+      let headers = loadEvent.headers;
+      let body = loadEvent.body;
+
+      if (!loadEvent.nocache) {
+        // @see https://developer.mozilla.org/nl/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
+        finalUrl = finalUrl + ((/\?/).test(finalUrl) ? "&" : "?") + (new Date()).getTime();
+      }
 
       xhr.onreadystatechange = function() {
         if (xhr.readyState !== XMLHttpRequest.DONE) {
@@ -142,35 +172,33 @@ export default class InfiniteAjaxScroll {
         if (xhr.status === 200) {
           let items = xhr.response;
 
-          if (ias.options.responseType === 'document') {
+          if (responseType === 'document') {
             items = $(ias.options.item, xhr.response);
             // @todo assert there actually are items in the response
           }
 
-          ias.emitter.emit(Events.LOADED, {items, url, xhr});
+          // we don't use a shared loadedEvent variable here, because these values should be immutable
 
-          resolve({items, url, xhr});
+          ias.emitter.emit(Events.LOADED, {items, url: finalUrl, xhr});
+
+          resolve({items, url: finalUrl, xhr});
         } else {
-          // @todo is console.error the best approach?
-          console.error('Request failed');
-
           reject(xhr);
         }
       };
 
-      // FIXME: make no-caching configurable
-      // @see https://developer.mozilla.org/nl/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
-      let nocacheUrl = url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime();
+      xhr.onerror = function() {
+        reject(xhr);
+      }
 
-      xhr.open('GET', nocacheUrl, true);
-      xhr.responseType = ias.options.responseType;
-      xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+      xhr.open(method, finalUrl, true);
+      xhr.responseType = responseType;
 
-      // @todo define event variable and pass that around so it can be manipulated
+      for (let header in headers) {
+        xhr.setRequestHeader(header, headers[header]);
+      }
 
-      ias.emitter.emit(Events.LOAD, {url, xhr});
-
-      xhr.send();
+      xhr.send(body);
     });
   }
 
