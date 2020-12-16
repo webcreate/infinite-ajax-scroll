@@ -73,10 +73,25 @@ Triggered right after the `hit` event. Indicating that the next page will be loa
 
 This event is triggered before the next page is requested from the server.
 
-| property | type | description |
-| :--- | :--- | :--- |
-| url | string | The url that is about to be requested |
-| xhr | XMLHttpRequest | The configured XMLHttpRequest that is going to be used |
+| property | type | default |description |
+| :--- | :---  | :--- | :--- |
+| url | string | | The url that is about to be requested |
+| xhr | XMLHttpRequest | | The configured XMLHttpRequest that is going to be used (see [MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)) |
+| method | string | `"GET"` | The request method to use, e.g. "GET", "POST", etc. |
+| body | mixed | `null` | Body of the request in case of POST (see [MDN](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send#Parameters)) |
+| nocache | boolean | `false` | Disables cache busting mechanism |
+| responseType | string | `"document"` | The expected type of response, eg. "document", "json", etc. (also see [responseType](./options.md#responseType) option) |
+| headers | Object | `{'X-Requested-With': 'XMLHttpRequest'}` | Key-value object containing request headers |
+
+You can use this event to modify any of the above properties.
+
+For example to disable the cache busting you can do:
+
+```js
+ias.on('load', function(event) {
+  event.nocache = true; // prevent IAS from adding a timestamp query param to the url
+});
+```
 
 ### loaded
 
