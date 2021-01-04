@@ -7,13 +7,13 @@ describe('Next', () => {
   });
 
   it('should emit a next event when scrolled to bottom', () => {
-    const spy = {
+    const spies = {
       hit() {},
       next() {},
     };
 
-    cy.spy(spy, 'hit');
-    cy.spy(spy, 'next');
+    cy.spy(spies, 'hit').as('hitSpy');
+    cy.spy(spies, 'next').as('nextSpy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
@@ -21,31 +21,30 @@ describe('Next', () => {
         next: '.pager__next',
       });
 
-      ias.on('hit', spy.hit);
-      ias.on('next', spy.next);
+      ias.on('hit', spies.hit);
+      ias.on('next', spies.next);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.next).to.have.been.calledOnce;
-          // @todo would expect to have `next` called after `hit`,
-          //       but this is not supported by tiny-emitter
-          // expect(spy.next).to.have.been.calledAfter(spy.hit);
+      cy.scrollTo('bottom', {duration: 300});
 
-          expect(spy.next).to.have.been.calledWith(
-              Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
-          );
-        });
+      cy.get('@nextSpy').should((spy) => {
+        expect(spy).to.have.been.calledOnce;
+        // @todo would expect to have `next` called after `hit`,
+        //       but this is not supported by tiny-emitter
+        // expect(spy.next).to.have.been.calledAfter(spy.hit);
+
+        expect(spy).to.have.been.calledWith(
+          Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
+        );
+      });
     });
   });
 
   it('should emit a next event when next called manually', () => {
-    const spy = {
+    const spies = {
       next() {},
     };
 
-    cy.spy(spy, 'next');
+    cy.spy(spies, 'next').as('nextSpy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
@@ -53,36 +52,40 @@ describe('Next', () => {
         next: '.pager__next',
       });
 
-      ias.on('next', spy.next);
+      ias.on('next', spies.next);
 
       ias.next();
 
-      expect(spy.next).to.have.been.calledOnce;
-      expect(spy.next).to.have.been.calledWith(
-          Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
-      );
+      cy.get('@nextSpy').should((spy) => {
+        expect(spy).to.have.been.calledOnce;
+        expect(spy).to.have.been.calledWith(
+            Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
+        );
+      });
     });
   });
 
   it('should call custom next handler', () => {
-    const spy = {
+    const spies = {
       nextHandler() {},
     };
 
-    cy.spy(spy, 'nextHandler');
+    cy.spy(spies, 'nextHandler').as('nextHandlerSpy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
         item: '.blocks__block',
-        next: spy.nextHandler,
+        next: spies.nextHandler,
       });
 
       ias.next();
 
-      expect(spy.nextHandler).to.have.been.calledOnce;
-      expect(spy.nextHandler).to.have.been.calledWith(
-          Cypress.sinon.match(1) // assert expected pageIndex
-      );
+      cy.get('@nextHandlerSpy').should((spy) => {
+        expect(spy).to.have.been.calledOnce;
+        expect(spy).to.have.been.calledWith(
+            Cypress.sinon.match(1) // assert expected pageIndex
+        );
+      });
     });
   });
 
@@ -91,7 +94,7 @@ describe('Next', () => {
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       cy.window().then((win) => {
-        const spy = cy.spy(win.console, 'warn');
+        cy.spy(win.console, 'warn').as('consoleSpy');
 
         let ias = new InfiniteAjaxScroll('.blocks', {
           item: '.blocks__block',
@@ -102,7 +105,7 @@ describe('Next', () => {
 
         ias.next();
 
-        expect(spy).to.have.been.calledOnce;
+        cy.get('@consoleSpy').should('have.been.calledOnce');
       });
     });
   });
@@ -112,7 +115,7 @@ describe('Next', () => {
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       cy.window().then((win) => {
-        const spy = cy.spy(win.console, 'warn');
+        const spy = cy.spy(win.console, 'warn').as('consoleSpy');
 
         let ias = new InfiniteAjaxScroll('.blocks', {
           item: '.blocks__block',
@@ -121,11 +124,9 @@ describe('Next', () => {
           bind: false
         });
 
-        ias.next().then(() => {
-          ias.next().then(() => {
-            expect(spy).to.have.been.calledOnce;
-          });
-        });
+        ias.next().then(() => { ias.next() });
+
+        cy.get('@consoleSpy').should('have.been.calledOnce');
       });
     });
   });

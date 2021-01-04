@@ -5,11 +5,11 @@ describe('Append', () => {
   });
 
   it('should emit an append event when scrolled to bottom', () => {
-    const spy = {
+    const spies = {
       append() {},
     };
 
-    cy.spy(spy, 'append');
+    cy.spy(spies, 'append').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
@@ -17,33 +17,32 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('append', spy.append);
+      ias.on('append', spies.append);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.append).to.have.been.calledOnce;
+      cy.scrollTo('bottom', {duration: 300});
 
-          expect(spy.append).to.have.been.calledWith(
-              Cypress.sinon.match.has("items", Cypress.sinon.match.array)
-          );
-          expect(spy.append).to.have.been.calledWith(
-              Cypress.sinon.match.has("parent", Cypress.sinon.match.any) // @todo test for Element
-          );
-          expect(spy.append).to.have.been.calledWith(
-              Cypress.sinon.match.has("appendFn", Cypress.sinon.match.func)
-          );
-        });
+      cy.get('@spy').should((spy) => {
+        expect(spy).to.have.been.calledOnce;
+
+        expect(spy).to.have.been.calledWith(
+          Cypress.sinon.match.has("items", Cypress.sinon.match.array)
+        );
+        expect(spy).to.have.been.calledWith(
+          Cypress.sinon.match.has("parent", Cypress.sinon.match.any) // @todo test for Element
+        );
+        expect(spy).to.have.been.calledWith(
+          Cypress.sinon.match.has("appendFn", Cypress.sinon.match.func)
+        );
+      })
     });
   });
 
   it('should emit an appended event when scrolled to bottom', () => {
-    const spy = {
+    const spies = {
       appended() {},
     };
 
-    cy.spy(spy, 'appended');
+    cy.spy(spies, 'appended').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
@@ -51,32 +50,31 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('appended', spy.appended);
+      ias.on('appended', spies.appended);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.appended).to.have.been.calledOnce;
+      cy.scrollTo('bottom', {duration: 300});
 
-          expect(spy.appended).to.have.been.calledWith(
-              Cypress.sinon.match.has("items", Cypress.sinon.match.array)
-          );
-          expect(spy.appended).to.have.been.calledWith(
-              Cypress.sinon.match.has("parent", Cypress.sinon.match.any) // @todo test for Element
-          );
-        });
+      cy.get('@spy').should((spy) => {
+        expect(spy).to.have.been.calledOnce;
+
+        expect(spy).to.have.been.calledWith(
+            Cypress.sinon.match.has("items", Cypress.sinon.match.array)
+        );
+        expect(spy).to.have.been.calledWith(
+            Cypress.sinon.match.has("parent", Cypress.sinon.match.any) // @todo test for Element
+        );
+      })
     });
   });
 
   it('should emit append and appended events when called manually', () => {
-    const spy = {
+    const spies = {
       append() {},
       appended() {},
     };
 
-    cy.spy(spy, 'append');
-    cy.spy(spy, 'appended');
+    cy.spy(spies, 'append').as('appendSpy');
+    cy.spy(spies, 'appended').as('appendedSpy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
@@ -84,26 +82,24 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('append', spy.append);
-      ias.on('appended', spy.appended);
+      ias.on('append', spies.append);
+      ias.on('appended', spies.appended);
 
       ias.append([document.createElement('div')]);
 
-      cy.wait(200).then(() => {
-        expect(spy.append).to.have.been.calledOnce;
-        expect(spy.appended).to.have.been.calledOnce;
-      });
+      cy.get('@appendSpy').should('have.been.calledOnce');
+      cy.get('@appendedSpy').should('have.been.calledOnce');
     });
   });
 
-  it('should emit an append event before appended event', () => {
-    const spy = {
+  it('should emit an appended event after append event', () => {
+    const spies = {
       append() {},
       appended() {},
     };
 
-    cy.spy(spy, 'append');
-    cy.spy(spy, 'appended');
+    cy.spy(spies, 'append').as('appendSpy');
+    cy.spy(spies, 'appended').as('appendedSpy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
@@ -111,14 +107,14 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('append', spy.append);
-      ias.on('appended', spy.appended);
+      ias.on('append', spies.append);
+      ias.on('appended', spies.appended);
 
       ias.append([document.createElement('div')]);
 
-      cy.wait(200).then(() => {
-        expect(spy.append).to.have.been.calledBefore(spy.appended);
-      });
+      cy.get('@appendedSpy').should((spy) => {
+        expect(spy).to.have.been.calledAfter(spies.append);
+      })
     });
   });
 });

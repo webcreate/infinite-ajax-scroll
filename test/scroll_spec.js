@@ -13,33 +13,32 @@ describe('Scroll', () => {
   });
 
   it('should emit a scrolled event when scrolled down', () => {
-    const spy = {
+    const spies = {
       scrolled() {}
     };
 
-    cy.spy(spy, 'scrolled');
+    cy.spy(spies, 'scrolled').as('spy');
 
-    ias.on('scrolled', spy.scrolled);
+    ias.on('scrolled', spies.scrolled);
 
-    cy
-      .scrollTo('bottom', {duration: 300})
-      .wait(200)
-      .then(() => {
-        expect(spy.scrolled).to.have.been.calledWith(
-            Cypress.sinon.match(function(event) {
-              expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
-              expect(event.scroll.x).to.be.equal(0, 'scroll.x');
-              expect(event.scroll.deltaY).to.be.greaterThan(0, 'scroll.deltaY');
-              expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
+    cy.scrollTo('bottom', {duration: 300});
 
-              return true;
-            })
-        );
-      });
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.have.been.calledWith(
+        Cypress.sinon.match(function(event) {
+          expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
+          expect(event.scroll.x).to.be.equal(0, 'scroll.x');
+          expect(event.scroll.deltaY).to.be.greaterThan(0, 'scroll.deltaY');
+          expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
+
+          return true;
+        })
+      );
+    });
   });
 
   it('should emit a scrolled event when scrolled up', () => {
-    const spy = {
+    const spies = {
       scrolled() {}
     };
 
@@ -48,71 +47,64 @@ describe('Scroll', () => {
       .scrollTo('bottom')
       .wait(300)
       .then(() => {
-        cy.spy(spy, 'scrolled');
+        cy.spy(spies, 'scrolled').as('spy');
 
-        ias.on('scrolled', spy.scrolled);
+        ias.on('scrolled', spies.scrolled);
 
-        cy
-          .scrollTo(0, 100)
-          .wait(200)
-          .then(() => {
-            expect(spy.scrolled).to.have.been.calledWith(
-              Cypress.sinon.match((event) => {
-                expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
-                expect(event.scroll.x).to.be.equal(0, 'scroll.x');
-                expect(event.scroll.deltaY).to.be.lessThan(0, 'scroll.deltaY'); // should be negative
-                expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
+        cy.scrollTo(0, 100);
 
-                return true;
-              })
-            );
-          });
+        cy.get('@spy').should((spy) => {
+          expect(spy).to.have.been.calledWith(
+            Cypress.sinon.match((event) => {
+              expect(event.scroll.y).to.be.greaterThan(0, 'scroll.y');
+              expect(event.scroll.x).to.be.equal(0, 'scroll.x');
+              expect(event.scroll.deltaY).to.be.lessThan(0, 'scroll.deltaY'); // should be negative
+              expect(event.scroll.deltaX).to.be.equal(0, 'scroll.deltaX');
+
+              return true;
+            })
+          );
+        });
       });
   });
 
   it('should emit a hit event when scrolled to bottom', () => {
-    const spy = {
+    const spies = {
       hit() {}
     };
 
-    cy.spy(spy, 'hit');
+    cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spy.hit);
+    ias.on('hit', spies.hit);
 
-    cy
-      .scrollTo('bottom', {duration: 300})
-      .wait(200)
-      .then(() => {
-        expect(spy.hit).to.have.been.called;
-      });
+    cy.scrollTo('bottom', {duration: 300});
+
+    cy.get('@spy').should('have.been.called');
   });
 
   it('should not emit a hit event when unbinded', () => {
-    const spy = {
+    const spies = {
       hit() {}
     };
 
-    cy.spy(spy, 'hit');
+    cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spy.hit);
+    ias.on('hit', spies.hit);
 
     ias.unbind();
 
-    cy
-      .scrollTo('bottom', {duration: 300})
-      .wait(200)
-      .then(() => {
-        expect(spy.hit).to.not.have.been.called;
-      });
+    cy.scrollTo('bottom', {duration: 300});
+
+    cy.get('@spy').should('not.have.been.called');
   });
 
   it('should take negativeMargin into account', () => {
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
-      const spy = {
+      const spies = {
         hit() {}
       };
 
-      cy.spy(spy, 'hit');
+      cy.spy(spies, 'hit').as('spy');
 
       // unbind instance from beforeEach step
       ias.unbind();
@@ -122,15 +114,12 @@ describe('Scroll', () => {
         negativeMargin: 200,
       });
 
-      ias.on('hit', spy.hit);
+      ias.on('hit', spies.hit);
 
-      cy
-        // 300 would not be enough without the negative margin
-        .scrollTo(0, 300, {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.hit).to.have.been.called;
-        });
+      // 300 would not be enough without the negative margin
+      cy.scrollTo(0, 300, {duration: 300});
+
+      cy.get('@spy').should('have.been.called');
     });
   });
 });

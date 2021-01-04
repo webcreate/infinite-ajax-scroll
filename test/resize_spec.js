@@ -13,52 +13,46 @@ describe('Resize', () => {
   });
 
   it('should emit a resized event when resized', () => {
-    const spy = {
-      resized() {}
-    };
+    const spies = {
+      resized() {},
+    }
 
-    cy.spy(spy, 'resized');
+    cy.spy(spies, 'resized').as('spy');
 
-    ias.on('resized', spy.resized);
+    ias.on('resized', spies.resized);
 
     cy.viewport(320, 400);
 
-    cy.wait(2000).then(() => {
-      expect(spy.resized).to.have.been.called;
-    });
+    cy.get('@spy').should('have.been.called');
   });
 
   it('should emit a hit event when resized to bottom', () => {
-    const spy = {
-      hit() {}
-    };
+    const spies = {
+      hit() {},
+    }
 
-    cy.spy(spy, 'hit');
+    cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spy.hit);
+    ias.on('hit', spies.hit);
 
     cy.viewport(640, 900);
 
-    cy.wait(200).then(() => {
-      expect(spy.hit).to.have.been.called;
-    });
+    cy.get('@spy').should('have.been.called');
   });
 
   it('should not emit a hit event when unbinded', () => {
-    const spy = {
-      hit() {}
-    };
+    const spies = {
+      hit() {},
+    }
 
-    cy.spy(spy, 'hit');
+    cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spy.hit);
+    ias.on('hit', spies.hit);
 
     ias.unbind();
 
     cy.viewport(640, 900);
 
-    cy.wait(200).then(() => {
-      expect(spy.hit).to.not.have.been.called;
-    });
+    cy.get('@spy').should('not.have.been.called');
   });
 });

@@ -5,11 +5,11 @@ describe('Prefill', () => {
   });
 
   it('does not prefill when disabled', () => {
-    const spy = {
+    const spies = {
       prefill() {},
     };
 
-    cy.spy(spy, 'prefill');
+    cy.spy(spies, 'prefill').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
@@ -20,24 +20,20 @@ describe('Prefill', () => {
         prefill: false,
       });
 
-      ias.on('prefill', spy.prefill);
+      ias.on('prefill', spies.prefill);
 
       ias.bind();
 
-      cy
-        .wait(200)
-        .then(() => {
-          expect(spy.prefill).to.have.been.not.called;
-      });
+      cy.get('@spy').should('not.have.been.called');
     });
   });
 
   it('prefills when enabled', () => {
-    const spy = {
+    const spies = {
       prefill() {},
     };
 
-    cy.spy(spy, 'prefill');
+    cy.spy(spies, 'prefill').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
@@ -48,15 +44,11 @@ describe('Prefill', () => {
         bind: false,
       });
 
-      ias.on('prefill', spy.prefill);
+      ias.on('prefill', spies.prefill);
 
       ias.bind();
 
-      cy
-        .wait(200)
-        .then(() => {
-          expect(spy.prefill).to.have.been.calledOnce;
-        });
+      cy.get('@spy').should('have.been.calledOnce');
     });
   });
 });
