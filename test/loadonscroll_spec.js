@@ -7,25 +7,22 @@ describe('Load on scroll', () => {
   });
 
   it('should emit a next event when loadOnScroll enabled by default', () => {
-    const spy = {
+    const spies = {
       next() {}
     };
 
-    cy.spy(spy, 'next');
+    cy.spy(spies, 'next').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
         item: '.blocks__block',
       });
 
-      ias.on('next', spy.next);
+      ias.on('next', spies.next);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(function() {
-          expect(spy.next).to.have.been.called;
-        });
+      cy.scrollTo('bottom', {duration: 300});
+
+      cy.get('@spy').should('have.been.called');
     });
   });
 
@@ -34,7 +31,7 @@ describe('Load on scroll', () => {
       next() {}
     };
 
-    cy.spy(spy, 'next');
+    cy.spy(spy, 'next').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
@@ -44,21 +41,18 @@ describe('Load on scroll', () => {
 
       ias.on('next', spy.next);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.next).to.have.been.called;
-        });
+      cy.scrollTo('bottom', {duration: 300});
+
+      cy.get('@spy').should('have.been.called');
     });
   });
 
   it('should not emit a next event when loadOnScroll is disabled', () => {
-    const spy = {
+    const spies = {
       next() {}
     };
 
-    cy.spy(spy, 'next');
+    cy.spy(spies, 'next').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
@@ -66,23 +60,20 @@ describe('Load on scroll', () => {
         loadOnScroll: false
       });
 
-      ias.on('next', spy.next);
+      ias.on('next', spies.next);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.next).to.not.have.been.called;
-        });
+      cy.scrollTo('bottom', {duration: 300});
+
+      cy.get('@spy').should('not.have.been.called');
     });
   });
 
   it('can be enabled (enableLoadOnScroll)', () => {
-    const spy = {
+    const spies = {
       next() {}
     };
 
-    cy.spy(spy, 'next');
+    cy.spy(spies, 'next').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
@@ -92,23 +83,20 @@ describe('Load on scroll', () => {
 
       ias.enableLoadOnScroll();
 
-      ias.on('next', spy.next);
+      ias.on('next', spies.next);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.next).to.have.been.called;
-        });
+      cy.scrollTo('bottom', {duration: 300});
+
+      cy.get('@spy').should('have.been.called');
     });
   });
 
   it('can be disabled (disableLoadOnScroll)', () => {
-    const spy = {
+    const spies = {
       next() {}
     };
 
-    cy.spy(spy, 'next');
+    cy.spy(spies, 'next').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       ias = new InfiniteAjaxScroll('.blocks', {
@@ -118,14 +106,11 @@ describe('Load on scroll', () => {
 
       ias.disableLoadOnScroll();
 
-      ias.on('next', spy.next);
+      ias.on('next', spies.next);
 
-      cy
-        .scrollTo('bottom', {duration: 300})
-        .wait(200)
-        .then(() => {
-          expect(spy.next).to.not.have.been.called;
-        });
+      cy.scrollTo('bottom', {duration: 300});
+
+      cy.get('@spy').should('not.have.been.called');
     });
   });
 });

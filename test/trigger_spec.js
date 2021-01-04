@@ -86,9 +86,9 @@ describe('Trigger', () => {
         bind: false,
       });
 
-      cy.get('.trigger').should('be.visible');
-
-      ias.bind();
+      cy.get('.trigger').should('be.visible')
+        .then(() => { ias.bind(); })
+      ;
 
       cy.get('.trigger').should('have.css', 'opacity', '0');
     });

@@ -16,87 +16,83 @@ describe('Load', () => {
 
   it('should emit a loaded event when loaded', () => {
     const url = 'http://localhost:8080/test/fixtures/default/page2.html';
-    const spy = {
+    const spies = {
       loaded() {}
     };
 
-    cy.spy(spy, 'loaded');
+    cy.spy(spies, 'loaded').as('spy');
 
-    ias.on('loaded', spy.loaded);
+    ias.on('loaded', spies.loaded);
 
     ias.load(url);
 
-    cy.wait(5000).then(() => {
-      expect(spy.loaded).to.have.been.calledOnce;
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.have.been.calledOnce;
 
       // test arguments of loaded event
-      expect(spy.loaded).to.have.been.calledWith(
+      expect(spy).to.have.been.calledWith(
           Cypress.sinon.match.has("url", Cypress.sinon.match(url))
       );
-      expect(spy.loaded).to.have.been.calledWith(
+      expect(spy).to.have.been.calledWith(
           Cypress.sinon.match.has("items", Cypress.sinon.match.array)
       );
-      expect(spy.loaded).to.have.been.calledWith(
+      expect(spy).to.have.been.calledWith(
           Cypress.sinon.match.has("xhr", Cypress.sinon.match.any)
       );
-    });
+    })
   });
 
   it('should emit a loaded event when loaded (json response)', () => {
     const url = 'http://localhost:8080/test/fixtures/default/page2.json';
-    const spy = {
+    const spies = {
       loaded() {}
     };
 
-    cy.spy(spy, 'loaded');
+    cy.spy(spies, 'loaded').as('spy');
 
     // @todo not sure if we should allow this
     ias.options.responseType = 'json';
 
-    ias.on('loaded', spy.loaded);
+    ias.on('loaded', spies.loaded);
 
     ias.load(url);
 
-    cy.wait(8000).then(() => {
+    cy.get('@spy').should((spy) => {
       // test that the items property contains the json object
-      expect(spy.loaded).to.have.been.calledWith(
+      expect(spies.loaded).to.have.been.calledWith(
           Cypress.sinon.match.has("items", Cypress.sinon.match.has("blocks", Cypress.sinon.match.array))
       );
     });
   });
 
   it('should not emit a loaded event when 404', () => {
-    const spy = {
+    const spies = {
       loaded() {}
     };
 
-    cy.spy(spy, 'loaded');
+    cy.spy(spies, 'loaded').as('spy');
 
-    ias.on('loaded', spy.loaded);
+    ias.on('loaded', spies.loaded);
 
     ias.load('http://localhost:8080/test/fixtures/default/page404.html');
 
-    cy.wait(5000).then(() => {
-      expect(spy.loaded).to.not.have.been.called;
-    });
+    cy.get('@spy').should('not.have.been.called');
   });
 
   it('should reject the promise when not 200 status code', () => {
-    const spy = {
+    const spies = {
       fulfilled() {},
       rejected() {},
     };
 
-    cy.spy(spy, 'fulfilled');
-    cy.spy(spy, 'rejected');
+    cy.spy(spies, 'fulfilled').as('fulfilledSpy');
+    cy.spy(spies, 'rejected').as('rejectedSpy');
 
     ias.load('http://localhost:8080/test/fixtures/default/page404.html')
-      .then(spy.fulfilled, spy.rejected)
-      .finally(() => {
-        expect(spy.fulfilled).to.not.have.been.called;
-        expect(spy.rejected).to.have.been.calledOnce;
-      })
-    ;
+      .then(spies.fulfilled, spies.rejected);
+
+    cy.get('@fulfilledSpy').should('not.have.been.called');
+    cy.get('@rejectedSpy').should('have.been.calledOnce');
   });
 
   it('allows to modify the url', () => {
@@ -136,37 +132,35 @@ describe('Load', () => {
   });
 
   it('should emit a load event when loading', () => {
-    const spy = {
+    const spies = {
       load() {}
     };
 
-    cy.spy(spy, 'load');
+    cy.spy(spies, 'load').as('spy');
 
-    ias.on('load', spy.load);
+    ias.on('load', spies.load);
 
     ias.load('http://localhost:8080/test/fixtures/default/page2.html');
 
-    cy.wait(100).then(() => {
-      expect(spy.load).to.have.been.calledOnce;
-    });
+    cy.get('@spy').should('have.been.calledOnce');
   });
 
-  it('should emit a load event before loaded when loading', () => {
-    const spy = {
+  it('should emit a loaded event after load when loading', () => {
+    const spies = {
       load() {},
       loaded() {},
     };
 
-    cy.spy(spy, 'load');
-    cy.spy(spy, 'loaded');
+    cy.spy(spies, 'load').as('loadSpy');
+    cy.spy(spies, 'loaded').as('loadedSpy');
 
-    ias.on('load', spy.load);
-    ias.on('loaded', spy.loaded);
+    ias.on('load', spies.load);
+    ias.on('loaded', spies.loaded);
 
     ias.load('http://localhost:8080/test/fixtures/default/page2.html');
 
-    cy.wait(100).then(() => {
-      expect(spy.load).to.have.been.calledBefore(spy.loaded);
-    });
+    cy.get('@loadedSpy').should((spy) => {
+      expect(spy).to.have.been.calledAfter(spies.load);
+    })
   });
 });
