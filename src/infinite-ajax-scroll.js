@@ -183,11 +183,15 @@ export default class InfiniteAjaxScroll {
 
           resolve({items, url: finalUrl, xhr});
         } else {
+          ias.emitter.emit(Events.ERROR, {url: finalUrl, method, xhr});
+
           reject(xhr);
         }
       };
 
       xhr.onerror = function() {
+        ias.emitter.emit(Events.ERROR, {url: finalUrl, method, xhr});
+
         reject(xhr);
       }
 

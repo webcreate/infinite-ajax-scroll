@@ -103,6 +103,16 @@ This event is triggered when the next page is requested from the server, right b
 | url | string | The url that is about to be requested |
 | xhr | XMLHttpRequest | The configured XMLHttpRequest that is going to be used |
 
+### error
+
+This event is triggered when an error occurred while loading the next page.
+
+| property | type | description |
+| :--- | :--- | :--- |
+| url | string | The url that is about to be requested |
+| method | string | The method used to fetch the url ("GET", "POST", etc) |
+| xhr | XMLHttpRequest | The configured XMLHttpRequest that was used |
+
 ### append
 
 This event is triggered before the items are about to be appended.
