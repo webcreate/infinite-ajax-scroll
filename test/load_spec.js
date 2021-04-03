@@ -163,4 +163,18 @@ describe('Load', () => {
       expect(spy).to.have.been.calledAfter(spies.load);
     })
   });
+
+  it('should emit an error event when 404', () => {
+    const spies = {
+      error() {}
+    };
+
+    cy.spy(spies, 'error').as('spy');
+
+    ias.on('error', spies.error);
+
+    ias.load('http://localhost:8080/test/fixtures/default/page404.html');
+
+    cy.get('@spy').should('not.mhave.been.called');
+  });
 });

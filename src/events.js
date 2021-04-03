@@ -5,6 +5,7 @@ export const UNBINDED = 'unbinded';
 export const HIT = 'hit';
 export const LOAD = 'load';
 export const LOADED = 'loaded';
+export const ERROR = 'error';
 export const LAST = 'last';
 export const NEXT = 'next';
 export const SCROLLED = 'scrolled';
@@ -21,6 +22,7 @@ const events = {
   HIT,
   LOAD,
   LOADED,
+  ERROR,
   LAST,
   NEXT,
   SCROLLED,
