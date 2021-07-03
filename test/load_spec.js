@@ -85,14 +85,15 @@ describe('Load', () => {
       rejected() {},
     };
 
-    cy.spy(spies, 'fulfilled').as('fulfilledSpy');
-    cy.spy(spies, 'rejected').as('rejectedSpy');
+    const fulfilled = cy.spy(spies, 'fulfilled');
+    const rejected = cy.spy(spies, 'rejected');
 
     ias.load('http://localhost:8080/test/fixtures/default/page404.html')
-      .then(spies.fulfilled, spies.rejected);
-
-    cy.get('@fulfilledSpy').should('not.have.been.called');
-    cy.get('@rejectedSpy').should('have.been.calledOnce');
+      .then(spies.fulfilled, spies.rejected)
+      .finally(() => {
+        expect(fulfilled).not.to.be.called;
+        expect(rejected).to.be.calledOnce;
+      });
   });
 
   it('allows to modify the url', () => {
