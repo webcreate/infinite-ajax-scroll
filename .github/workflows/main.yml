@@ -3,6 +3,16 @@ name: Cypress Tests
 on: [push]
 
 jobs:
+  lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: npm ci
+      - name: Run linter
+        run: npm run lint
+
   test:
     runs-on: ubuntu-20.04
     strategy:
