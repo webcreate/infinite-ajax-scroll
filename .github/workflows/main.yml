@@ -32,7 +32,7 @@ jobs:
           start: npm start
           browser: ${{ matrix.browser }}
           headless: true
-          record: true
+          record: ${{ github.event.pull_request.head.repo.full_name == 'webcreate/infinite-ajax-scroll' }}
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
