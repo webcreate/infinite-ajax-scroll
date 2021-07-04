@@ -1,3 +1,4 @@
+import events from "../src/events";
 
 describe('Trigger', () => {
   beforeEach(() => {
@@ -157,7 +158,7 @@ describe('Trigger', () => {
         trigger: '.trigger',
       });
 
-      ias.on('next', spy.next);
+      ias.on(events.NEXT, spy.next);
 
       cy.scrollTo('bottom', {duration: 300});
 

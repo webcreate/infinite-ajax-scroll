@@ -1,3 +1,5 @@
+import events from "../src/events";
+
 let ias;
 
 describe('Resize', () => {
@@ -19,7 +21,7 @@ describe('Resize', () => {
 
     cy.spy(spies, 'resized').as('spy');
 
-    ias.on('resized', spies.resized);
+    ias.on(events.RESIZED, spies.resized);
 
     cy.viewport(320, 400);
 
@@ -33,7 +35,7 @@ describe('Resize', () => {
 
     cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spies.hit);
+    ias.on(events.HIT, spies.hit);
 
     cy.viewport(640, 900);
 
@@ -47,7 +49,7 @@ describe('Resize', () => {
 
     cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spies.hit);
+    ias.on(events.HIT, spies.hit);
 
     ias.unbind();
 

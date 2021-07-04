@@ -1,3 +1,5 @@
+import events from "../src/events";
+
 describe('Prefill', () => {
   beforeEach(() => {
     // runs before each test in the block
@@ -20,7 +22,7 @@ describe('Prefill', () => {
         prefill: false,
       });
 
-      ias.on('prefill', spies.prefill);
+      ias.on(events.PREFILL, spies.prefill);
 
       ias.bind();
 
@@ -44,7 +46,7 @@ describe('Prefill', () => {
         bind: false,
       });
 
-      ias.on('prefill', spies.prefill);
+      ias.on(events.PREFILL, spies.prefill);
 
       ias.bind();
 

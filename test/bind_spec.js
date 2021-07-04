@@ -1,4 +1,5 @@
 import InfiniteAjaxScroll from '../src/infinite-ajax-scroll';
+import events from "../src/events";
 
 describe('Bind', () => {
   it('should bind on instantiation by default', () => {
@@ -13,7 +14,7 @@ describe('Bind', () => {
 
     cy.spy(spy, 'onBind');
 
-    ias.on('binded', spy.onBind);
+    ias.on(events.BINDED, spy.onBind);
 
     expect(spy.onBind).to.have.been.calledOnce;
   });
@@ -29,7 +30,7 @@ describe('Bind', () => {
 
     cy.spy(spy, 'onBind');
 
-    ias.on('binded', spy.onBind);
+    ias.on(events.BINDED, spy.onBind);
 
     expect(spy.onBind).to.not.have.been.called;
   });
@@ -46,7 +47,7 @@ describe('Bind', () => {
 
     cy.spy(spy, 'onBind');
 
-    ias.on('binded', spy.onBind);
+    ias.on(events.BINDED, spy.onBind);
 
     ias.bind();
 
@@ -65,7 +66,7 @@ describe('Bind', () => {
 
     cy.spy(spy, 'onBind');
 
-    ias.on('binded', spy.onBind);
+    ias.on(events.BINDED, spy.onBind);
 
     ias.bind();
     ias.bind();
@@ -85,7 +86,7 @@ describe('Bind', () => {
 
     cy.spy(spy, 'onUnbind');
 
-    ias.on('unbinded', spy.onUnbind);
+    ias.on(events.UNBINDED, spy.onUnbind);
 
     ias.unbind();
 
@@ -103,7 +104,7 @@ describe('Bind', () => {
 
     cy.spy(spy, 'onUnbind');
 
-    ias.on('unbinded', spy.onUnbind);
+    ias.on(events.UNBINDED, spy.onUnbind);
 
     ias.unbind();
 

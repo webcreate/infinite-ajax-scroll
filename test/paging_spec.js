@@ -1,3 +1,5 @@
+import events from "../src/events";
+
 let ias;
 
 describe('Paging', () => {
@@ -20,7 +22,7 @@ describe('Paging', () => {
 
     cy.spy(spies, 'page').as('spy');
 
-    ias.on('page', spies.page);
+    ias.on(events.PAGE, spies.page);
 
     cy.scrollTo('bottom', {duration: 300});
 

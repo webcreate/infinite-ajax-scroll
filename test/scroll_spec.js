@@ -1,3 +1,5 @@
+import events from "../src/events";
+
 let ias;
 
 describe('Scroll', () => {
@@ -19,7 +21,7 @@ describe('Scroll', () => {
 
     cy.spy(spies, 'scrolled').as('spy');
 
-    ias.on('scrolled', spies.scrolled);
+    ias.on(events.SCROLLED, spies.scrolled);
 
     cy.scrollTo('bottom', {duration: 300});
 
@@ -49,7 +51,7 @@ describe('Scroll', () => {
       .then(() => {
         cy.spy(spies, 'scrolled').as('spy');
 
-        ias.on('scrolled', spies.scrolled);
+        ias.on(events.SCROLLED, spies.scrolled);
 
         cy.scrollTo(0, 100);
 
@@ -75,7 +77,7 @@ describe('Scroll', () => {
 
     cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spies.hit);
+    ias.on(events.HIT, spies.hit);
 
     cy.scrollTo('bottom', {duration: 300});
 
@@ -89,7 +91,7 @@ describe('Scroll', () => {
 
     cy.spy(spies, 'hit').as('spy');
 
-    ias.on('hit', spies.hit);
+    ias.on(events.HIT, spies.hit);
 
     ias.unbind();
 
@@ -114,7 +116,7 @@ describe('Scroll', () => {
         negativeMargin: 200,
       });
 
-      ias.on('hit', spies.hit);
+      ias.on(events.HIT, spies.hit);
 
       // 300 would not be enough without the negative margin
       cy.scrollTo(0, 300, {duration: 300});
