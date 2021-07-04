@@ -18,7 +18,7 @@ jobs:
     strategy:
       matrix:
         node: [ 14 ]
-        browser: [ firefox, chrome ]
+        browser: [ chrome ]
     steps:
       - uses: actions/setup-node@v1
         with:
