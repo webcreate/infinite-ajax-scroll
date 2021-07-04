@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Tests
 
 on: [push]
 
@@ -13,11 +13,11 @@ jobs:
       - name: Run linter
         run: npm run lint
 
-  test:
+  cypress:
     runs-on: ubuntu-20.04
     strategy:
       matrix:
-        node: [ 10 ]
+        node: [ 14 ]
         browser: [ firefox, chrome ]
     steps:
       - uses: actions/setup-node@v1
