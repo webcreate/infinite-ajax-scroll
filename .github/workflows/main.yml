@@ -1,0 +1,25 @@
+name: Cypress Tests
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        node: [ 10 ]
+        browser: [ firefox, chrome ]
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Cypress tests
+        uses: cypress-io/github-action@v2
+        with:
+          start: npm start
+          browser: ${{ matrix.browser }}
+          headless: true
