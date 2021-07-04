@@ -1,3 +1,5 @@
+import events from "../src/events";
+
 let ias;
 
 describe('Load on scroll', () => {
@@ -18,7 +20,7 @@ describe('Load on scroll', () => {
         item: '.blocks__block',
       });
 
-      ias.on('next', spies.next);
+      ias.on(events.NEXT, spies.next);
 
       cy.scrollTo('bottom', {duration: 300});
 
@@ -39,7 +41,7 @@ describe('Load on scroll', () => {
         loadOnScroll: true
       });
 
-      ias.on('next', spy.next);
+      ias.on(events.NEXT, spy.next);
 
       cy.scrollTo('bottom', {duration: 300});
 
@@ -60,7 +62,7 @@ describe('Load on scroll', () => {
         loadOnScroll: false
       });
 
-      ias.on('next', spies.next);
+      ias.on(events.NEXT, spies.next);
 
       cy.scrollTo('bottom', {duration: 300});
 
@@ -83,7 +85,7 @@ describe('Load on scroll', () => {
 
       ias.enableLoadOnScroll();
 
-      ias.on('next', spies.next);
+      ias.on(events.NEXT, spies.next);
 
       cy.scrollTo('bottom', {duration: 300});
 
@@ -106,7 +108,7 @@ describe('Load on scroll', () => {
 
       ias.disableLoadOnScroll();
 
-      ias.on('next', spies.next);
+      ias.on(events.NEXT, spies.next);
 
       cy.scrollTo('bottom', {duration: 300});
 

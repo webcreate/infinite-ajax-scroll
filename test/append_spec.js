@@ -1,3 +1,5 @@
+import events from "../src/events";
+
 describe('Append', () => {
   beforeEach(() => {
     // runs before each test in the block
@@ -17,7 +19,7 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('append', spies.append);
+      ias.on(events.APPEND, spies.append);
 
       cy.scrollTo('bottom', {duration: 300});
 
@@ -50,7 +52,7 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('appended', spies.appended);
+      ias.on(events.APPENDED, spies.appended);
 
       cy.scrollTo('bottom', {duration: 300});
 
@@ -82,8 +84,8 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('append', spies.append);
-      ias.on('appended', spies.appended);
+      ias.on(events.APPEND, spies.append);
+      ias.on(events.APPENDED, spies.appended);
 
       ias.append([document.createElement('div')]);
 
@@ -107,8 +109,8 @@ describe('Append', () => {
         next: '.pager__next',
       });
 
-      ias.on('append', spies.append);
-      ias.on('appended', spies.appended);
+      ias.on(events.APPEND, spies.append);
+      ias.on(events.APPENDED, spies.appended);
 
       ias.append([document.createElement('div')]);
 

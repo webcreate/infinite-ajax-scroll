@@ -1,4 +1,5 @@
 import * as Events from "../src/events";
+import events from "../src/events";
 
 let ias;
 
@@ -22,7 +23,7 @@ describe('Load', () => {
 
     cy.spy(spies, 'loaded').as('spy');
 
-    ias.on('loaded', spies.loaded);
+    ias.on(events.LOADED, spies.loaded);
 
     ias.load(url);
 
@@ -53,7 +54,7 @@ describe('Load', () => {
     // @todo not sure if we should allow this
     ias.options.responseType = 'json';
 
-    ias.on('loaded', spies.loaded);
+    ias.on(events.LOADED, spies.loaded);
 
     ias.load(url);
 
@@ -72,7 +73,7 @@ describe('Load', () => {
 
     cy.spy(spies, 'loaded').as('spy');
 
-    ias.on('loaded', spies.loaded);
+    ias.on(events.LOADED, spies.loaded);
 
     ias.load('http://localhost:8080/test/fixtures/default/page404.html');
 
@@ -139,7 +140,7 @@ describe('Load', () => {
 
     cy.spy(spies, 'load').as('spy');
 
-    ias.on('load', spies.load);
+    ias.on(events.LOAD, spies.load);
 
     ias.load('http://localhost:8080/test/fixtures/default/page2.html');
 
@@ -155,8 +156,8 @@ describe('Load', () => {
     cy.spy(spies, 'load').as('loadSpy');
     cy.spy(spies, 'loaded').as('loadedSpy');
 
-    ias.on('load', spies.load);
-    ias.on('loaded', spies.loaded);
+    ias.on(events.LOAD, spies.load);
+    ias.on(events.LOADED, spies.loaded);
 
     ias.load('http://localhost:8080/test/fixtures/default/page2.html');
 
@@ -172,7 +173,7 @@ describe('Load', () => {
 
     cy.spy(spies, 'error').as('spy');
 
-    ias.on('error', spies.error);
+    ias.on(events.ERROR, spies.error);
 
     ias.load('http://localhost:8080/test/fixtures/default/page404.html');
 

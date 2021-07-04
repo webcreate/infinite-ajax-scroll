@@ -1,3 +1,5 @@
+import events from "../src/events";
+
 let ias;
 
 describe('Next', () => {
@@ -21,8 +23,8 @@ describe('Next', () => {
         next: '.pager__next',
       });
 
-      ias.on('hit', spies.hit);
-      ias.on('next', spies.next);
+      ias.on(events.HIT, spies.hit);
+      ias.on(events.NEXT, spies.next);
 
       cy.scrollTo('bottom', {duration: 300});
 
@@ -52,7 +54,7 @@ describe('Next', () => {
         next: '.pager__next',
       });
 
-      ias.on('next', spies.next);
+      ias.on(events.NEXT, spies.next);
 
       ias.next();
 
