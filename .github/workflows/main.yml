@@ -13,13 +13,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node }}
-
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Cypress tests
+      - name: Run Cypress
         uses: cypress-io/github-action@v2
         with:
+          build: npm run build
           start: npm start
           browser: ${{ matrix.browser }}
           headless: true
