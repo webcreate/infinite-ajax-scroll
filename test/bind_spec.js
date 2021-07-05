@@ -16,9 +16,7 @@ describe('Bind', () => {
 
     ias.on(events.BINDED, spy.onBind);
 
-    cy.get('@spy').should((spy) => {
-      expect(spy).to.have.been.calledOnce;
-    });
+    cy.get('@spy').should('have.been.calledOnce');
   });
 
   it('should not bind on instantiation when option.bind is false', () => {
@@ -34,9 +32,7 @@ describe('Bind', () => {
 
     ias.on(events.BINDED, spy.onBind);
 
-    cy.get('@spy').should((spy) => {
-      expect(spy).to.not.have.been.called;
-    })
+    cy.get('@spy').should('not.have.been.called')
   });
 
   it('should bind manually', () => {
@@ -55,9 +51,7 @@ describe('Bind', () => {
 
     ias.bind();
 
-    cy.get('@spy').should((spy) => {
-      expect(spy).to.have.been.calledOnce;
-    });
+    cy.get('@spy').should('have.been.calledOnce');
   });
 
   it('should not bind twice', () => {
@@ -77,9 +71,7 @@ describe('Bind', () => {
     ias.bind();
     ias.bind();
 
-    cy.get('@spy').should((spy) => {
-      expect(spy).to.have.been.calledOnce;
-    });
+    cy.get('@spy').should('have.been.calledOnce');
   });
 
   it('should unbind', () => {
@@ -98,9 +90,7 @@ describe('Bind', () => {
 
     ias.unbind();
 
-    cy.get('@spy').should((spy) => {
-      expect(spy).to.have.been.calledOnce;
-    });
+    cy.get('@spy').should('have.been.calledOnce');
   });
 
   it('should not unbind when not binded', () => {
@@ -118,8 +108,6 @@ describe('Bind', () => {
 
     ias.unbind();
 
-    cy.get('@spy').should((spy) => {
-      expect(spy).to.not.have.been.called;
-    });
+    cy.get('@spy').should('not.have.been.called');
   });
 });
