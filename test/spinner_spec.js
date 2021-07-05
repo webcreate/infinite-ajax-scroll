@@ -88,8 +88,8 @@ describe('Spinner', () => {
       },
     };
 
-    cy.spy(spy, 'showHandler');
-    cy.spy(spy, 'hideHandler');
+    cy.spy(spy, 'showHandler').as('showSpy');
+    cy.spy(spy, 'hideHandler').as('hideSpy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       let ias = new InfiniteAjaxScroll('.blocks', {
@@ -104,8 +104,8 @@ describe('Spinner', () => {
 
       ias.next();
 
-      expect(spy.showHandler).to.have.been.calledOnce;
-      expect(spy.hideHandler).to.have.been.calledOnce;
+      cy.get('@showSpy').should('have.been.calledOnce')
+      cy.get('@hideSpy').should('have.been.calledOnce')
     });
   });
 
