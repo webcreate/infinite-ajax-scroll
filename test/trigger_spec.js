@@ -28,7 +28,7 @@ describe('Trigger', () => {
         })
       };
 
-      const spy = cy.spy(subject, 'ias');
+      cy.spy(subject, 'ias').as('spy');
 
       try {
         subject.ias();
@@ -36,7 +36,9 @@ describe('Trigger', () => {
         // noop
       }
 
-      expect(spy).to.have.thrown('Error');
+      cy.get('@spy').should((spy) => {
+        expect(spy).to.have.thrown('Error');
+      })
     });
   });
 
@@ -88,8 +90,7 @@ describe('Trigger', () => {
       });
 
       cy.get('.trigger').should('be.visible')
-        .then(() => { ias.bind(); })
-      ;
+        .then(() => { ias.bind(); });
 
       cy.get('.trigger').should('have.css', 'opacity', '0');
     });
@@ -139,8 +140,7 @@ describe('Trigger', () => {
 
         // the trigger should not be visible
         .get('.trigger')
-          .should('have.css', 'opacity', '0')
-      ;
+          .should('have.css', 'opacity', '0');
     });
   });
 
@@ -167,5 +167,4 @@ describe('Trigger', () => {
       });
     });
   });
-
 });

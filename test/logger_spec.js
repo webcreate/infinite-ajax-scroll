@@ -8,7 +8,7 @@ describe('Logger', () => {
 
   it('should use default logger', () => {
     cy.window().then((win) => {
-      consoleSpy = cy.spy(win.console, "log")
+      cy.spy(win.console, "log").as('spy')
     });
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
@@ -17,17 +17,19 @@ describe('Logger', () => {
         next: '.pager__next',
         logger: true
       });
+    });
 
+    cy.get('@spy').should((consoleSpy) => {
       expect(consoleSpy).to.have.been.calledOnce;
       expect(consoleSpy).to.have.been.calledWith(
-          "Binded event handlers"
+        "Binded event handlers"
       );
     });
   });
 
   it('should disable the logger', () => {
     cy.window().then((win) => {
-      consoleSpy = cy.spy(win.console, "log")
+      cy.spy(win.console, "log").as('spy')
     });
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
@@ -36,9 +38,9 @@ describe('Logger', () => {
         next: '.pager__next',
         logger: false
       });
-
-      expect(consoleSpy).to.not.have.been.called;
     });
+
+    cy.get('@spy').should('not.have.been.called');
   });
 
   it('should use a custom logger', () => {
@@ -49,7 +51,7 @@ describe('Logger', () => {
       }
     };
 
-    cy.spy(customLogger, 'binded');
+    cy.spy(customLogger, 'binded').as('spy');
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       new InfiniteAjaxScroll('.blocks', {
@@ -57,9 +59,9 @@ describe('Logger', () => {
         next: '.pager__next',
         logger: customLogger
       });
-
-      expect(customLogger.binded).to.have.been.calledOnce;
     });
+
+    cy.get('@spy').should('have.been.calledOnce');
   });
 
 });

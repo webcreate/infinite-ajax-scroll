@@ -12,11 +12,13 @@ describe('Bind', () => {
       onBind() {}
     };
 
-    cy.spy(spy, 'onBind');
+    cy.spy(spy, 'onBind').as('spy');
 
     ias.on(events.BINDED, spy.onBind);
 
-    expect(spy.onBind).to.have.been.calledOnce;
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.have.been.calledOnce;
+    });
   });
 
   it('should not bind on instantiation when option.bind is false', () => {
@@ -28,11 +30,13 @@ describe('Bind', () => {
       onBind() {}
     };
 
-    cy.spy(spy, 'onBind');
+    cy.spy(spy, 'onBind').as('spy');
 
     ias.on(events.BINDED, spy.onBind);
 
-    expect(spy.onBind).to.not.have.been.called;
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.not.have.been.called;
+    })
   });
 
   it('should bind manually', () => {
@@ -45,13 +49,15 @@ describe('Bind', () => {
       onBind() {}
     };
 
-    cy.spy(spy, 'onBind');
+    cy.spy(spy, 'onBind').as('spy');
 
     ias.on(events.BINDED, spy.onBind);
 
     ias.bind();
 
-    expect(spy.onBind).to.have.been.calledOnce;
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.have.been.calledOnce;
+    });
   });
 
   it('should not bind twice', () => {
@@ -64,14 +70,16 @@ describe('Bind', () => {
       onBind() {}
     };
 
-    cy.spy(spy, 'onBind');
+    cy.spy(spy, 'onBind').as('spy');
 
     ias.on(events.BINDED, spy.onBind);
 
     ias.bind();
     ias.bind();
 
-    expect(spy.onBind).to.have.been.calledOnce;
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.have.been.calledOnce;
+    });
   });
 
   it('should unbind', () => {
@@ -84,13 +92,15 @@ describe('Bind', () => {
       onUnbind() {}
     };
 
-    cy.spy(spy, 'onUnbind');
+    cy.spy(spy, 'onUnbind').as('spy');
 
     ias.on(events.UNBINDED, spy.onUnbind);
 
     ias.unbind();
 
-    expect(spy.onUnbind).to.have.been.calledOnce;
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.have.been.calledOnce;
+    });
   });
 
   it('should not unbind when not binded', () => {
@@ -102,12 +112,14 @@ describe('Bind', () => {
       onUnbind() {}
     };
 
-    cy.spy(spy, 'onUnbind');
+    cy.spy(spy, 'onUnbind').as('spy');
 
     ias.on(events.UNBINDED, spy.onUnbind);
 
     ias.unbind();
 
-    expect(spy.onUnbind).to.not.have.been.called;
+    cy.get('@spy').should((spy) => {
+      expect(spy).to.not.have.been.called;
+    });
   });
 });
