@@ -81,6 +81,8 @@ export default class InfiniteAjaxScroll {
 
       this.ready = true;
 
+      this.emitter.emit(Events.READY);
+
       if (this.bindOnReady && this.options.bind) {
         this.bind();
       }
