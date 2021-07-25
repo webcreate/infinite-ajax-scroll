@@ -177,6 +177,6 @@ describe('Load', () => {
 
     ias.load('http://localhost:8080/test/fixtures/default/page404.html');
 
-    cy.get('@spy').should('not.have.been.called');
+    cy.get('@spy').should('have.been.calledOnce');
   });
 });
