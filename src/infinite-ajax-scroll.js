@@ -357,7 +357,7 @@ export default class InfiniteAjaxScroll {
       this.emitter.once(event, function() { Promise.resolve(callback.apply(this, arguments)).then(resolve) }, this);
 
       if (event === Events.BINDED && this.binded) {
-        callback.bind(ctx)();
+        callback.bind(this)();
         resolve()
       }
     })
