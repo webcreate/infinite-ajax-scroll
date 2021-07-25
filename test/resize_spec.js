@@ -11,6 +11,7 @@ describe('Resize', () => {
       ias = new InfiniteAjaxScroll('.blocks', {
         item: '.blocks__block',
       });
+      ias.bind();
     });
   });
 

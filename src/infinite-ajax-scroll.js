@@ -46,6 +46,8 @@ export default class InfiniteAjaxScroll {
     this.resizeObserver = ResizeObserverFactory(this, this.scrollContainer);
     this._scrollListener = throttle(scrollHandler, 200).bind(this);
 
+    this.ready = false;
+    this.bindOnReady = true;
     this.binded = false;
     this.paused = false;
     this.pageIndex = this.sentinel() ? 0 : -1;
@@ -72,15 +74,34 @@ export default class InfiniteAjaxScroll {
     // prefill/measure after all plugins are done binding
     this.on(Events.BINDED, this.prefill.prefill.bind(this.prefill));
 
-    if (this.options.bind) {
-      // @todo on document.ready? (window.addEventListener('DOMContentLoaded'))
-      this.bind();
+    let ready = () => {
+      if (this.ready) {
+        return;
+      }
+
+      this.ready = true;
+
+      if (this.bindOnReady && this.options.bind) {
+        this.bind();
+      }
+    };
+
+    if (document.readyState === "complete" || document.readyState === "interactive") {
+      setTimeout(ready, 1);
+    } else {
+      window.addEventListener('DOMContentLoaded', ready);
     }
   }
 
   bind() {
     if (this.binded) {
       return;
+    }
+
+    // If we manually call bind before the dom is ready, we assume that we want
+    // to take control over the bind flow.
+    if (!this.ready) {
+      this.bindOnReady = false;
     }
 
     this.scrollContainer.addEventListener('scroll', this._scrollListener);
@@ -93,6 +114,10 @@ export default class InfiniteAjaxScroll {
 
   unbind() {
     if (!this.binded) {
+      if (!this.ready) {
+        this.once(Events.BINDED, this.unbind);
+      }
+
       return;
     }
 
@@ -105,6 +130,14 @@ export default class InfiniteAjaxScroll {
   }
 
   next() {
+    if (!this.binded) {
+      if (!this.ready) {
+        return this.once(Events.BINDED, this.next);
+      }
+
+      return;
+    }
+
     this.pause();
 
     let event = {
