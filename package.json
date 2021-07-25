@@ -39,7 +39,7 @@
     "build": "rollup -c",
     "watch": "rollup -c --watch",
     "cypress": "cypress open -d",
-    "start": "serve -l 8080 -n ./ &",
+    "start": "serve -l 8080 -n ./",
     "test": "cypress run",
     "lint": "eslint src test"
   },
