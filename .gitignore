@@ -3,3 +3,4 @@ node_modules
 test/screenshots
 test/videos
 .build
+.idea
