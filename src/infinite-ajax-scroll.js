@@ -202,7 +202,10 @@ export default class InfiniteAjaxScroll {
           return;
         }
 
-        if (xhr.status === 200) {
+        if (xhr.status === 0) {
+          // weird status happening during Cypress tests
+        }
+        else if (xhr.status === 200) {
           let items = xhr.response;
 
           if (responseType === 'document') {

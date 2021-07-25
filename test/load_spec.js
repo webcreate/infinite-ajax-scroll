@@ -75,7 +75,9 @@ describe('Load', () => {
 
     ias.on(events.LOADED, spies.loaded);
 
-    ias.load('http://localhost:8080/test/fixtures/default/page404.html');
+    ias.load('http://localhost:8080/test/fixtures/default/page404.html')
+      .catch((xhr) => {}) // prevent uncaught exception in cypress
+    ;
 
     cy.get('@spy').should('not.have.been.called');
   });
@@ -175,7 +177,9 @@ describe('Load', () => {
 
     ias.on(events.ERROR, spies.error);
 
-    ias.load('http://localhost:8080/test/fixtures/default/page404.html');
+    ias.load('http://localhost:8080/test/fixtures/default/page404.html')
+      .catch((xhr) => {}) // prevent uncaught exception in cypress
+    ;
 
     cy.get('@spy').should('have.been.calledOnce');
   });
