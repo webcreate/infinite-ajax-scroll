@@ -20,6 +20,10 @@ ias.once('appended', handler);
 
 ## Reference
 
+### ready
+
+This event is triggered when the DOM is ready. Right after this event Infinite Ajax Scroll will bind (unless the [`bind`](./options.md#bind) option is set to `false`).
+
 ### binded
 
 This event is triggered when Infinite Ajax Scroll binds to the scroll and resize events of the scroll container. This mostly happens right after the DOM is ready, but this can be configured with the `bind` option.
