@@ -102,7 +102,6 @@ describe('Next', () => {
           item: '.blocks__block',
           next: '.pager__next',
           pagination: '.pager',
-          bind: false
         });
 
         ias.next();
@@ -117,13 +116,12 @@ describe('Next', () => {
 
     cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
       cy.window().then((win) => {
-        const spy = cy.spy(win.console, 'warn').as('consoleSpy');
+        cy.spy(win.console, 'warn').as('consoleSpy');
 
         let ias = new InfiniteAjaxScroll('.blocks', {
           item: '.blocks__block',
           next: '.pager__next',
           pagination: '.pager',
-          bind: false
         });
 
         ias.next().then(() => { ias.next() });

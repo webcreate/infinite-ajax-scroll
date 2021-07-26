@@ -95,10 +95,10 @@ See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttp
 ## bind
 
 **Type:** `boolean`<br>
-**Default:** `false`<br>
+**Default:** `true`<br>
 **Required:** no
 
-By default Infinite Ajax Scroll binds to the scroll and resize events on document ready. If you want manual control over this behaviour you can set this option to `false`. To bind call the [`bind`](methods.md#bind) method.
+By default Infinite Ajax Scroll binds to the scroll and resize events on document ready. If you want to have manual control over this behaviour you can set this option to `false`. To bind manually you can call the [`bind`](methods.md#bind) method.
 
 ## scrollContainer
 

@@ -11,6 +11,7 @@ describe('Scroll', () => {
       ias = new InfiniteAjaxScroll('.blocks', {
         item: '.blocks__block',
       });
+      ias.bind();
     });
   });
 
