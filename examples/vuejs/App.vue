@@ -6,7 +6,8 @@
             <img :src="movie.img"/>
         </div>
     </div>
-    <a @click="nextHandler()" class="next">Next</a>
+    <div class="loader" v-if="isLoading"></div>
+    <div class="last" v-if="isLast">No more movies 😒</div>
   </div>
 </template>
 
@@ -33,34 +34,39 @@ const catalog = [
   }
 ]
 
-let ias = null;
-
 export default Vue.extend({
   data() {
     return {
+      ias: null,
+      isLast: false,
+      isLoading: false,
       movies: []
     };
   },
   mounted() {
-    // Simulate initial load
-    Promise.all([
-      this.loadNewMovie(),
-      this.loadNewMovie(),
-      this.loadNewMovie(),
-      this.loadNewMovie()
-    ]).then(() => {
-      ias = new InfiniteAjaxScroll('.movies', {
-        item: '.movie',
-        pagination: false,
-      });
+    const ias = new InfiniteAjaxScroll('.movies', {
+      item: '.movie',
+      next: this.nextPage,
+      spinner: {
+        show: () => this.isLoading = true,
+        hide: () => this.isLoading = false,
+      },
+    });
 
-      ias.on('hit', () => {
-        console.log("hit!!!")
-        this.loadNewMovie()
-      })
-    })
+    ias.on('last', () => {
+      this.isLast = true;
+    });
   },
   methods: {
+    nextPage(pageIndex) {
+      const hasNextUrl = pageIndex < 4;
+
+      return Promise.all([
+        this.loadNewMovie(),
+        this.loadNewMovie(),
+        this.loadNewMovie()
+      ]).then(() => hasNextUrl);
+    },
     loadNewMovie() {
       return new Promise((resolve) => {
         // Simulate loading of new movie
@@ -70,24 +76,44 @@ export default Vue.extend({
 
           this.movies.push(movie)
           resolve()
-        }, 2000)
+        }, 200)
       })
-    },
-    nextHandler() {
-      this.loadNewMovie()
     }
   }
 });
 </script>
 
 <style lang="scss" scoped>
+  .movies {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 300px;
+  }
   .movie {
-    margin: 20px 0;
-    padding: 20px 20px;
-    width: 300px;
-    background-color: #ff0000;
+    margin-top: 20px;
+    padding: 20px;
+    background-image: linear-gradient(to right, #EE0979 0%, #F73D39 20%);
       img {
         width: 100%;
       }
+  }
+
+  .last {
+    font-family: sans-serif;
+    text-align: center;
+    color: #999;
+    line-height: 40px;
+  }
+
+  .loader {
+    height: 40px;
+    background: transparent url('loader.svg') no-repeat center center;
+    background-size: 40px 19px;
+    animation: flipAnimation 1s infinite;
+  }
+
+  @keyframes flipAnimation {
+    0%,100% { transform: rotateY(-180deg); }
+    50% { transform: rotateY(0deg); }
   }
 </style>
