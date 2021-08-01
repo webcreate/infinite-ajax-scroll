@@ -160,7 +160,7 @@ export default class InfiniteAjaxScroll {
 
     const event = {
       pageIndex: this.pageIndex + 1,
-      promise: promise
+      promise
     };
 
     this.emitter.emit(Events.NEXT, event);
