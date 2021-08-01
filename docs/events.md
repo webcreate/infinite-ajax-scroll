@@ -74,25 +74,14 @@ Triggered right after the `hit` event. Indicating that the next page will be loa
 
 > pageIndex is zero indexed. This means the index starts at 0 on the first page.
 
-For example to get the url and title of the new page, you can do:
+For example to notify the user about loading the next page, you can do:
 
 ```js
 ias.on('next', function(event) {
-  // fallback on url and title of current page
-  let url = document.location.toString();
-  let title = document.title;
-
-  const onLoaded = (event) => {
-    url = event.url;
-    title = event.xhr.response?.title ?? title;
-  }
-
-  ias.once('loaded', onLoaded)
+  alert(`Page ${event.pageIndex+1} is loading...`);
 
   event.promise.then(function() {
-    alert(`We just loaded ${url} with title ${title}`)
-
-    ias.off('loaded', onLoaded);
+    alert(`Page ${event.pageIndex+1} is loaded and added to the page.`);
   });
 });
 ```
