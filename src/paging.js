@@ -51,7 +51,10 @@ export default class Paging {
 
     let loaded = (event) => {
       url = event.url;
-      title = event.xhr.response?.title ?? title
+
+      if (event.xhr.response) {
+        title = event.xhr.response.title
+      }
     };
 
     this.ias.once(Events.LOADED, loaded);
