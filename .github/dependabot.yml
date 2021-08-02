@@ -5,16 +5,7 @@ updates:
   schedule:
     interval: daily
     time: "04:00"
-  open-pull-requests-limit: 2
-  ignore:
-  - dependency-name: cypress
-    versions:
-    - 7.0.0
-    - 7.0.1
-  - dependency-name: rollup
-    versions:
-    - 2.38.2
-    - 2.38.4
+  open-pull-requests-limit: 4
 - package-ecosystem: npm
   directory: "/examples/articles"
   schedule:
@@ -28,7 +19,31 @@ updates:
     time: "04:00"
   open-pull-requests-limit: 2
 - package-ecosystem: npm
+  directory: "/examples/button"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 2
+- package-ecosystem: npm
+  directory: "/examples/json"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 2
+- package-ecosystem: npm
   directory: "/examples/masonry"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 2
+- package-ecosystem: npm
+  directory: "/examples/overflow"
+  schedule:
+    interval: daily
+    time: "04:00"
+  open-pull-requests-limit: 2
+- package-ecosystem: npm
+  directory: "/examples/vuejs"
   schedule:
     interval: daily
     time: "04:00"

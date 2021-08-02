@@ -49,7 +49,6 @@ export default class Paging {
     let url = document.location.toString();
     let title = document.title;
 
-    // @todo can be moved inside appended when eventStack is implemented
     let loaded = (event) => {
       url = event.url;
 
@@ -60,7 +59,7 @@ export default class Paging {
 
     this.ias.once(Events.LOADED, loaded);
 
-    this.ias.once(Events.APPENDED, () => {
+    nextEvent.promise.then(() => {
       this.pageBreaks.push({
         pageIndex: nextEvent.pageIndex,
         url,
@@ -70,7 +69,6 @@ export default class Paging {
 
       this.update();
 
-      // @todo can be removed when eventStack is implemented
       this.ias.off(Events.LOADED, loaded);
     });
   }

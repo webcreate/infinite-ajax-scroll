@@ -142,15 +142,11 @@ export default class InfiniteAjaxScroll {
 
     this.pause();
 
-    let event = {
-      pageIndex: this.pageIndex + 1,
-    };
+    const pageIndex = this.pageIndex + 1;
 
-    this.emitter.emit(Events.NEXT, event);
-
-    return Promise.resolve(this.nextHandler(event.pageIndex))
+    const promise = Promise.resolve(this.nextHandler(pageIndex))
         .then((hasNextUrl) => {
-          this.pageIndex = event.pageIndex;
+          this.pageIndex = pageIndex;
 
           if (!hasNextUrl) {
             this.emitter.emit(Events.LAST);
@@ -161,6 +157,15 @@ export default class InfiniteAjaxScroll {
           this.resume();
         })
     ;
+
+    const event = {
+      pageIndex: this.pageIndex + 1,
+      promise
+    };
+
+    this.emitter.emit(Events.NEXT, event);
+
+    return promise;
   }
 
   /**
