@@ -82,7 +82,7 @@ Where `.spinner` references a html element by class name. You will have to add t
 Use the documentation to learn how to use the new way of using these features:
 
 * Spinner Extension -> [spinner](docs/options.md#spinner) options
-* Trigger Extension -> [spinner](docs/options.md#trigger) options
+* Trigger Extension -> [trigger](docs/options.md#trigger) options
 
 Other extensions are now build-in as events:
 
@@ -99,7 +99,7 @@ Finally, the History Extension is dropped entirely.
 
 ### Methods
 
-* `destroy` method is removed
+* `destroy` method is removed -> use [unbind](docs/methods.md#unbind)
 * `extension` method is removed
 * `initialize` method renamed to `bind`
 * `reinitialize` method is replaced by `bind` and `unbind`
@@ -111,7 +111,6 @@ Finally, the History Extension is dropped entirely.
 * `render` is renamed to `append`
 * `rendered` is renamed to `appended`
 * `noneLeft` is renamed to `last`
-* `ready` is removed
 
 Upgrade from 2.2 to 2.3
 =======================

@@ -1,6 +1,6 @@
 {
   "name": "@webcreate/infinite-ajax-scroll",
-  "version": "3.0.0-beta.6",
+  "version": "3.0.0-rc.1",
   "title": "Infinite Ajax Scroll",
   "description": "Turn your existing pagination into infinite scrolling pages with ease",
   "license": "AGPL-3.0-only",
