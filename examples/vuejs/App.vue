@@ -54,7 +54,7 @@ export default Vue.extend({
         setTimeout(() => {
           this.images.push({
             title: `A nice image random image at position ${this.images.length + 1}`,
-            img: `https://picsum.photos/200/300?random=${this.images.length}`
+            img: `https://picsum.photos/266/400?random=${this.images.length}`
           })
           resolve()
         }, 400)
