@@ -18,21 +18,11 @@ let nextHandler = function(pageIndex) {
       .then(() => true);
 };
 
-// hides an element but also takes transition delay into account
-function hideWithTransition(element) {
-  return new Promise(function(resolve) {
-    element.addEventListener('transitionend', resolve, {once: true});
-
-    element.style.opacity = '0';
-  });
-}
-
 window.ias = new InfiniteAjaxScroll('.blocks', {
   item: '.blocks__block',
   next: nextHandler,
   spinner: {
     element: '.loader',
-    hide: hideWithTransition,
   },
   trigger: {
     element: '.trigger',
