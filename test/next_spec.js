@@ -130,4 +130,30 @@ describe('Next', () => {
       });
     });
   });
+
+  it('should emit a nexted event when finished', () => {
+    const spies = {
+      nexted() {},
+    };
+
+    cy.spy(spies, 'nexted').as('nextedSpy');
+
+    cy.InfiniteAjaxScroll().then((InfiniteAjaxScroll) => {
+      ias = new InfiniteAjaxScroll('.blocks', {
+        item: '.blocks__block',
+        next: '.pager__next',
+      });
+
+      ias.on(events.NEXTED, spies.nexted);
+
+      ias.next();
+
+      cy.get('@nextedSpy').should((spy) => {
+        expect(spy).to.have.been.calledOnce;
+        expect(spy).to.have.been.calledWith(
+          Cypress.sinon.match.has("pageIndex", Cypress.sinon.match(1))
+        );
+      });
+    });
+  });
 });

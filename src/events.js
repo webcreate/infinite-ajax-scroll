@@ -8,6 +8,7 @@ export const LOADED = 'loaded';
 export const ERROR = 'error';
 export const LAST = 'last';
 export const NEXT = 'next';
+export const NEXTED = 'nexted';
 export const READY = 'ready';
 export const SCROLLED = 'scrolled';
 export const RESIZED = 'resized';
@@ -26,6 +27,7 @@ const events = {
   ERROR,
   LAST,
   NEXT,
+  NEXTED,
   READY,
   SCROLLED,
   RESIZED,

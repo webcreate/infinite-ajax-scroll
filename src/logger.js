@@ -19,6 +19,9 @@ const defaultLogger = {
   next: (event) => {
     console.log(`Next page triggered [pageIndex=${event.pageIndex}]`);
   },
+  nexted: (event) => {
+    console.log(`Next page completed [pageIndex=${event.pageIndex}]`);
+  },
   load: (event) => {
     console.log(`Start loading ${event.url}`);
   },
