@@ -45,7 +45,7 @@ export default class Paging {
     });
   }
 
-  next(nextEvent) {
+  next() {
     let url = document.location.toString();
     let title = document.title;
 
@@ -59,9 +59,9 @@ export default class Paging {
 
     this.ias.once(Events.LOADED, loaded);
 
-    nextEvent.promise.then(() => {
+    this.ias.once(Events.NEXTED, (event) => {
       this.pageBreaks.push({
-        pageIndex: nextEvent.pageIndex,
+        pageIndex: event.pageIndex,
         url,
         title,
         sentinel: this.ias.sentinel()

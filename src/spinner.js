@@ -66,17 +66,13 @@ export default class Spinner {
 
       delay = Math.max(0, self.options.delay - diff);
 
-      // copy original append function
-      let appendFn = event.appendFn;
+      const _appendFn = event.appendFn.bind({});
 
-      // wrap append function with delay
-      event.appendFn = (items, parent, last) => {
-        return new Promise((resolve) => {
-          setTimeout(() => {
-            // turn hide function into promise
-            Promise.resolve(self.hide()).then(() => {
-              appendFn(items, parent, last);
-
+      event.appendFn = function(items, parent, last) {
+        return new Promise(function (resolve) {
+          setTimeout(function() {
+            self.hide().then(function() {
+              _appendFn(items, parent, last);
               resolve();
             });
           }, delay);

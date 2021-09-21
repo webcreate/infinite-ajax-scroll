@@ -76,7 +76,7 @@ export default class Trigger {
   }
 
   clickHandler() {
-    this.hide().then(() => this.ias.next());
+    this.hide().then(this.ias.next.bind(this.ias));
   }
 
   update(pageIndex) {

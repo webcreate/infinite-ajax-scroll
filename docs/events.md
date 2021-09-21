@@ -70,7 +70,6 @@ Triggered right after the `hit` event. Indicating that the next page will be loa
 | property | type | description |
 | :--- | :--- | :--- |
 | pageIndex | int | The page index of the next page (the page that is about to be loaded) |
-| promise | Promise | A Promise that is resolved when the next operation finishes |
 
 > pageIndex is zero indexed. This means the index starts at 0 on the first page.
 
@@ -78,13 +77,21 @@ For example to notify the user about loading the next page, you can do:
 
 ```js
 ias.on('next', function(event) {
+  // pageIndex is 0-indexed, so we add 1
   alert(`Page ${event.pageIndex+1} is loading...`);
-
-  event.promise.then(function() {
+});
+ias.on('nexted', function(event) {
     alert(`Page ${event.pageIndex+1} is loaded and added to the page.`);
-  });
 });
 ```
+
+### nexted
+
+Trigger when loading and appending the next page is completed.
+
+| property | type | description |
+| :--- | :--- | :--- |
+| pageIndex | int | The page index of the next page (the page that is finished loading) |
 
 ### load
 
