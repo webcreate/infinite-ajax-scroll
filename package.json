@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "cypress": "^8.0.0",
-    "eslint": "^7.3.1",
+    "eslint": "^8.0.1",
     "eslint-plugin-cypress": "^2.2.1",
     "rollup": "^2.0.3",
     "rollup-plugin-buble": "^0.19.8",
