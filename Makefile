@@ -38,7 +38,7 @@ build:
 .PHONY: build
 
 test:
-	cd $(TEST_DIR); \
+	cd $(TEST_DIR); (npm start &); \
 		npm run lint && \
 		npm run test
 .PHONY: test
