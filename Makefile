@@ -5,13 +5,15 @@ SEMVER=prerelease --preid=beta
 EXAMPLES=$(dir $(wildcard examples/*/package.json))
 
 install:
-	npm install
+	npm ci
 	npm run build
-	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm install && npm run link && npm run build) || exit $$?;)
+	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm ci && npm run link && npm run build) || exit $$?;)
 .PHONY: install
 
 update:
-	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm update) || exit $$?;)
+	npm ci
+	npm run build
+	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm ci) || exit $$?;)
 .PHONY: update
 
 up:
