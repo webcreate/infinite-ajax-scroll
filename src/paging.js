@@ -27,6 +27,7 @@ export default class Paging {
 
     ias.on(Events.BINDED, this.binded.bind(this));
     ias.on(Events.NEXT, this.next.bind(this));
+    ias.on(Events.PREV, this.prev.bind(this));
     ias.on(Events.SCROLLED, this.scrolled.bind(this));
     ias.on(Events.RESIZED, this.scrolled.bind(this));
   }
@@ -65,6 +66,34 @@ export default class Paging {
         url,
         title,
         sentinel: this.ias.sentinel()
+      });
+
+      this.update();
+
+      this.ias.off(Events.LOADED, loaded);
+    });
+  }
+
+  prev() {
+    let url = document.location.toString();
+    let title = document.title;
+
+    let loaded = (event) => {
+      url = event.url;
+
+      if (event.xhr.response) {
+        title = event.xhr.response.title
+      }
+    };
+
+    this.ias.once(Events.LOADED, loaded);
+
+    this.ias.once(Events.PREVED, (event) => {
+      this.pageBreaks.unshift({
+        pageIndex: event.pageIndex,
+        url,
+        title,
+        sentinel: this.ias.first()
       });
 
       this.update();
