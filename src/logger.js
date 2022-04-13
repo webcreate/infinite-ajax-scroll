@@ -22,6 +22,12 @@ const defaultLogger = {
   nexted: (event) => {
     console.log(`Next page completed [pageIndex=${event.pageIndex}]`);
   },
+  prev: (event) => {
+    console.log(`Previous page triggered [pageIndex=${event.pageIndex}]`);
+  },
+  preved: (event) => {
+    console.log(`Previous page completed [pageIndex=${event.pageIndex}]`);
+  },
   load: (event) => {
     console.log(`Start loading ${event.url}`);
   },
@@ -34,8 +40,17 @@ const defaultLogger = {
   appended: (event) => {
     console.log(`Finished appending ${event.items.length} item(s)`);
   },
+  prepend: () => {
+    console.log(`Start prepending items`);
+  },
+  prepended: (event) => {
+    console.log(`Finished prepending ${event.items.length} item(s)`);
+  },
   last: () => {
     console.log(`No more pages left to load`);
+  },
+  first: () => {
+    console.log(`Reached first page`);
   },
   page: (event) => {
     console.log(`Page changed [pageIndex=${event.pageIndex}]`);
