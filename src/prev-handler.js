@@ -3,9 +3,7 @@ import Assert from './assert';
 
 export function prevHandler(pageIndex) {
   let ias = this;
-  let lastResponse = document; // TODO: evaluate if this is correct
-
-  let prevEl = $(ias.options.prev, lastResponse)[0];
+  let prevEl = ias._prevEl || $(ias.options.prev, document)[0];
 
   if (!prevEl) {
     Assert.warn(Assert.singleElement, ias.options.prev, 'options.prev');
@@ -17,9 +15,7 @@ export function prevHandler(pageIndex) {
 
   return ias.load(prevUrl)
     .then((data) => {
-      lastResponse = data.xhr.response;
-
-      let prevEl = $(ias.options.prev, lastResponse)[0];
+      let prevEl = ias._prevEl = $(ias.options.prev, data.xhr.response)[0];
 
       return ias.prepend(data.items)
         .then(() => !!prevEl) // TODO: evaluate if this makes sense
