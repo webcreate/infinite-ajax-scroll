@@ -5,6 +5,7 @@ export const PREPENDED = 'prepended';
 export const BINDED = 'binded';
 export const UNBINDED = 'unbinded';
 export const HIT = 'hit';
+export const TOP = 'top';
 export const LOAD = 'load';
 export const LOADED = 'loaded';
 export const ERROR = 'error';
@@ -29,6 +30,7 @@ const events = {
   BINDED,
   UNBINDED,
   HIT,
+  TOP,
   LOAD,
   LOADED,
   ERROR,

@@ -4,6 +4,9 @@ const defaultLogger = {
   hit: () => {
     console.log(`Hit scroll threshold`);
   },
+  top: () => {
+    console.log(`Hit top scroll threshold`);
+  },
   binded: () => {
     console.log(`Binded event handlers`);
   },
