@@ -23,7 +23,7 @@ More features, documentation and examples available at: https://docs.infiniteaja
 Get up and running in no time by linking directly to Infinite Ajax Scroll on [unpkg](https://unpkg.com).
 
 ```markup
-<script src="https://unpkg.com/@webcreate/infinite-ajax-scroll@^3.0.0-beta.6/dist/infinite-ajax-scroll.min.js"></script>
+<script src="https://unpkg.com/@webcreate/infinite-ajax-scroll@^3.0.0/dist/infinite-ajax-scroll.min.js"></script>
 ```
 
 Place this code right before the `</body>` tag on each template or page that you want to use infinite scroll on.
