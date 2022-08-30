@@ -22,3 +22,8 @@ ias.on('page', (e) => {
 
   history.replaceState(state, e.title, e.url);
 });
+
+// disable cache busting
+ias.on('load', function(event) {
+  event.nocache = true;
+});
