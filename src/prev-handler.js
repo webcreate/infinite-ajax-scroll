@@ -5,6 +5,10 @@ export function prevHandler(pageIndex) {
   let ias = this;
   let prevEl = ias._prevEl || $(ias.options.prev, document.body)[0];
 
+  if (ias.options.prev === undefined) {
+    return;
+  }
+
   if (!prevEl) {
     Assert.warn(Assert.singleElement, ias.options.prev, 'options.prev');
 
