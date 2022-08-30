@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.1.0-beta.1]
 
-This version introduces upwards scroll support. See documentation on the [`prev`](docs/options.md#prev) option on how to enabled this feature.
+This version introduces upwards scroll support (fixes [#466](https://github.com/webcreate/infinite-ajax-scroll/issues/466)). See documentation on the [`prev`](docs/options.md#prev) option on how to enable this feature.
 
 * Added [`prev`](docs/options.md#prev) option
 * Added [`prev`](docs/events.md#prev) event
