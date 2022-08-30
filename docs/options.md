@@ -54,10 +54,13 @@ Selector of the previous link. The `href` attribute will be used for the url of 
 
 ```html
 <a href="/page/1" class="pager__prev">Prev</a>
+<span class="pager__current">2</span>
+<a href="/page/3" class="pager__next">Next</a>
 ```
 
 ```javascript
 let ias = new InfiniteAjaxScroll(/*..*/, {
+  next: '.pager__next',
   prev: '.pager__prev'
 })
 ```
