@@ -11,7 +11,7 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import Vue from "vue";
 import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 
@@ -76,7 +76,7 @@ export default Vue.extend({
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
   .container {
     margin-top: 48px;
   }
@@ -92,10 +92,9 @@ export default Vue.extend({
   .image {
     padding: 20px;
     border: 10px solid #666;
-
-    img {
-      width: 100%;
-    }
+  }
+  .image img {
+    width: 100%;
   }
 
   .last {
