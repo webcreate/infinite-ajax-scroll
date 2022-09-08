@@ -4,3 +4,4 @@ test/screenshots
 test/videos
 .build
 .idea
+.parcel-cache
