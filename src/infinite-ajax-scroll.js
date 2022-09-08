@@ -211,8 +211,12 @@ export default class InfiniteAjaxScroll {
         if (!hasPrevUrl) {
           this.emitter.emit(Events.FIRST);
         }
-      }).then(() => {
+
+        return hasPrevUrl;
+      }).then((hasPrevUrl) => {
         this.emitter.emit(Events.PREVED, {pageIndex: this.pageIndexPrev});
+
+        return hasPrevUrl;
       });
   }
 
