@@ -156,3 +156,14 @@ body {
   opacity: 0;
   transition: opacity 400ms;
 }
+
+.ias-foot {
+  text-align: center;
+  margin: 40px 0;
+  font: 12px sans-serif;
+  color: #aaa;
+}
+
+.ias-foot a {
+  color: #999;
+}

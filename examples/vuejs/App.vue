@@ -1,6 +1,6 @@
 
 <template>
-  <div>
+  <div class="container">
     <div class="images">
         <div class="image" v-for="image in loadedImages" :key="image.id">
             <img :src="image.img" :alt="image.title" width="300" height="448"/>
@@ -77,6 +77,10 @@ export default Vue.extend({
 </script>
 
 <style lang="scss" scoped>
+  .container {
+    margin-top: 48px;
+  }
+
   .images {
     margin: 0 auto;
     padding: 20px;
