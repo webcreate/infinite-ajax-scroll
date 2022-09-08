@@ -157,8 +157,12 @@ export default class InfiniteAjaxScroll {
         }
 
         this.resume();
-      }).then(() => {
+
+        return hasNextUrl;
+      }).then((hasNextUrl) => {
         this.emitter.emit(Events.NEXTED, {pageIndex: this.pageIndex});
+
+        return hasNextUrl;
       });
   }
 
