@@ -2,8 +2,8 @@
 <template>
   <div>
     <div class="images">
-        <div class="image" v-for="image in images" :key="image.id">
-            <img :src="image.img" :alt="image.title"/>
+        <div class="image" v-for="image in loadedImages" :key="image.id">
+            <img :src="image.img" :alt="image.title" width="300" height="448"/>
         </div>
     </div>
     <div class="loader" v-if="isLoading"></div>
@@ -18,10 +18,21 @@ import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 export default Vue.extend({
   data() {
     return {
-      ias: null,
       isLast: false,
       isLoading: false,
-      images: []
+      images: [
+        'https://m.media-amazon.com/images/M/MV5BYzFjNzIxMmEtMzY5NS00YTgzLTkwYWEtN2FjMmY0NmNkZWY3XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+        'https://m.media-amazon.com/images/M/MV5BMTM1MTk2ODQxNV5BMl5BanBnXkFtZTcwOTY5MDg0NA@@._V1_SX300.jpg',
+        'https://m.media-amazon.com/images/M/MV5BMzRiMGE2MmMtM2RhMy00OWNiLTljYTktOThmMmE1YjY1NjYyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg',
+        'https://ia.media-imdb.com/images/M/MV5BOTI0MzcxMTYtZDVkMy00NjY1LTgyMTYtZmUxN2M3NmQ2NWJhXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+        'https://ia.media-imdb.com/images/M/MV5BNWMxZTgzMWEtMTU0Zi00NDc5LWFkZjctMzUxNDIyNzZiMmNjXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+        'https://m.media-amazon.com/images/M/MV5BYTk5NWE2ZjAtZmRmOS00ZGYzLWI5ZmUtMDcwODI0YWY0MTRlL2ltYWdlXkEyXkFqcGdeQXVyNjQzNDI3NzY@._V1_SX300.jpg',
+        'https://m.media-amazon.com/images/M/MV5BYjZlYmJjYWYtZDM0NS00YmZlLWIyMTAtMDY5ZTNjZTgwMDhjXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+        'https://ia.media-imdb.com/images/M/MV5BNzM4Y2FlNzYtZmY5Yy00NzU4LTk1ODItY2NjYWYzYzUyZGM3L2ltYWdlXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+        'https://ia.media-imdb.com/images/M/MV5BNjFlOTI2OGQtMzg0YS00ZGE4LTkwMjEtZDUzYThlOTU5YjQ5XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+        'https://m.media-amazon.com/images/M/MV5BYTUwMTY1YmMtN2U5NC00YjkzLTg0YWQtZmEwNTEzZjdkNzQ2XkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX300.jpg',
+      ],
+      loadedImages: [],
     };
   },
   mounted() {
@@ -45,16 +56,17 @@ export default Vue.extend({
       return Promise.all([
         this.loadNewImage(),
         this.loadNewImage(),
-        this.loadNewImage()
+        this.loadNewImage(),
       ]).then(() => hasNextUrl);
     },
     loadNewImage() {
       return new Promise((resolve) => {
         // Simulate loading of new image
         setTimeout(() => {
-          this.images.push({
-            title: `A nice image random image at position ${this.images.length + 1}`,
-            img: `https://picsum.photos/266/400?random=${this.images.length}`
+          this.loadedImages.push({
+            id: this.loadedImages.length + 1,
+            title: `A nice image random image at position ${this.loadedImages.length + 1}`,
+            img: this.images[this.loadedImages.length % this.images.length],
           })
           resolve()
         }, 400)
@@ -68,10 +80,12 @@ export default Vue.extend({
   .images {
     margin: 0 auto;
     padding: 20px;
-    max-width: 400px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
   }
   .image {
-    margin-top: 20px;
     padding: 20px;
     border: 10px solid #666;
 
