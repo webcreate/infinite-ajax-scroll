@@ -14,7 +14,7 @@
   },
   "scripts": {
     "build": "parcel build *.html --public-url ./",
-    "watch": "parcel watch * --public-url ./",
+    "watch": "parcel watch *.html --public-url ./",
     "link": "npm link ../../"
   },
   "dependencies": {
