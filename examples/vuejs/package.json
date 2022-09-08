@@ -19,9 +19,9 @@
   },
   "dependencies": {
     "@webcreate/infinite-ajax-scroll": "^3.0.0",
-    "vue": "^2.6.14"
+    "vue": "^3.2.37"
   },
   "devDependencies": {
-    "parcel-bundler": "^1.12.5"
+    "parcel": "^2.0.0"
   }
 }

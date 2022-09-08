@@ -12,10 +12,9 @@
 </template>
 
 <script lang="js">
-import Vue from "vue";
 import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 
-export default Vue.extend({
+export default {
   data() {
     return {
       isLast: false,
@@ -73,7 +72,7 @@ export default Vue.extend({
       })
     }
   }
-});
+};
 </script>
 
 <style lang="css" scoped>
