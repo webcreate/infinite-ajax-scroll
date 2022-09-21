@@ -11,11 +11,10 @@
   </div>
 </template>
 
-<script lang="ts">
-import Vue from "vue";
+<script lang="js">
 import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 
-export default Vue.extend({
+export default {
   data() {
     return {
       isLast: false,
@@ -73,10 +72,10 @@ export default Vue.extend({
       })
     }
   }
-});
+};
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
   .container {
     margin-top: 48px;
   }
@@ -92,10 +91,9 @@ export default Vue.extend({
   .image {
     padding: 20px;
     border: 10px solid #666;
-
-    img {
-      width: 100%;
-    }
+  }
+  .image img {
+    width: 100%;
   }
 
   .last {
