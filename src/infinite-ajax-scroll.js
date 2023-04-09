@@ -7,12 +7,14 @@ import {scrollHandler} from "./event-handlers";
 import Emitter from "tiny-emitter";
 import {getDistanceToFold, getRootRect, getScrollPosition} from "./dimensions";
 import {nextHandler} from './next-handler';
+import {prevHandler} from './prev-handler';
 import Pagination from './pagination';
 import Spinner from './spinner';
 import Logger from './logger';
 import Paging from './paging';
 import Trigger from './trigger';
 import {appendFn} from './append';
+import {prependFn} from './prepend';
 import * as Events from './events';
 import ResizeObserverFactory from './resize-observer';
 import Prefill from "./prefill";
@@ -36,11 +38,18 @@ export default class InfiniteAjaxScroll {
     }
 
     this.nextHandler = nextHandler;
+    this.prevHandler = prevHandler;
 
     if (this.options.next === false) {
       this.nextHandler = function() {}
     } else if (typeof this.options.next === 'function') {
       this.nextHandler = this.options.next;
+    }
+
+    if (this.options.prev === false) {
+      this.prevHandler = function() {}
+    } else if (typeof this.options.prev === 'function') {
+      this.prevHandler = this.options.prev;
     }
 
     this.resizeObserver = ResizeObserverFactory(this, this.scrollContainer);
@@ -50,7 +59,8 @@ export default class InfiniteAjaxScroll {
     this.bindOnReady = true;
     this.binded = false;
     this.paused = false;
-    this.pageIndex = this.sentinel() ? 0 : -1;
+    this.pageIndexPrev = 0;
+    this.pageIndex = this.pageIndexNext = this.sentinel() ? 0 : -1;
 
     this.on(Events.HIT, () => {
       if (!this.loadOnScroll) {
@@ -58,6 +68,14 @@ export default class InfiniteAjaxScroll {
       }
 
       this.next();
+    });
+
+    this.on(Events.TOP, () => {
+      if (!this.loadOnScroll) {
+        return;
+      }
+
+      this.prev();
     });
 
     this.on(Events.SCROLLED, this.measure);
@@ -73,6 +91,11 @@ export default class InfiniteAjaxScroll {
 
     // prefill/measure after all plugins are done binding
     this.on(Events.BINDED, this.prefill.prefill.bind(this.prefill));
+
+    this.hitFirst = this.hitLast = false;
+
+    this.on(Events.LAST, () => this.hitLast = true);
+    this.on(Events.FIRST, () => this.hitFirst = true);
 
     let ready = () => {
       if (this.ready) {
@@ -132,6 +155,10 @@ export default class InfiniteAjaxScroll {
   }
 
   next() {
+    if (this.hitLast) {
+      return;
+    }
+
     if (!this.binded) {
       if (!this.ready) {
         return this.once(Events.BINDED, this.next);
@@ -142,27 +169,54 @@ export default class InfiniteAjaxScroll {
 
     this.pause();
 
-    const pageIndex = this.pageIndex + 1;
+    const pageIndex = this.pageIndexNext + 1;
 
-    this.emitter.emit(Events.NEXT, {pageIndex: this.pageIndex + 1});
+    this.emitter.emit(Events.NEXT, {pageIndex: this.pageIndexNext + 1});
 
     return Promise.resolve(this.nextHandler(pageIndex))
       .then((hasNextUrl) => {
-        this.pageIndex = pageIndex;
+        this.pageIndexNext = pageIndex;
 
         if (!hasNextUrl) {
           this.emitter.emit(Events.LAST);
-
-          return;
         }
 
         this.resume();
 
         return hasNextUrl;
       }).then((hasNextUrl) => {
-        this.emitter.emit(Events.NEXTED, {pageIndex: this.pageIndex});
+        this.emitter.emit(Events.NEXTED, {pageIndex: this.pageIndexNext});
 
         return hasNextUrl;
+      });
+  }
+
+  prev() {
+    if (!this.binded || this.hitFirst) {
+      return;
+    }
+
+    this.pause();
+
+    const pageIndex = this.pageIndexPrev - 1;
+
+    this.emitter.emit(Events.PREV, {pageIndex: this.pageIndexPrev - 1});
+
+    return Promise.resolve(this.prevHandler(pageIndex))
+      .then((hasPrevUrl) => {
+        this.pageIndexPrev = pageIndex;
+
+        this.resume();
+
+        if (!hasPrevUrl) {
+          this.emitter.emit(Events.FIRST);
+        }
+
+        return hasPrevUrl;
+      }).then((hasPrevUrl) => {
+        this.emitter.emit(Events.PREVED, {pageIndex: this.pageIndexPrev});
+
+        return hasPrevUrl;
       });
   }
 
@@ -276,6 +330,48 @@ export default class InfiniteAjaxScroll {
     });
   }
 
+  /**
+   * @param {array<Element>} items
+   * @param {Element|null} parent
+   */
+  prepend(items, parent) {
+    let ias = this;
+    parent = parent || ias.container;
+
+    let event = {
+      items,
+      parent,
+      prependFn
+    };
+
+    ias.emitter.emit(Events.PREPEND, event);
+
+    let executor = (resolve) => {
+      window.requestAnimationFrame(() => {
+        const first = ias.first();
+        const scrollPositionStart = getScrollPosition(this.scrollContainer);
+        const topStart = first.getBoundingClientRect().top + scrollPositionStart.y;
+
+        Promise.resolve(event.prependFn(event.items, event.parent, ias.first()))
+          .then(() => {
+            const scrollPositionEnd = getScrollPosition(this.scrollContainer);
+            const topEnd = first.getBoundingClientRect().top + scrollPositionEnd.y;
+
+            let deltaY = topEnd - topStart;
+
+            this.scrollContainer.scrollTo(scrollPositionEnd.x, deltaY);
+          })
+          .then(() => {
+            resolve({items, parent});
+          });
+        });
+    };
+
+    return (new Promise(executor)).then((event) => {
+      ias.emitter.emit(Events.PREPENDED, event);
+    });
+  }
+
   sentinel() {
     const items = $(this.options.item, this.container);
 
@@ -284,6 +380,16 @@ export default class InfiniteAjaxScroll {
     }
 
     return items[items.length-1];
+  }
+
+  first() {
+    const items = $(this.options.item, this.container);
+
+    if (!items.length) {
+      return null;
+    }
+
+    return items[0];
   }
 
   pause() {
@@ -302,9 +408,15 @@ export default class InfiniteAjaxScroll {
     this.loadOnScroll = false;
   }
 
+  /**
+   * @deprecated replaced by distanceBottom
+   */
   distance(rootRect, sentinel) {
-    const _rootRect = rootRect || getRootRect(this.scrollContainer);
+    return this.distanceBottom(rootRect, sentinel);
+  }
 
+  distanceBottom(rootRect, sentinel) {
+    const _rootRect = rootRect || getRootRect(this.scrollContainer);
     const _sentinel = sentinel || this.sentinel();
 
     const scrollPosition = getScrollPosition(this.scrollContainer);
@@ -317,8 +429,14 @@ export default class InfiniteAjaxScroll {
     return distance;
   }
 
+  distanceTop() {
+    const scrollPosition = getScrollPosition(this.scrollContainer);
+
+    return scrollPosition.y - this.negativeMargin;
+  }
+
   measure() {
-    if (this.paused) {
+    if (this.paused || (this.hitFirst && this.hitLast)) {
       return;
     }
 
@@ -334,12 +452,20 @@ export default class InfiniteAjaxScroll {
       return;
     }
 
-    const sentinel = this.sentinel();
+    if (!this.hitFirst) {
+      let distanceTop = this.distanceTop();
 
-    let distance = this.distance(rootRect, sentinel);
+      if (distanceTop <= 0) {
+        this.emitter.emit(Events.TOP, {distance: distanceTop});
+      }
+    }
 
-    if (distance <= 0) {
-      this.emitter.emit(Events.HIT, {distance});
+    if (!this.hitLast) {
+      let distanceBottom = this.distanceBottom(rootRect, this.sentinel());
+
+      if (distanceBottom <= 0) {
+        this.emitter.emit(Events.HIT, {distance: distanceBottom});
+      }
     }
   }
 

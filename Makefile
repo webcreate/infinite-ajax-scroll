@@ -13,7 +13,7 @@ install:
 update:
 	npm ci
 	npm run build
-	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm ci) || exit $$?;)
+	$(foreach ex,$(EXAMPLES),(cd $(ex) && npm install) || exit $$?;)
 .PHONY: update
 
 up:

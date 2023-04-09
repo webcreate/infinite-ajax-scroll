@@ -49,7 +49,9 @@ Infinite Ajax Scroll works on a container with item elements which get appended.
 </div>
 
 <div class="pagination">
-    <a href="page2.html" class="next">Next</a>
+    <a href="page1.html" class="prev">Prev</a>
+    <span class="current">2</span>
+    <a href="page3.html" class="next">Next</a>
 </div>
 ```
 
@@ -62,6 +64,7 @@ import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 let ias = new InfiniteAjaxScroll('.container', {
   item: '.item',
   next: '.next',
+  prev: '.prev',
   pagination: '.pagination'
 });
 ```

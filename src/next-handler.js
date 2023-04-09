@@ -3,7 +3,7 @@ import Assert from './assert';
 
 export function nextHandler(pageIndex) {
   let ias = this;
-  let lastResponse = ias._lastResponse || document;
+  let lastResponse = ias._lastResponse || document.body;
 
   let nextEl = $(ias.options.next, lastResponse)[0];
 

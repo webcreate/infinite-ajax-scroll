@@ -11,15 +11,9 @@ export default class Prefill {
       return;
     }
 
-    let distance = this.ias.distance();
-
-    if (distance > 0) {
-      return;
-    }
-
     this.ias.emitter.emit(Events.PREFILL);
 
-    return this._prefill().then(() => {
+    return Promise.all([this._prefillNext(), this._prefillPrev()]).then(() => {
       this.ias.emitter.emit(Events.PREFILLED);
 
       // @todo reevaluate if we should actually call `measure` here.
@@ -27,17 +21,33 @@ export default class Prefill {
     });
   }
 
-  _prefill() {
-    return this.ias.next().then((hasNextUrl) => {
-      if (!hasNextUrl) {
-        return;
-      }
+  _prefillNext() {
+    let distance = this.ias.distance();
 
-      let distance = this.ias.distance();
+    if (distance > 0) {
+      return;
+    }
 
-      if (distance < 0) {
-        return this._prefill();
-      }
-    });
+    return this.ias.next()
+      .then((hasNextUrl) => {
+        if (!hasNextUrl) {
+          return;
+        }
+
+        let distance = this.ias.distance();
+
+        if (distance < 0) {
+          return this._prefillNext();
+        }
+      })
+    ;
+  }
+
+  _prefillPrev() {
+    if (!this.ias.options.prev) {
+      return;
+    }
+
+    return this.ias.prev();
   }
 }

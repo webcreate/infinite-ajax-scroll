@@ -20,7 +20,6 @@ describe('Logger', () => {
     });
 
     cy.get('@spy').should((consoleSpy) => {
-      expect(consoleSpy).to.have.been.calledOnce;
       expect(consoleSpy).to.have.been.calledWith(
         "Binded event handlers"
       );

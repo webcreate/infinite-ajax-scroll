@@ -3,6 +3,7 @@ import InfiniteAjaxScroll from '@webcreate/infinite-ajax-scroll';
 window.ias = new InfiniteAjaxScroll('.surface-container', {
   item: '.article',
   next: '.pager__next',
+  prev: '.pager__prev',
   pagination: '.pager',
   spinner: '.loader'
 });
@@ -20,4 +21,9 @@ ias.on('page', (e) => {
   let state = history.state;
 
   history.replaceState(state, e.title, e.url);
+});
+
+// disable cache busting
+ias.on('load', function(event) {
+  event.nocache = true;
 });

@@ -44,6 +44,29 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 })
 ```
 
+## prev
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
+**Type:** `string`<br>
+**Default:** `undefined`<br>
+**Required:** no
+
+Selector of the previous link. The `href` attribute will be used for the url of the previous page. Only a single element should match this selector.
+
+```html
+<a href="/page/1" class="pager__prev">Prev</a>
+<span class="pager__current">2</span>
+<a href="/page/3" class="pager__next">Next</a>
+```
+
+```javascript
+let ias = new InfiniteAjaxScroll(/*..*/, {
+  next: '.pager__next',
+  prev: '.pager__prev'
+})
+```
+
 ## pagination
 
 **Type:** `boolean|string|Element`<br>

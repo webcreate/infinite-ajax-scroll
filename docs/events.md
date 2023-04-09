@@ -63,6 +63,16 @@ Triggered when the user has hit the scroll threshold for the next page due to sc
 | :--- | :--- | :--- |
 | distance | int | The distance to the scroll threshold in pixels |
 
+### top
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
+Triggered when the user has hit the top of the scroll area for the previous page due to scrolling or resizing.
+
+| property | type | description                            |
+| :--- | :--- |:---------------------------------------|
+| distance | int | The distance to the scroll top in pixels |
+
 ### next
 
 Triggered right after the `hit` event. Indicating that the next page will be loaded.
@@ -88,6 +98,40 @@ ias.on('nexted', function(event) {
 ### nexted
 
 Trigger when loading and appending the next page is completed.
+
+| property | type | description |
+| :--- | :--- | :--- |
+| pageIndex | int | The page index of the next page (the page that is finished loading) |
+
+### prev
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
+Triggered right after the `top` event. Indicating that the previous page will be loaded.
+
+| property | type | description                                                           |
+| :--- | :--- |:----------------------------------------------------------------------|
+| pageIndex | int | The page index of the prev page (the page that is about to be loaded) |
+
+> pageIndex is zero indexed. This means the index starts at 0 on the first page.
+
+For example to notify the user about loading the previous page, you can do:
+
+```js
+ias.on('prev', function(event) {
+  // pageIndex is 0-indexed, so we add 1
+  alert(`Page ${event.pageIndex+1} is loading...`);
+});
+ias.on('preved', function(event) {
+    alert(`Page ${event.pageIndex+1} is loaded and prepended to the page.`);
+});
+```
+
+### preved
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
+Trigger when loading and prepending the previous page is completed.
 
 | property | type | description |
 | :--- | :--- | :--- |
@@ -158,17 +202,54 @@ This event is triggered after the items have been appended.
 | items | array | Array of items that have been appended |
 | parent | Element | The element to which the items have been appended |
 
+### prepend
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
+This event is triggered before the items are about to be prepended.
+
+| property | type | description                                      |
+| :--- | :--- |:-------------------------------------------------|
+| items | array | Array of items that will be prepended            |
+| parent | Element | The element to which the items will be prepended |
+| prependFn | function | Function used to prepend items to the container  |
+
+See [src/prepend.js](../src/prepend.js) for the default prepend function.
+
+### prepended
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
+This event is triggered after the items have been prepended.
+
+| property | type | description                                        |
+| :--- | :--- |:---------------------------------------------------|
+| items | array | Array of items that have been prepended            |
+| parent | Element | The element to which the items have been prepended |
+
 ### last
 
 Triggered when the last page is appended.
 
 ```javascript
 ias.on('last', () => {
-  console.log('Users has reached the last page');
+  console.log('User has reached the last page');
 })
 ```
 
 [Read more on how we can inform the user about reaching the last page](advanced/last-page-message.md)
+
+### first
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
+Triggered when the last page is appended.
+
+```javascript
+ias.on('first', () => {
+  console.log('User has reached the first page');
+})
+```
 
 ### page
 
