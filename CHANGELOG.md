@@ -26,6 +26,7 @@ This version introduces upwards scroll support (fixes [#466](https://github.com/
 ## [3.0.1]
 
 * Fixed prefill not filling past the scroll threshold
+>>>>>>>>> Temporary merge branch 2
 
 ## [3.0.0]
 
