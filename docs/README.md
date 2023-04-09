@@ -18,3 +18,4 @@
 * [Last page message](advanced/last-page-message.md)
 * [History](advanced/history.md)
 * [Overflow](advanced/overflow.md)
+* [Upward scroll](advanced/upwards.md)

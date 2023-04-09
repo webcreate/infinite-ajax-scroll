@@ -1,3 +1,8 @@
+Upgrade from 3.0.x to 3.1.0
+===========================
+
+Version 3.1.0 is backwards-compatible with 3.0.x.
+
 Upgrade from 2.3.x to 3.0
 =========================
 

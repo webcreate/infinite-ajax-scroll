@@ -65,6 +65,8 @@ Triggered when the user has hit the scroll threshold for the next page due to sc
 
 ### top
 
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
 Triggered when the user has hit the top of the scroll area for the previous page due to scrolling or resizing.
 
 | property | type | description                            |
@@ -103,15 +105,17 @@ Trigger when loading and appending the next page is completed.
 
 ### prev
 
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
 Triggered right after the `top` event. Indicating that the previous page will be loaded.
 
-| property | type | description |
-| :--- | :--- | :--- |
-| pageIndex | int | The page index of the next page (the page that is about to be loaded) |
+| property | type | description                                                           |
+| :--- | :--- |:----------------------------------------------------------------------|
+| pageIndex | int | The page index of the prev page (the page that is about to be loaded) |
 
 > pageIndex is zero indexed. This means the index starts at 0 on the first page.
 
-For example to notify the user about loading the next page, you can do:
+For example to notify the user about loading the previous page, you can do:
 
 ```js
 ias.on('prev', function(event) {
@@ -124,6 +128,8 @@ ias.on('preved', function(event) {
 ```
 
 ### preved
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
 
 Trigger when loading and prepending the previous page is completed.
 
@@ -198,17 +204,21 @@ This event is triggered after the items have been appended.
 
 ### prepend
 
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
 This event is triggered before the items are about to be prepended.
 
 | property | type | description                                      |
 | :--- | :--- |:-------------------------------------------------|
 | items | array | Array of items that will be prepended            |
 | parent | Element | The element to which the items will be prepended |
-| prependFn | function | Function used to append items to the container   |
+| prependFn | function | Function used to prepend items to the container  |
 
-See [src/append.js](../src/append.js) for the default append function.
+See [src/prepend.js](../src/prepend.js) for the default prepend function.
 
 ### prepended
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
 
 This event is triggered after the items have been prepended.
 
@@ -230,6 +240,8 @@ ias.on('last', () => {
 [Read more on how we can inform the user about reaching the last page](advanced/last-page-message.md)
 
 ### first
+
+*Introduced in Infinite Ajax Scroll 3.1.0*
 
 Triggered when the last page is appended.
 

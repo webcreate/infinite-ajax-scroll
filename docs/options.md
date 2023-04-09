@@ -46,6 +46,8 @@ let ias = new InfiniteAjaxScroll(/*..*/, {
 
 ## prev
 
+*Introduced in Infinite Ajax Scroll 3.1.0*
+
 **Type:** `string`<br>
 **Default:** `undefined`<br>
 **Required:** no

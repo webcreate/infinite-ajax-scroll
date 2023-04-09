@@ -23,6 +23,7 @@ ias.on('page', (event) => {
 
 ## Loading previous pages
 
-{% hint style='working' %}
-This feature is still work in progress
-{% endhint %}
+Infinite Ajax Scroll can also be used to load items above the current scroll position. This is useful when you want to load older items first.
+
+[View upwards infinite scroll documentation](upwards.md)
+
