@@ -32,7 +32,7 @@ class NativeWrapperResizeObserver {
   }
 
   unobserve() {
-    this.ro.unobserve();
+    this.ro.unobserve(this.el);
   }
 }
 
